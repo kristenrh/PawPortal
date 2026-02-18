@@ -1,0 +1,71 @@
+body {
+  background-color: lightblue;
+  font-family: verdana;
+}
+
+
+ /* Add a black background color to the top navigation */
+.topnav {
+    display: flex;
+    justify-content: space-around;
+    overflow: hidden;
+    background-color: lightblue;
+}
+
+/* Style the links inside the navigation bar */
+.topnav button {
+    outline: none;
+    background-color: rgb(173, 197, 230);
+    float: left;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav button:hover {
+  background-color: lightskyblue;
+  color: white;
+}
+
+/* Add a color to the active/current link */
+.topnav button.active {
+  background-color: #04AA6D;
+  color: lightblue;
+}
+
+
+.title {
+  color: rgb(0, 0, 0);
+  text-align: center;
+}
+
+.box1 {
+  background-color: rgb(173, 197, 230);
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 20px;
+}
+
+.box2 {
+    display: flex;
+}
+
+.kenel_Dog {
+  background-color: rgb(173, 197, 230);
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 20px;
+}
+
+.kenel_Cat {
+  background-color: rgb(173, 197, 230);
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 20px;
+}

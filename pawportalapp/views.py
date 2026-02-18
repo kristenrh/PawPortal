@@ -3,5 +3,5 @@ from django.http import HttpResponse
 
 
 def index(request):
-    template = loader.get_template('testfile.html')
+    template = loader.get_template('Homepage.html')
     return HttpResponse(template.render())
