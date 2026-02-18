@@ -54,10 +54,9 @@ body {
     display: flex;
 }
 
-
 .kenel_Dog {
   background-color: rgb(173, 197, 230);
-  border: 2px solid rgb(255, 0, 0);
+  border: 2px solid black;
   border-radius: 5px;
   padding: 20px;
   margin: 20px;
