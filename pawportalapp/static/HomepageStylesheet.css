@@ -42,7 +42,7 @@ body {
   text-align: center;
 }
 
-.box1 {
+.outerKennelBox {
   background-color: rgb(173, 197, 230);
   border: 2px solid black;
   border-radius: 5px;
@@ -50,7 +50,7 @@ body {
   margin: 20px;
 }
 
-.box2 {
+.innerKennelBox {
     display: flex;
 }
 
