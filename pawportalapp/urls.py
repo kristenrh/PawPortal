@@ -1,8 +1,9 @@
-from django.contrib import admin
 from django.urls import path
-from pawportalapp import views
+from . import views
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("", views.index, name="home"),
+    path("", views.dashboard, name="dashboard"),
+    path("kennel/", views.kennel, name="kennel"),
+    path("socialization/", views.socialization, name="socialization"),
+    path("adoption/", views.adoption, name="adoption"),
 ]

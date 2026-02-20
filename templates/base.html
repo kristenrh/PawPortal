@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PawPortal</title>
+  <style>
+    body { margin:0; font-family: Arial, sans-serif; }
+    .navbar { background:#96b9ff; padding:14px; display:flex; gap:18px; }
+    .navbar a { color:black; text-decoration:none; font-weight:bold; }
+    .content { padding: 24px; }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <a href="{% url 'dashboard' %}">Shelter Dashboard</a>
+    <a href="{% url 'kennel' %}">Kennel Overview</a>
+    <a href="{% url 'socialization' %}">Socialization Log</a>
+    <a href="{% url 'adoption' %}">Adoption Calendar</a>
+  </div>
+
+  <div class="content">
+    {% block content %}{% endblock %}
+  </div>
+
+</body>
+</html>
