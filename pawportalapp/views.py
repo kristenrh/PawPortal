@@ -4,4 +4,4 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse("PawPortal Home Page!")
+    return render(request, "index.html")
