@@ -1,23 +1,5 @@
-# This branch is going to be made into a Google Login Example.
+This branch was developed to provide a Google Login through Django example.
+However, the example may be useful for multiple teams so it has been added to its own repository here:
+https://github.com/tthoma81Debug/CS_458_Examples
 
-# PawPortal
-CS458 Capstone Project - PawPortal: Animal Shelter Management
-
-# Django Install:
-Requires Python to be installed.
-
-
-python -m pip install django
-
-
-python.exe -m pip install --upgrade pip
-
-# Starting the Server:
-Must be within project folder.
-
-python manage.py runserver
-
-# To Migrate:
-Must be within project folder.
-
-python manage.py migrate
+This branch may be freely deleted or ignored. 
