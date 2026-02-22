@@ -1,3 +1,5 @@
+# This branch is going to be made into a Google Login Example.
+
 # PawPortal
 CS458 Capstone Project - PawPortal: Animal Shelter Management
 
