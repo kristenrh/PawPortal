@@ -1,7 +1,14 @@
-from django.template import loader
 from django.http import HttpResponse
+from django.shortcuts import render
 
+def dashboard(request):
+    return render(request, "dashboard.html")
 
-def index(request):
-    template = loader.get_template('testfile.html')
-    return HttpResponse(template.render())
+def kennel(request):
+    return render(request, "kennel.html")
+
+def socialization(request):
+    return render(request, "socialization.html")
+
+def adoption(request):
+    return render(request, "adoption.html")
