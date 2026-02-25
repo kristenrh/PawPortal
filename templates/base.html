@@ -1,26 +1,22 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-  <title>PawPortal</title>
-  <style>
-    body { margin:0; font-family: Arial, sans-serif; }
-    .navbar { background:#96b9ff; padding:14px; display:flex; gap:18px; }
-    .navbar a { color:black; text-decoration:none; font-weight:bold; }
-    .content { padding: 24px; }
-  </style>
+    <title>PawPortal</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
+
 <body>
+    <div class="navbar">
+        <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">Shelter Dashboard</a>
+        <a href="{% url 'kennel' %}" class="{% if request.resolver_match.url_name == 'kennel' %}active{% endif %}">Kennel Overview</a>
+        <a href="{% url 'socialization' %}" class="{% if request.resolver_match.url_name == 'socialization' %}active{% endif %}">Socialization Log</a>
+        <a href="{% url 'adoption' %}" class="{% if request.resolver_match.url_name == 'adoption' %}active{% endif %}">Adoption Calendar</a>
+    </div>
 
-  <div class="navbar">
-    <a href="{% url 'dashboard' %}">Shelter Dashboard</a>
-    <a href="{% url 'kennel' %}">Kennel Overview</a>
-    <a href="{% url 'socialization' %}">Socialization Log</a>
-    <a href="{% url 'adoption' %}">Adoption Calendar</a>
-  </div>
-
-  <div class="content">
-    {% block content %}{% endblock %}
-  </div>
-
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
 </body>
+
 </html>

@@ -1,10 +1,26 @@
-body {
-    background-color: #f4f4f4;
-    font-family: Arial, sans-serif;
+.navbar {
+    background: #96b9ff;
+    padding: 14px;
+    display: flex;
+    gap: 18px;
+    align-items: center;
 }
 
-h1 {
-    color: #3a7d23;
-    text-align: center;
-    margin-top: 100px;
+.navbar a {
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 10px;
+}
+
+/* ACTIVE TAB */
+.navbar a.active {
+    background: #7ea6f5;
+    border: 1px solid #5f87d6;
+}
+
+/* Hover */
+.navbar a:hover {
+    background: #88affc;
 }
