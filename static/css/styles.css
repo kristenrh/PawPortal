@@ -24,3 +24,17 @@
 .navbar a:hover {
     background: #88affc;
 }
+
+/* Background */
+html, body {
+    margin: 0%;
+    height: 100%;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: url("backgroundTest.png") center / cover no-repeat;
+    z-index: -1;
+}
