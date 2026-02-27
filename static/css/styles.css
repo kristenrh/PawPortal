@@ -24,3 +24,53 @@
 .navbar a:hover {
     background: #88affc;
 }
+
+/* Background */
+html, body {
+    margin: 0%;
+    height: 100%;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: url("backgroundTest.png") center / cover no-repeat;
+    z-index: -1;
+}
+
+.shelter-map{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 20px;
+    padding: 20px;
+}
+.kennel-slot {
+    width: 100px;
+    height: 100px;
+    border: 3px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: white;
+}
+
+.animal-card {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    cursor: grab;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.animal-dock {
+    margin-top: 50px;
+    padding:20px;
+    min-height:100px;
+    background: grey;
+    display: flex;
+    gap: 15px;
+}
+
