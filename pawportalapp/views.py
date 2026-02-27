@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from .models import Product
 
 def dashboard(request):
     return render(request, "dashboard.html")
@@ -12,3 +13,11 @@ def socialization(request):
 
 def adoption(request):
     return render(request, "adoption.html")
+
+def product_list(request):
+    try:
+        products = Product.objects.all()  # Fetch all products
+    except Exception as e:
+        products = []
+        print(f"Database error: {e}")
+    return render(request, 'product_list.html', {'products': products})
