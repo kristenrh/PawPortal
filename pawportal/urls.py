@@ -15,7 +15,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+from pawportalapp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,6 +24,4 @@ urlpatterns = [
     path("login/", views.google_login, name="login"),
     path("oauth2callback/", views.google_callback, name="oauth2callback"),
     path("logout/", views.logout_view, name="logout"),
-    path("admin/", admin.site.urls),
-    path("", include("pawportalapp.urls")),
 ]

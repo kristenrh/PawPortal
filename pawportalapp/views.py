@@ -121,16 +121,3 @@ def logout_view(request):
     request.session.pop("user", None)
     request.session.pop("oauth_state", None)
     return redirect("/")
-from django.shortcuts import render
-
-def dashboard(request):
-    return render(request, "dashboard.html")
-
-def kennel(request):
-    return render(request, "kennel.html")
-
-def socialization(request):
-    return render(request, "socialization.html")
-
-def adoption(request):
-    return render(request, "adoption.html")
