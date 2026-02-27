@@ -1,7 +1,7 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
-  <h1>Kennel Overview</h1>
   <p>Testing: templates are working</p>
   <!--Dummy table -->
  <div class = "shelter-map">
@@ -10,13 +10,12 @@
     <div class = "kennel-slot" data-kennel-id="3">Kennel C-1</div>
     <div class = "kennel-slot" data-kennel-id="4">Kennel D-1</div>
 <!--Test Drag n drop feature-->
-<div class = "animal-dock">
-    <!--animals will go here - integrate with PostgreSQL-->
-</div>
-<script src = "{% static 'dragNdrop.js' %}"></script>
+ </body>
+    <div id = "container">
+        <div id = "card"></div>
+    </div>
+</body>
+     <script src = dragNdrop.js></script>
 
-
+  <script src="{% static 'js/dragNdrop.js' %}"></script>
 {% endblock %}
-
-<!-- Background-->
-<link rel="stylesheet" href="styles.css">
