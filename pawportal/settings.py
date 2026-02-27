@@ -116,3 +116,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Google OAuth settings for this demo
+GOOGLE_CLIENT_ID = "979342100656-qg3dq7djuurgir7of4gkvt3mn4g4pb58.apps.googleusercontent.com"
+GOOGLE_CLIENT_SECRET = "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"
+GOOGLE_REDIRECT_URI = "http://localhost:8000/oauth2callback/"

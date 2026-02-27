@@ -19,3 +19,11 @@ python manage.py runserver
 Must be within project folder.
 
 python manage.py migrate
+
+# To Start Google Auth
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+pip install django requests
+
+# To Reactivate
+.\venv\Scripts\Activate.ps1
