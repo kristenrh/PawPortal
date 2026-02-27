@@ -55,3 +55,22 @@ body::before {
     justify-content: center;
     background: white;
 }
+
+.animal-card {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    cursor: grab;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.animal-dock {
+    margin-top: 50px;
+    padding:20px;
+    min-height:100px;
+    background: grey;
+    display: flex;
+    gap: 15px;
+}
+
