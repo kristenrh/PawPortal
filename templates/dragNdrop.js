@@ -20,3 +20,38 @@ function allowDrop(ev) {
 function drag(ev) {
     ev.dataTransfer.setData("animalID", ev.target.id);
 }
+
+async function drop(ev) {
+    ev.preventDefault();
+    const animalElementID = ev.dataTransfer.getData("animalID");
+    const animalElement = document.getElementById(animalElementID);
+    const dropTarget = ev.target.closest('.kennel-slot, .animal-dock');
+    
+    if (dropTarget) {
+        dropTarget.appendChild(animalElement);
+        const animalDbId = animalElementID.split('-')[1];
+        const kennelDbId = dropTarget.getAttribute('data-kennel-id');
+
+        try {
+            await updateAnimalLocation(animalDbId, kennelDbId);
+            console.log(`Animal ${animalDbId} moved to kennel ${kennelDbId}`);
+        } catch (err) {
+            console.error("Error updating animal location:", err);
+        }
+    }
+}
+
+async function updateAnimalLocation(animalId, kennelId) {
+    const response = await fetch('/update_animal_location/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify({ animal_id: animalId, kennel_id: kennelId })
+    });
+    if (!response.ok) {
+        throw new Error('Animal location update has failed');
+    }
+    return await response.json();
+}
