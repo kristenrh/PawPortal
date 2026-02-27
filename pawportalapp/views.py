@@ -12,13 +12,14 @@ from django.http import HttpResponse
 
 def index(request):
     template = loader.get_template('Homepage.html')
+    loginPage = loader.get_template('LoginPage.html')
     user = request.session.get("user")
     if not user:
-        return HttpResponse('<a href="/login/">Login with Google</a>')
-    return HttpResponse(
-        f"Hello {user['email']} "
-        f'(<a href="/logout/">logout</a>)'
-    )
+        return HttpResponse(loginPage.render())
+    # return HttpResponse(
+    #     f"Hello {user['email']} "
+    #     f'(<a href="/logout/">logout</a>)'
+    # )
     return HttpResponse(template.render())
     
 
@@ -26,6 +27,7 @@ def google_login(request):
     """
     Redirects the user to Google's OAuth 2.0 authorization endpoint.
     """
+    
     # --- demo check for placeholder client ID/secret ---
     cid = settings.GOOGLE_CLIENT_ID
     csecret = settings.GOOGLE_CLIENT_SECRET
@@ -48,6 +50,7 @@ def google_login(request):
     # Random string to protect against CSRF
     state = secrets.token_urlsafe(16)
     request.session["oauth_state"] = state
+    
 
     params = {
         "client_id": settings.GOOGLE_CLIENT_ID,

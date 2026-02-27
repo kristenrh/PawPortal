@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'HomepageStylesheet.css' %}">
+    <title>Paw Portal</title>
+</head>
+
+<body>
+    <div class = "topnav">
+        <button onclick="alert('Placeholder (Send to Shelter Dashboard!)')">Shelter Dashboard</button>
+        <button onclick="window.location.href='/login/'">Login with Google</button>
+    </div>
+    <h1 class="title">Animal Shelter Management</h1>
+    <div class = "outerKennelBox">
+        <h2>Kenel Overview</h2>
+        <div class = "innerKennelBox">
+            <div class = "kenel_Dog">
+                <p>Placeholder for dog kenel overview</p>
+            </div>
+            <div class = "kenel_Cat">
+                <p>Placeholder for cat kenel overview</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+{% comment %}  {% endcomment %}

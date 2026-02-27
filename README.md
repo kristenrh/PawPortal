@@ -27,3 +27,6 @@ pip install django requests
 
 # To Reactivate
 .\venv\Scripts\Activate.ps1
+
+# To get page up start server then go to
+http://localhost:8000/
