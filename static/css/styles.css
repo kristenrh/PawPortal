@@ -44,7 +44,6 @@ body::before {
     grid-template-columns: repeat(4,1fr);
     gap: 20px;
     padding: 20px;
-    background: lightskyblue;
 }
 .kennel-slot {
     width: 100px;
