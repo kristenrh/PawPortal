@@ -31,12 +31,8 @@ html, body {
     height: 100%;
 }
 
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: url("backgroundTest.png") center / cover no-repeat;
-    z-index: -1;
+body {
+    background-color: #e8f1ff;
 }
 
 .shelter-map{
@@ -74,3 +70,6 @@ body::before {
     gap: 15px;
 }
 
+.content {
+    padding: 40px 40px;   /* top/bottom 40, left/right 60 */
+}
