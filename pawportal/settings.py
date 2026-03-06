@@ -78,7 +78,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'PawPortal',
         'USER': "postgres",
-        'PASSWORD': 'Minecraft@101',
+        'PASSWORD': 'password',
         'HOST': 'localhost',
         'PORT': '5432'
     }
