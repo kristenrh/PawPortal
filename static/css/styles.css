@@ -31,12 +31,8 @@ html, body {
     height: 100%;
 }
 
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: url("backgroundTest.png") center / cover no-repeat;
-    z-index: -1;
+body {
+    background-color: #e8f1ff;
 }
 
 .shelter-map{
@@ -74,3 +70,139 @@ body::before {
     gap: 15px;
 }
 
+.content {
+    padding: 30px 60px;   /* top/bottom 40, left/right 60 */
+}
+
+/* ===== Dashboard split layout ===== */
+.dashboard-split {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 40px;
+    align-items: start;
+}
+
+/* Left side */
+.dash-title {
+    margin: 0 0 12px 0;
+    font-size: 48px;
+    line-height: 1.1;
+}
+
+.dash-subtitle {
+    margin: 0 0 18px 0;
+    font-size: 18px;
+    opacity: 0.8;
+}
+
+.dash-body p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.dash-body ul {
+    margin-top: 12px;
+    padding-left: 18px;
+}
+
+/* Right side card */
+.auth-card {
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.auth-card h2 {
+    margin: 0 0 6px 0;
+}
+
+.muted {
+    margin: 0 0 16px 0;
+    opacity: 0.7;
+    font-size: 14px;
+}
+
+.auth-label {
+    display: block;
+    margin: 12px 0 6px 0;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.15);
+    outline: none;
+    background: white;
+}
+
+.auth-input:focus {
+    border-color: #5f87d6;
+    box-shadow: 0 0 0 3px rgba(95, 135, 214, 0.2);
+}
+
+.auth-btn {
+    width: 100%;
+    margin-top: 16px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #5f87d6;
+    background: #7ea6f5;
+    color: black;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.auth-btn:hover {
+    background: #88affc;
+}
+
+.auth-btn.secondary {
+    background: transparent;
+}
+
+.auth-divider {
+    height: 1px;
+    background: rgba(0,0,0,0.12);
+    margin: 16px 0;
+}
+
+/* Responsive: stack on small screens */
+@media (max-width: 900px) {
+    .dashboard-split {
+        grid-template-columns: 1fr;
+    }
+    .dash-title {
+        font-size: 40px;
+    }
+}
+
+.dash-auth {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;   /* space between login + dev card */
+}
+
+.dev-card {
+    background: rgba(255, 255, 255, 0.5);  /* lighter */
+    border: 1px solid rgba(0,0,0,0.05);
+    box-shadow: none;                     /* remove shadow */
+    padding: 16px;                        /* slightly smaller */
+}
+
+.dev-card h2 {
+    font-size: 16px;
+    font-weight: 600;
+    opacity: 0.7;
+    margin-bottom: 8px;
+}
+
+.dev-list li {
+    font-weight: 500;
+    font-size: 14px;
+    opacity: 0.7;
+}
