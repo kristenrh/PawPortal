@@ -120,3 +120,10 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+
+# Google OAuth settings
+GOOGLE_CLIENT_ID = "979342100656-qg3dq7djuurgir7of4gkvt3mn4g4pb58.apps.googleusercontent.com"
+GOOGLE_CLIENT_SECRET = "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"
+GOOGLE_REDIRECT_URI = "http://localhost:8000/oauth2callback/"
+
+# ADJUSTMENTS FOR MERGE
