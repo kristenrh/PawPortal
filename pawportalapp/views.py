@@ -20,6 +20,12 @@ def index(request):
     #     f"Hello {user['email']} "
     #     f'(<a href="/logout/">logout</a>)'
     # )
+    
+    
+    # if user['email'] == "registered User's email":
+    #     return HttpResponse(template.render())
+    # else:
+    #     return HttpResponse("Unauthorized.  Register the user")
     return HttpResponse(template.render())
     
 
