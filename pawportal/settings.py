@@ -55,7 +55,7 @@ ROOT_URLCONF = 'pawportal.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -117,7 +117,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-# Google OAuth settings for this demo
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+# Google OAuth settings
 GOOGLE_CLIENT_ID = "979342100656-qg3dq7djuurgir7of4gkvt3mn4g4pb58.apps.googleusercontent.com"
 GOOGLE_CLIENT_SECRET = "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"
 GOOGLE_REDIRECT_URI = "http://localhost:8000/oauth2callback/"

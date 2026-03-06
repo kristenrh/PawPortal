@@ -1,12 +1,3 @@
-import secrets
-from urllib.parse import urlencode
-
-import requests
-from django.conf import settings
-from django.http import HttpResponse, HttpResponseBadRequest
-from django.shortcuts import redirect
-
-from django.template import loader
 from django.http import HttpResponse
 from django.shortcuts import render
 
