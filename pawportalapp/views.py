@@ -9,7 +9,7 @@ import requests
 def dashboard(request):
     user = request.session.get("user")
     if not user:
-        return render(request, "LoginPage.html")
+        return render(request, "loginPage.html")
 
     return render(request, "dashboard.html")
 

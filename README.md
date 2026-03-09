@@ -19,3 +19,9 @@ python manage.py runserver
 Must be within project folder.
 
 python manage.py migrate
+
+
+# Application Viewing:
+Must have server started.
+
+Navigate to http://localhost:8000/ in Incognito/InPrivate browser to avoid cache reset issues.
