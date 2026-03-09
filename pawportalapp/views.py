@@ -1,14 +1,11 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-<<<<<<< HEAD
-from .models import animal
-=======
 from django.conf import settings
 from django.shortcuts import redirect
 from urllib.parse import urlencode
 import secrets
 import requests
->>>>>>> 09c517898db2ab0fd33c564bfb22242382a4709a
+from .models import animal
 
 def dashboard(request):
     user = request.session.get("user")
@@ -23,7 +20,7 @@ def socialization(request):
 def adoption(request):
     return render(request, "adoption.html")
 
-<<<<<<< HEAD
+
 def kennel(request):
     try:
         products = animal.objects.all()  # Fetch all products
@@ -31,7 +28,7 @@ def kennel(request):
         products = []
         print(f"Database error: {e}")
     return render(request, 'kennel.html', {'products': products})
-=======
+
 def google_login(request):
     """
     Redirects the user to Google's OAuth 2.0 authorization endpoint.
@@ -130,4 +127,3 @@ def logout_view(request):
     request.session.pop("user", None)
     request.session.pop("oauth_state", None)
     return redirect("/")
->>>>>>> 09c517898db2ab0fd33c564bfb22242382a4709a
