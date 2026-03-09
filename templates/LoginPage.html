@@ -9,12 +9,65 @@
 <body>
     <div class="navbar">
         <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">Shelter Dashboard</a>
-        {% comment %} Login Button {% endcomment %}
+        
     </div>
 
-    <div class="content">
-        {% block content %}{% endblock %}
-    </div>
-</body>
+{% block content %}
+<div class="dashboard-split">
 
-</html>
+  <!-- Intro -->
+  <section class="dash-intro">
+    <h1 class="dash-title">Welcome to PawPortal!</h1>
+    <p class="dash-subtitle">
+      A simple shelter management portal for tracking kennels, socialization, and adoptions.
+    </p>
+
+    <div class="dash-body">
+      <p>
+        Use PawPortal to get a quick snapshot of your shelter, keep logs organized, and
+        make adoption scheduling easier for staff.
+      </p>
+      <ul>
+        <li>Track kennel occupancy</li>
+        <li>Log socialization sessions</li>
+        <li>Manage adoption calendar</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Login box (no functionality yet) -->
+<section class="dash-auth">
+
+  <!-- Login Card -->
+  <div class="auth-card">
+    <h2>Login</h2>
+    <p class="muted">Please proceed with Google.</p>
+
+    <label class="auth-label">Email</label>
+    <input class="auth-input" type="email" placeholder="name@shelter.org" />
+
+    <label class="auth-label">Password</label>
+    <input class="auth-input" type="password" placeholder="••••••••" />
+
+    <button class="auth-btn" type="button">Log in</button>
+
+    <div class="auth-divider"></div>
+
+    <button class="auth-btn secondary" type="button">Create account</button>
+  </div>
+
+  <!-- Developer Card -->
+  <div class="auth-card dev-card">
+    <h2>Developed By</h2>
+    <ul class="dev-list">
+      <li>Kristen Henningfeld</li>
+      <li>Adam Rath</li>
+      <li>Dan Shultz</li>
+      <li>Will Pantzlaff</li>
+    </ul>
+  </div>
+
+</section>
+
+</div>
+{% endblock %}
