@@ -1,4 +1,16 @@
-{% extends "base.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PawPortal</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">Shelter Dashboard</a>
+        
+    </div>
 
 {% block content %}
 <div class="dashboard-split">
@@ -26,12 +38,12 @@
   <!-- Login box (no functionality yet) -->
 <section class="dash-auth">
 
-<!-- Login Card -->
-<div class="auth-card">
+  <!-- Login Card -->
+  <div class="auth-card">
   <h2>Sign in</h2>
   <p class="muted">Use your Google account to continue.</p>
 
-  <button class="google-btn">
+  <button class="google-btn" onclick="window.location.href='/login/'">
     <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google logo">
     Login with Google
   </button>
