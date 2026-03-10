@@ -10,11 +10,14 @@
     <div class = "kennel-slot" data-kennel-id="2" ondragover = "allowDrop(event)" ondrop = "drop(event)">Kennel B-1</div>
     <div class = "kennel-slot" data-kennel-id="3" ondragover = "allowDrop(event)" ondrop = "drop(event)">Kennel C-1</div>
     <div class = "kennel-slot" data-kennel-id="4" ondragover = "allowDrop(event)" ondrop = "drop(event)">Kennel D-1</div>
+    <div class = "kennel-slot" data-kennel-id="5" ondragover = "allowDrop(event)" ondrop = "drop(event)">Kennel E-1</div>
+    <div class = "kennel-slot" data-kennel-id="6" ondragover = "allowDrop(event)" ondrop = "drop(event)">Kennel A-2</div>
 </div>
 
-<div class = "animal-block">
-    <div class = "animal-card" draggable="true" ondragstart="drag(event)" id="animal-1">Buddy</div>
-    <div class = "animal-card" draggable="true" ondragstart="drag(event)" id="animal-2">Mittens</div>
+<div class = "animal-dock" ondragover = "allowDrop(event)" ondrop = "drop(event)">
+    <div class = "animal-card" draggable="true" ondragstart="drag(event)" id="animal-1">Mozart</div>
+    <div class = "animal-card" draggable="true" ondragstart="drag(event)" id="animal-2">Willow</div>
+    <div class = "animal-card" draggable="true" ondragstart="drag(event)" id="animal-3">Charlie</div>
     <div class = "animal-dock" ondragover = "allowDrop(event)" ondrop = "drop(event)">
         {% for animal in animals %}
             <div class = "animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ animal.id }}">{{ animal.name }}</div>
