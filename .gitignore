@@ -25,4 +25,7 @@ Thumbs.db
 # Environment variables
 .env
 
-*.pyc
+# 
+pawportal/__pycache__/settings.cpython-313.pyc
+pawportal/__pycache__/urls.cpython-313.pyc
+pawportalapp/__pycache__/views.cpython-313.pyc
