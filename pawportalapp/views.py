@@ -29,6 +29,15 @@ def kennel(request):
         print(f"Database error: {e}")
     return render(request, 'kennel.html', {'products': products})
 
+def getData(animal_id):
+    try:
+        itemrequest = animal.objects.filter(animalid=animal_id).values()  # Fetch animal at id
+    except Exception as e:
+        itemrequest = []
+        print(f"Database error: {e}")
+    return itemrequest
+
+
 def google_login(request):
     """
     Redirects the user to Google's OAuth 2.0 authorization endpoint.
