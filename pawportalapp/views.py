@@ -5,6 +5,7 @@ from django.shortcuts import redirect
 from urllib.parse import urlencode
 import secrets
 import requests
+from .models import animal
 
 def dashboard(request):
     user = request.session.get("user")
@@ -13,14 +14,29 @@ def dashboard(request):
 
     return render(request, "dashboard.html")
 
-def kennel(request):
-    return render(request, "kennel.html")
-
 def socialization(request):
     return render(request, "socialization.html")
 
 def adoption(request):
     return render(request, "adoption.html")
+
+
+def kennel(request):
+    try:
+        products = animal.objects.all()  # Fetch all products
+    except Exception as e:
+        products = []
+        print(f"Database error: {e}")
+    return render(request, 'kennel.html', {'products': products})
+
+def getData(animal_id):
+    try:
+        itemrequest = animal.objects.filter(animalid=animal_id).values()  # Fetch animal at id
+    except Exception as e:
+        itemrequest = []
+        print(f"Database error: {e}")
+    return itemrequest
+
 
 def google_login(request):
     """
