@@ -11,6 +11,15 @@ def dashboard(request):
     if not user:
         return render(request, "LoginPage.html")
 
+    # if user = volunteer:
+    # return render(request, "dashboard_volunteer.html")
+
+    # if user = shelter staff:
+    # return render(request, "dashboard_shelter_staff.html")
+
+    # if not user != volunteer and user != shelter staff: 
+    # return render(request, "signup.html")
+
     return render(request, "dashboard.html")
 
 def kennel(request):
