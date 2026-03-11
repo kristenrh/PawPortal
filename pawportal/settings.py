@@ -75,12 +75,24 @@ WSGI_APPLICATION = 'pawportal.wsgi.application'
 
 DATABASES = {
     'default': {
+<<<<<<< HEAD
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'product',
         'USER': 'postgres',
         'PASSWORD': 'password',
         'HOST': 'localhost',
         'PORT': '5432',
+||||||| 54e06d5
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+=======
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'PawPortal',
+        'USER': "postgres",
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '5432'
+>>>>>>> e9861d82279a3eadbde6e804f349320a1579a1fd
     }
 }
 
@@ -123,3 +135,8 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+
+# Google OAuth settings
+GOOGLE_CLIENT_ID = "979342100656-qg3dq7djuurgir7of4gkvt3mn4g4pb58.apps.googleusercontent.com"
+GOOGLE_CLIENT_SECRET = "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"
+GOOGLE_REDIRECT_URI = "http://localhost:8000/oauth2callback/"
