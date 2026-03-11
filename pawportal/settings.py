@@ -75,15 +75,26 @@ WSGI_APPLICATION = 'pawportal.wsgi.application'
 
 DATABASES = {
     'default': {
+<<<<<<< HEAD
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'product',
+        'USER': 'postgres',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '5432',
+||||||| 54e06d5
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+=======
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'PawPortal',
         'USER': "postgres",
         'PASSWORD': 'password',
         'HOST': 'localhost',
         'PORT': '5432'
+>>>>>>> e9861d82279a3eadbde6e804f349320a1579a1fd
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
