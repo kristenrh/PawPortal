@@ -74,25 +74,13 @@ WSGI_APPLICATION = 'pawportal.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-<<<<<<< HEAD
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'product',
-        'USER': 'postgres',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-        'PORT': '5432',
-||||||| 54e06d5
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-=======
+        'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'PawPortal',
         'USER': "postgres",
         'PASSWORD': 'password',
         'HOST': 'localhost',
-        'PORT': '5432'
->>>>>>> e9861d82279a3eadbde6e804f349320a1579a1fd
+        'PORT': '5432',
     }
 }
 
