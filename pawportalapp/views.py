@@ -1,33 +1,23 @@
-from django.http import HttpResponse
-from django.shortcuts import render
-<<<<<<< HEAD
-#from .models import Animal, AnimalLocation
-||||||| 54e06d5
-=======
+from django.http import HttpResponse, HttpResponseBadRequest
+from django.shortcuts import render, redirect
 from django.conf import settings
-from django.shortcuts import redirect
-from urllib.parse import urlencode
 import secrets
 import requests
-from .models import animal
->>>>>>> e9861d82279a3eadbde6e804f349320a1579a1fd
+from urllib.parse import urlencode
+#from .models import Animal, AnimalLocation
 
 def dashboard(request):
     user = request.session.get("user")
+
     if not user:
         return render(request, "LoginPage.html")
 
-<<<<<<< HEAD
+    return render(request, "dashboard.html")
+
 def kennel(request):
     #animals = Animal.objects.all()
     #kennel = AnimalLocation.objects.all()
     return render(request, "kennel.html")
-||||||| 54e06d5
-def kennel(request):
-    return render(request, "kennel.html")
-=======
-    return render(request, "dashboard.html")
->>>>>>> e9861d82279a3eadbde6e804f349320a1579a1fd
 
 def socialization(request):
     return render(request, "socialization.html")
