@@ -11,6 +11,9 @@ def dashboard(request):
     if not user:
         return render(request, "LoginPage.html")
 
+    # todo: call backend to check get info on if user is volunteer or shelter staff and render appropriate dashboard
+    # if neither volunteer nor shelter staff, render signup page to ask them to sign up as either volunteer or shelter staff
+
     # if user = volunteer:
     # return render(request, "dashboard_volunteer.html")
 
