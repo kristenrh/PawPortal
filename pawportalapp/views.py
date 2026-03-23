@@ -137,7 +137,5 @@ def google_callback(request):
 
 
 def logout_view(request):
-    """Clear the session and go back to home."""
-    request.session.pop("user", None)
-    request.session.pop("oauth_state", None)
+    request.session.flush()
     return redirect("/")

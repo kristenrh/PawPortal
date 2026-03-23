@@ -8,10 +8,22 @@
 
 <body>
     <div class="navbar">
-        <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">Shelter Dashboard</a>
-        <a href="{% url 'kennel' %}" class="{% if request.resolver_match.url_name == 'kennel' %}active{% endif %}">Kennel Overview</a>
-        <a href="{% url 'socialization' %}" class="{% if request.resolver_match.url_name == 'socialization' %}active{% endif %}">Socialization Log</a>
-        <a href="{% url 'adoption' %}" class="{% if request.resolver_match.url_name == 'adoption' %}active{% endif %}">Adoption Calendar</a>
+
+        <!-- LEFT SIDE -->
+        <div class="nav-left">
+            <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">Shelter Dashboard</a>
+            <a href="{% url 'kennel' %}" class="{% if request.resolver_match.url_name == 'kennel' %}active{% endif %}">Kennel Overview</a>
+            <a href="{% url 'socialization' %}" class="{% if request.resolver_match.url_name == 'socialization' %}active{% endif %}">Socialization Log</a>
+            <a href="{% url 'adoption' %}" class="{% if request.resolver_match.url_name == 'adoption' %}active{% endif %}">Adoption Calendar</a>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        {% if request.session.user %}
+        <div class="nav-right">
+            <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+        </div>
+        {% endif %}
+
     </div>
 
     <div class="content">
@@ -20,3 +32,4 @@
 </body>
 
 </html>
+
