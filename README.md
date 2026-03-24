@@ -15,14 +15,14 @@ CS458 Capstone Project - PawPortal: Animal Shelter Management
 'python manage.py migrate'
 
 # To Start Google Auth
-python -m venv venv
-.\venv\Scripts\Activate.ps1
-pip install django requests
+'python -m venv venv'   
+'.\venv\Scripts\Activate.ps1'   
+'pip install django requests'
  
 # To Reactivate
-.\venv\Scripts\Activate.ps1
+'.\venv\Scripts\Activate.ps1'
 
 # To Access Application
 **must have server and Postgres running
-Open InPrivate/Incognito window to avoid cache issues
+Open InPrivate/Incognito window to avoid cache issues.
 Navigate to 'http://localhost:8000/'
