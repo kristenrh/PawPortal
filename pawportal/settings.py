@@ -74,17 +74,10 @@ WSGI_APPLICATION = 'pawportal.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-<<<<<<< HEAD
-        'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'PawPortal',
-        'USER': "postgres",
-=======
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'PawPortal',
         'USER': 'postgres',
->>>>>>> d82da5099ded13d8f8cc89238747b484a9abb691
         'PASSWORD': 'password',
         'HOST': 'localhost',
         'PORT': '5432',
