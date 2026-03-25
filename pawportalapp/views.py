@@ -15,7 +15,7 @@ def dashboard(request):
     user = request.session.get("user")
 
     if not user:
-        return render(request, "LoginPage.html")
+        return render(request, "loginPage.html")
 
     return render(request, "dashboard.html")
 
@@ -133,7 +133,5 @@ def google_callback(request):
 
 
 def logout_view(request):
-    """Clear the session and go back to home."""
-    request.session.pop("user", None)
-    request.session.pop("oauth_state", None)
+    request.session.flush()
     return redirect("/")

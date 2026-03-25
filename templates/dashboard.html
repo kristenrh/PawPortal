@@ -1,61 +1,48 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="dashboard-split">
-
-  <!-- Intro -->
-  <section class="dash-intro">
-    <h1 class="dash-title">Welcome to PawPortal!</h1>
-    <p class="dash-subtitle">
-      A simple shelter management portal for tracking kennels, socialization, and adoptions.
-    </p>
-
-    <div class="dash-body">
-      <p>
-        Use PawPortal to get a quick snapshot of your shelter, keep logs organized, and
-        make adoption scheduling easier for staff.
+<div class="landing-page">
+  <section class="landing-intro">
+      <h1 class="landing-title">Welcome to PawPortal!</h1>
+      <p class="landing-subtitle">
+          A simple shelter management portal for tracking kennels, socialization, and adoptions.
       </p>
-      <ul>
-        <li>Track kennel occupancy</li>
-        <li>Log socialization sessions</li>
-        <li>Manage adoption calendar</li>
-      </ul>
-    </div>
+      <p class="landing-body">
+          Use PawPortal to get a quick snapshot of your shelter, keep logs organized, and
+          make adoption scheduling easier for staff.
+      </p>
   </section>
 
-  <!-- Login box (no functionality yet) -->
-<section class="dash-auth">
+  <section class="feature-grid">
+      <a href="{% url 'kennel' %}" class="feature-card">
+          <div class="feature-icon">🐾</div>
+          <h2>Kennel Overview</h2>
+          <p>View kennel assignments and get a quick look at shelter layout.</p>
+      </a>
 
-<!-- Login Card -->
-<div class="auth-card">
-  <h2>Sign in</h2>
-  <p class="muted">Use your Google account to continue.</p>
+      <a href="{% url 'socialization' %}" class="feature-card">
+          <div class="feature-icon">📝</div>
+          <h2>Socialization Log</h2>
+          <p>Track volunteer and staff interactions with shelter animals.</p>
+      </a>
 
-  <button class="google-btn">
-    <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google logo">
-    Login with Google
-  </button>
+      <a href="{% url 'adoption' %}" class="feature-card">
+          <div class="feature-icon">📅</div>
+          <h2>Adoption Calendar</h2>
+          <p>Manage upcoming adoption events and scheduled appointments.</p>
+      </a>
+  </section>
 
-  <div class="auth-divider"></div>
-
-  <button class="google-btn secondary">
-    <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google logo">
-    Sign up with Google
-  </button>
-</div>
-
-  <!-- Developer Card -->
-  <div class="auth-card dev-card">
-    <h2>Developed By</h2>
-    <ul class="dev-list">
-      <li>Kristen Henningfeld</li>
-      <li>Adam Rath</li>
-      <li>Dan Shultz</li>
-      <li>Will Pantzlaff</li>
-    </ul>
-  </div>
-
-</section>
-
+  <section class="dev-section">
+      <div class="auth-card dev-card">
+          <h2>Developed By</h2>
+          <ul class="dev-list">
+              <li>Kristen Henningfeld</li>
+              <li>Adam Rath</li>
+              <li>Dan Shultz</li>
+              <li>Will Pantzlaff</li>
+          </ul>
+      </div>
+  </section>
 </div>
 {% endblock %}
