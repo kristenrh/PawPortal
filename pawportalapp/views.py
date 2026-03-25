@@ -1,10 +1,15 @@
+from django.http import HttpResponse
+from django.shortcuts import render
+#from .models import Animal, AnimalLocation
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.conf import settings
 import secrets
 import requests
+from .models import animal
 from urllib.parse import urlencode
 #from .models import Animal, AnimalLocation
+
 
 def dashboard(request):
     user = request.session.get("user")
@@ -13,11 +18,6 @@ def dashboard(request):
         return render(request, "loginPage.html")
 
     return render(request, "dashboard.html")
-
-def kennel(request):
-    #animals = Animal.objects.all()
-    #kennel = AnimalLocation.objects.all()
-    return render(request, "kennel.html")
 
 def socialization(request):
     return render(request, "socialization.html")
@@ -28,19 +28,15 @@ def adoption(request):
 
 def kennel(request):
     try:
+        #products = animal.objects.values_list("animalname", flat=True)  # Fetch all products
         products = animal.objects.all()  # Fetch all products
     except Exception as e:
         products = []
         print(f"Database error: {e}")
-    return render(request, 'kennel.html', {'products': products})
 
-def getData(animal_id):
-    try:
-        itemrequest = animal.objects.filter(animalid=animal_id).values()  # Fetch animal at id
-    except Exception as e:
-        itemrequest = []
-        print(f"Database error: {e}")
-    return itemrequest
+    #print("this is the test run: ", products)
+    
+    return render(request, 'kennel.html', {'products': products})
 
 
 def google_login(request):

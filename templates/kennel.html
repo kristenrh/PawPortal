@@ -15,9 +15,9 @@
 </div>
 
 <div class = "animal-dock" ondragover = "allowDrop(event)" ondrop = "drop(event)">
-    <div class = "animal-card" draggable="true" ondragstart="drag(event)" id="animal-1">Mozart</div>
-    <div class = "animal-card" draggable="true" ondragstart="drag(event)" id="animal-2">Willow</div>
-    <div class = "animal-card" draggable="true" ondragstart="drag(event)" id="animal-3">Charlie</div>
+    {% for p in products%} 
+        <div class = "animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ p.animalid }}">{{ p.animalname }}</div>
+    {% endfor %}
     <div class = "animal-dock" ondragover = "allowDrop(event)" ondrop = "drop(event)">
         {% for animal in animals %}
             <div class = "animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ animal.id }}">{{ animal.name }}</div>
