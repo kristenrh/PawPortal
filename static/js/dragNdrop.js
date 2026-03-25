@@ -1,3 +1,4 @@
+/* * JavaScript for handling drag-and-drop functionality on the kennel page.*/
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -12,6 +13,7 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+/* Allow dropping by preventing the default behavior. */
 
 function allowDrop(ev) {
     ev.preventDefault();

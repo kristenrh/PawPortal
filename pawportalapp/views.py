@@ -1,15 +1,16 @@
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseBadRequest
+from django.shortcuts import render, redirect
 from django.conf import settings
-from django.shortcuts import redirect
-from urllib.parse import urlencode
 import secrets
 import requests
+from urllib.parse import urlencode
+#from .models import Animal, AnimalLocation
 
 def dashboard(request):
     user = request.session.get("user")
+
     if not user:
-        return render(request, "LoginPage.html")
+        return render(request, "loginPage.html")
 
     # todo: call backend to check get info on if user is volunteer or shelter staff and render appropriate dashboard
     # if neither volunteer nor shelter staff, render signup page to ask them to sign up as either volunteer or shelter staff
@@ -26,6 +27,8 @@ def dashboard(request):
     return render(request, "dashboard.html")
 
 def kennel(request):
+    #animals = Animal.objects.all()
+    #kennel = AnimalLocation.objects.all()
     return render(request, "kennel.html")
 
 def socialization(request):
@@ -33,6 +36,24 @@ def socialization(request):
 
 def adoption(request):
     return render(request, "adoption.html")
+
+
+def kennel(request):
+    try:
+        products = animal.objects.all()  # Fetch all products
+    except Exception as e:
+        products = []
+        print(f"Database error: {e}")
+    return render(request, 'kennel.html', {'products': products})
+
+def getData(animal_id):
+    try:
+        itemrequest = animal.objects.filter(animalid=animal_id).values()  # Fetch animal at id
+    except Exception as e:
+        itemrequest = []
+        print(f"Database error: {e}")
+    return itemrequest
+
 
 def google_login(request):
     """
@@ -128,7 +149,5 @@ def google_callback(request):
 
 
 def logout_view(request):
-    """Clear the session and go back to home."""
-    request.session.pop("user", None)
-    request.session.pop("oauth_state", None)
+    request.session.flush()
     return redirect("/")
