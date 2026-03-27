@@ -1,6 +1,115 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Adoption Calendar</h1>
-  <p>Testing: templates are working</p>
+<div class="calendar-page">
+    <div class="calendar-topbar">
+        <button id="prev-month" class="calendar-nav-btn" type="button">←</button>
+        <h1 id="calendar-month" class="calendar-title">April 2026</h1>
+        <button id="next-month" class="calendar-nav-btn" type="button">→</button>
+    </div>
+
+    <div class="calendar" id="calendar">
+        <div class="calendar-header">Sunday</div>
+        <div class="calendar-header">Monday</div>
+        <div class="calendar-header">Tuesday</div>
+        <div class="calendar-header">Wednesday</div>
+        <div class="calendar-header">Thursday</div>
+        <div class="calendar-header">Friday</div>
+        <div class="calendar-header">Saturday</div>
+    </div>
+</div>
+
+<script>
+    const calendar = document.getElementById("calendar");
+    const monthLabel = document.getElementById("calendar-month");
+    const prevBtn = document.getElementById("prev-month");
+    const nextBtn = document.getElementById("next-month");
+
+    let currentMonth = 3; // Started at April
+    let currentYear = 2026;
+
+    const monthNames = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+
+    // Example hard-coded events prior to database connection
+    const events = {
+        "2026-04-03": ["10:00 AM - Luna"],
+        "2026-04-06": ["1:30 PM - Charlie"],
+        "2026-04-10": ["11:00 AM - Daisy"],
+        "2026-04-20": ["2:00 PM - Max"]
+    };
+
+    function renderCalendar(month, year) {
+        // remove old day cells
+        const oldDays = calendar.querySelectorAll(".calendar-day");
+        oldDays.forEach(day => day.remove());
+
+        monthLabel.textContent = `${monthNames[month]} ${year}`;
+
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        const today = new Date();
+        const todayDate = today.getDate();
+        const todayMonth = today.getMonth();
+        const todayYear = today.getFullYear();
+
+        // empty boxes before month starts
+        for (let i = 0; i < firstDay; i++) {
+            const emptyCell = document.createElement("div");
+            emptyCell.classList.add("calendar-day", "empty");
+            calendar.appendChild(emptyCell);
+        }
+
+        // day cells
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dayCell = document.createElement("div");
+            dayCell.classList.add("calendar-day");
+
+            if (day === todayDate && month === todayMonth && year === todayYear) {
+                dayCell.classList.add("today");
+            }
+
+            const dayNumber = document.createElement("div");
+            dayNumber.classList.add("day-number");
+            dayNumber.textContent = day;
+            dayCell.appendChild(dayNumber);
+
+            const key = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+
+            if (events[key]) {
+                events[key].forEach(eventText => {
+                    const eventDiv = document.createElement("div");
+                    eventDiv.classList.add("calendar-event");
+                    eventDiv.textContent = eventText;
+                    dayCell.appendChild(eventDiv);
+                });
+            }
+
+            calendar.appendChild(dayCell);
+        }
+    }
+
+    prevBtn.addEventListener("click", () => {
+        currentMonth--;
+        if (currentMonth < 0) {
+            currentMonth = 11;
+            currentYear--;
+        }
+        renderCalendar(currentMonth, currentYear);
+    });
+
+    nextBtn.addEventListener("click", () => {
+        currentMonth++;
+        if (currentMonth > 11) {
+            currentMonth = 0;
+            currentYear++;
+        }
+        renderCalendar(currentMonth, currentYear);
+    });
+
+    renderCalendar(currentMonth, currentYear);
+</script>
 {% endblock %}
