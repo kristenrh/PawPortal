@@ -1,8 +1,8 @@
 function openAddPanel() {
-    document.getElementById("animalPanel").style.display = "block";
+    document.getElementById("animalAddPanel").style.display = "block";
 }
 function closeAddPanel() {
-    document.getElementById("animalPanel").style.display = "none";
+    document.getElementById("animalAddPanel").style.display = "none";
 }
 
 function openRemovePanel() {
@@ -57,9 +57,9 @@ document.getElementById("removeForm").addEventListener("submit", function(e) {
         if(data.status === "success") {
             alert("Animal removed successfully!");
             closeRemovePanel();
-            location.reload(); // Refresh to show updated list
+            location.reload();
         } else {
-            alert("Failed to remove animal. Please try again."+data.message);
+            alert("Failed to remove animal. Please try again.");
         }
     })
     .catch(err => {
@@ -67,6 +67,7 @@ document.getElementById("removeForm").addEventListener("submit", function(e) {
         alert("Failed to remove animal. Please try again.");
     });
 });
+
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
