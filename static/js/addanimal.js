@@ -1,5 +1,5 @@
 function openPanel() {
-    document.getElementById("animalPanel").style.display
+    document.getElementById("animalPanel").style.display = "block";
 }
 function closePanel() {
     document.getElementById("animalPanel").style.display = "none";
