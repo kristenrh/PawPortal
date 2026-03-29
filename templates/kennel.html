@@ -41,19 +41,21 @@
 </div>
 
 <div class = "shelter-map">
-    <div class = "kennel-slot" data-kennel-id="1" ondragover = "allowDrop(event)" ondrop = "drop(event)">Kennel A-1</div>
-    <div class = "kennel-slot" data-kennel-id="2" ondragover = "allowDrop(event)" ondrop = "drop(event)">Kennel B-1</div>
-    <div class = "kennel-slot" data-kennel-id="3" ondragover = "allowDrop(event)" ondrop = "drop(event)">Kennel C-1</div>
-    <div class = "kennel-slot" data-kennel-id="4" ondragover = "allowDrop(event)" ondrop = "drop(event)">Kennel D-1</div>
-    <div class = "kennel-slot" data-kennel-id="5" ondragover = "allowDrop(event)" ondrop = "drop(event)">Kennel E-1</div>
-    <div class = "kennel-slot" data-kennel-id="6" ondragover = "allowDrop(event)" ondrop = "drop(event)">Kennel A-2</div>
+    <div class = "kennel-slot" data-kennel-id="A01" ondragover = "allowDrop(event)" ondrop = "drop(event)">Kennel A-1</div>
+    <div class = "kennel-slot" data-kennel-id="B01" ondragover = "allowDrop(event)" ondrop = "drop(event)">Kennel B-1</div>
+    <div class = "kennel-slot" data-kennel-id="C01" ondragover = "allowDrop(event)" ondrop = "drop(event)">Kennel C-1</div>
+    <div class = "kennel-slot" data-kennel-id="D01" ondragover = "allowDrop(event)" ondrop = "drop(event)">Kennel D-1</div>
+    <div class = "kennel-slot" data-kennel-id="E01" ondragover = "allowDrop(event)" ondrop = "drop(event)">Kennel E-1</div>
+    <div class = "kennel-slot" data-kennel-id="A02" ondragover = "allowDrop(event)" ondrop = "drop(event)">Kennel A-2</div>
 </div>
+
 
 
 <div class = "animal-dock" ondragover = "allowDrop(event)" ondrop = "drop(event)">
     {% for p in products%} 
         <div class = "animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ p.animalid }}">{{ p.animalname }}</div>
     {% endfor %}
+
 
 </div>
     <script src = "{% static 'js/dragNdrop.js' %}"></script>

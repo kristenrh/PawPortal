@@ -4,6 +4,8 @@ from .models import Animal
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+import json
 import secrets
 import requests
 from urllib.parse import urlencode
@@ -64,15 +66,43 @@ def kennel(request):
         #products = Animal.objects.values_list("animalname", flat=True)  # Fetch all products
         animals = Animal.objects.all()
         products = Animal.objects.all()  # Fetch all products
+        kennels = Animal.objects.values_list("animallocation", flat=True).distinct()  # Fetch distinct kennel locations
     except Exception as e:
         products = []
         animals = []
-        print(f"Database error: {e}")
+        kennels = ["A01", "B01", "C01", "D01", "E01", "A02"]
 
+        print(f"Database error: {e}")
     #print("this is the test run: ", products)
     
-    return render(request, 'kennel.html', {'products': products, 'animals': animals})
+    return render(request, 'kennel.html', {'products': products, 'animals': animals, 'kennels': kennels})
 
+def location_update(request):
+    print("METHOD:", request.method)
+    print("BODY:", request.body)
+
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            print("PARSED JSON:", data)
+
+            animal_id = data.get("animal_id")
+            kennel_id = data.get("kennel_id")
+
+            print("animal_id:", animal_id)
+            print("kennel_id:", kennel_id)
+
+            animal = Animal.objects.get(animalid=animal_id)
+            animal.animallocation = kennel_id
+            animal.save()
+
+            return JsonResponse({"status": "success"})
+
+        except Exception as e:
+            print("ERROR:", e)
+            return JsonResponse({"status": "error", "message": str(e)}, status=400)
+
+    return JsonResponse({"status": "error"}, status=400)
 
 def google_login(request):
     """
