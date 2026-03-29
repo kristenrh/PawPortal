@@ -5,6 +5,19 @@
 <h1>Welcome to the Kennel!</h1>
 <p> Testing the kennel template. </p>
 
+<button onclick = "openPanel()">Add Animal</button>
+<div id = "animalPanel" class = "panel" style="displaynone;">
+    <form id = "animalForm">
+        <label for="animalName">Animal Name:</label>
+        <input type="text" id="animalName" name="animalName" required>
+        <br>
+        <label for="animalType">Animal Type:</label>
+        <input type="text" id="animalType" name="animalType" required>
+        <br>
+        <button type="submit">Add Animal</button>
+    </form>
+</div>
+
 <div class = "shelter-map">
     <div class = "kennel-slot" data-kennel-id="1" ondragover = "allowDrop(event)" ondrop = "drop(event)">Kennel A-1</div>
     <div class = "kennel-slot" data-kennel-id="2" ondragover = "allowDrop(event)" ondrop = "drop(event)">Kennel B-1</div>
