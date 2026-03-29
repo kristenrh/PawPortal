@@ -1,8 +1,15 @@
-function openPanel() {
+function openAddPanel() {
     document.getElementById("animalPanel").style.display = "block";
 }
-function closePanel() {
+function closeAddPanel() {
     document.getElementById("animalPanel").style.display = "none";
+}
+
+function openRemovePanel() {
+    document.getElementById("animalRemovePanel").style.display = "block";
+}
+function closeRemovePanel() {
+    document.getElementById("animalRemovePanel").style.display = "none";
 }
 
 //form handling logic
@@ -21,7 +28,7 @@ document.getElementById("animalForm").addEventListener("submit", function(e) {
     .then(data => {
         if(data.status === "success") {
             alert("Animal added successfully!");
-            closePanel();
+            closeAddPanel();
             location.reload(); // Refresh to show new animal
         } else {
             alert("Failed to add animal. Please try again."+data.message);
@@ -33,6 +40,33 @@ document.getElementById("animalForm").addEventListener("submit", function(e) {
     });
 });
 
+document.getElementById("removeForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const animalId = document.getElementById("removeAnimalSelect").value;
+
+    fetch("/remove_animal/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken")
+        },
+        body: JSON.stringify({ id: animalId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data.status === "success") {
+            alert("Animal removed successfully!");
+            closeRemovePanel();
+            location.reload(); // Refresh to show updated list
+        } else {
+            alert("Failed to remove animal. Please try again."+data.message);
+        }
+    })
+    .catch(err => {
+        console.error("Error removing animal:", err);
+        alert("Failed to remove animal. Please try again.");
+    });
+});
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {

@@ -29,30 +29,49 @@ def add_animal(request):
     if request.method == "POST":
         name = request.POST.get("animalName")
         species = request.POST.get("animalSpecies")
+        age = request.POST.get("animalAge")
 
         print("Name:", name)
         print("Species:", species)
 
         new_animal = Animal.objects.create(
             animalname=name,
-            animalspecies=species
+            animalspecies=species,
+            animalage = age
         )
 
         return JsonResponse({"status": "success"})
 
     return JsonResponse({"status": "error"})
 
+def remove_animal(request):
+    if request.method == "POST":
+        import json
+        try:
+            data= json.loads(request.body)
+            animal_id = data.get("id")
+            animal_obj = Animal.objects.get(animalid = animal_id)
+            animal_obj.delete()
+            return JsonResponse({"status": "success"})
+        except Animal.DoesNotExist:
+            return JsonResponse({"status": "error", "message": "Animal not found"})
+        except Exception as e:
+            return JsonResponse({"status": "error", "message": str(e)})
+        return JsonResponse({"status": "error", "message": "Invalid request method"}, status=400)
+
 def kennel(request):
     try:
         #products = Animal.objects.values_list("animalname", flat=True)  # Fetch all products
+        animals = Animal.objects.all()
         products = Animal.objects.all()  # Fetch all products
     except Exception as e:
         products = []
+        animals = []
         print(f"Database error: {e}")
 
     #print("this is the test run: ", products)
     
-    return render(request, 'kennel.html', {'products': products})
+    return render(request, 'kennel.html', {'products': products, 'animals': animals})
 
 
 def google_login(request):
