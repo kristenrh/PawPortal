@@ -5,11 +5,11 @@
 <h1>Welcome to the Kennel!</h1>
 <p> Testing the kennel template. </p>
 
-<button onclick = "openAddPanel()">Add Animal</button>
-<button onclick = "openRemovePanel()">Remove Animal</button>
+<button onclick="openAddPanel()">Add Animal</button>
+<button onclick="openRemovePanel()">Remove Animal</button>
 
-<div id = "animalAddPanel" class = "panel" style="display:none;">
-    <form id = "animalForm" method = "POST">
+<div id="animalAddPanel" class="panel" style="display:none;">
+    <form id="animalForm" method="POST">
         {% csrf_token %}
         <label for="animalName">Animal Name:</label>
         <input type="text" id="animalName" name="animalName" required>
@@ -21,43 +21,108 @@
         <input type="number" id="animalAge" name="animalAge" required>
         <br>
         <button type="submit">Add Animal</button>
-        <button type = "button" onclick = "closeAddPanel()">Cancel</button>
+        <button type="button" onclick="closeAddPanel()">Cancel</button>
     </form>
 </div>
 
-<div id = "animalRemovePanel" class="panel" style="display:none;">
-    <form id = "removeForm">
+<div id="animalRemovePanel" class="panel" style="display:none;">
+    <form id="removeForm">
         {% csrf_token %}
-        <label for = "removeAnimalSelect">Animal to Remove:</label>
-        <select id = "removeAnimalSelect" name = "animalId">
+        <label for="removeAnimalSelect">Animal to Remove:</label>
+        <select id="removeAnimalSelect" name="animalId">
             {% for p in animals %}
                 <option value="{{ p.animalid }}">{{ p.animalname }}</option>
             {% endfor %}
         </select>
         <br>
         <button type="submit">Remove Animal</button>
-        <button type = "button" onclick = "closeRemovePanel()">Cancel</button>
+        <button type="button" onclick="closeRemovePanel()">Cancel</button>
     </form>
 </div>
 
-<div class = "shelter-map">
-    <div class = "kennel-slot" data-kennel-id="A01" ondragover = "allowDrop(event)" ondrop = "drop(event)">Kennel A-1</div>
-    <div class = "kennel-slot" data-kennel-id="B01" ondragover = "allowDrop(event)" ondrop = "drop(event)">Kennel B-1</div>
-    <div class = "kennel-slot" data-kennel-id="C01" ondragover = "allowDrop(event)" ondrop = "drop(event)">Kennel C-1</div>
-    <div class = "kennel-slot" data-kennel-id="D01" ondragover = "allowDrop(event)" ondrop = "drop(event)">Kennel D-1</div>
-    <div class = "kennel-slot" data-kennel-id="E01" ondragover = "allowDrop(event)" ondrop = "drop(event)">Kennel E-1</div>
-    <div class = "kennel-slot" data-kennel-id="A02" ondragover = "allowDrop(event)" ondrop = "drop(event)">Kennel A-2</div>
+
+<div class="shelter-map">
+
+    <div class="kennel-slot" data-kennel-id="A01" ondragover="allowDrop(event)" ondrop="drop(event)">
+        Kennel A-1
+        {% for p in animals %}
+            {% if p.animallocation == "A01" %}
+                <div class="animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ p.animalid }}">
+                    {{ p.animalname }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="kennel-slot" data-kennel-id="B01" ondragover="allowDrop(event)" ondrop="drop(event)">
+        Kennel B-1
+        {% for p in animals %}
+            {% if p.animallocation == "B01" %}
+                <div class="animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ p.animalid }}">
+                    {{ p.animalname }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="kennel-slot" data-kennel-id="C01" ondragover="allowDrop(event)" ondrop="drop(event)">
+        Kennel C-1
+        {% for p in animals %}
+            {% if p.animallocation == "C01" %}
+                <div class="animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ p.animalid }}">
+                    {{ p.animalname }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="kennel-slot" data-kennel-id="D01" ondragover="allowDrop(event)" ondrop="drop(event)">
+        Kennel D-1
+        {% for p in animals %}
+            {% if p.animallocation == "D01" %}
+                <div class="animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ p.animalid }}">
+                    {{ p.animalname }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="kennel-slot" data-kennel-id="E01" ondragover="allowDrop(event)" ondrop="drop(event)">
+        Kennel E-1
+        {% for p in animals %}
+            {% if p.animallocation == "E01" %}
+                <div class="animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ p.animalid }}">
+                    {{ p.animalname }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="kennel-slot" data-kennel-id="A02" ondragover="allowDrop(event)" ondrop="drop(event)">
+        Kennel A-2
+        {% for p in animals %}
+            {% if p.animallocation == "A02" %}
+                <div class="animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ p.animalid }}">
+                    {{ p.animalname }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
 </div>
 
 
-
-<div class = "animal-dock" ondragover = "allowDrop(event)" ondrop = "drop(event)">
-    {% for p in products%} 
-        <div class = "animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ p.animalid }}">{{ p.animalname }}</div>
+<div class="animal-dock" ondragover="allowDrop(event)" ondrop="drop(event)">
+    {% for p in animals %}
+        {% if not p.animallocation %}
+            <div class="animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ p.animalid }}">
+                {{ p.animalname }}
+            </div>
+        {% endif %}
     {% endfor %}
-
-
 </div>
-    <script src = "{% static 'js/dragNdrop.js' %}"></script>
-    <script src = "{% static 'js/addanimal.js' %}"></script>
+
+<script src="{% static 'js/dragNdrop.js' %}"></script>
+<script src="{% static 'js/addanimal.js' %}"></script>
+
 {% endblock %}

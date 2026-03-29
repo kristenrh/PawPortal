@@ -107,8 +107,8 @@ body {
 }
 
 .animal-dock {
-    margin-top: 20px;
-    min-height: 50px;
+    margin-top: 200px;
+    min-height: 100px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
