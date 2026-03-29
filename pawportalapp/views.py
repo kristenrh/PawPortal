@@ -1,15 +1,12 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-#from .models import Animal, AnimalLocation
+from .models import Animal
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.conf import settings
 import secrets
 import requests
-from .models import animal
 from urllib.parse import urlencode
-#from .models import Animal, AnimalLocation
-
 
 def dashboard(request):
     user = request.session.get("user")
@@ -25,11 +22,30 @@ def socialization(request):
 def adoption(request):
     return render(request, "adoption.html")
 
+def add_animal(request):
+    print("REQUEST METHOD:", request.method)
+    print("POST DATA:", request.POST)
+
+    if request.method == "POST":
+        name = request.POST.get("animalName")
+        species = request.POST.get("animalSpecies")
+
+        print("Name:", name)
+        print("Species:", species)
+
+        new_animal = Animal.objects.create(
+            animalname=name,
+            animalspecies=species
+        )
+
+        return JsonResponse({"status": "success"})
+
+    return JsonResponse({"status": "error"})
 
 def kennel(request):
     try:
-        #products = animal.objects.values_list("animalname", flat=True)  # Fetch all products
-        products = animal.objects.all()  # Fetch all products
+        #products = Animal.objects.values_list("animalname", flat=True)  # Fetch all products
+        products = Animal.objects.all()  # Fetch all products
     except Exception as e:
         products = []
         print(f"Database error: {e}")

@@ -7,14 +7,16 @@
 
 <button onclick = "openPanel()">Add Animal</button>
 <div id = "animalPanel" class = "panel" style="display:none;">
-    <form id = "animalForm">
+    <form id = "animalForm" method = "POST">
+        {% csrf_token %}
         <label for="animalName">Animal Name:</label>
         <input type="text" id="animalName" name="animalName" required>
         <br>
-        <label for="animalType">Animal Type:</label>
-        <input type="text" id="animalType" name="animalType" required>
+        <label for="animalSpecies">Animal Species:</label>
+        <input type="text" id="animalSpecies" name="animalSpecies" required>
         <br>
         <button type="submit">Add Animal</button>
+        <button type = "cancel" onclick = "closePanel()">Cancel</button>
     </form>
 </div>
 

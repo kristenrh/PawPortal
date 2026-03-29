@@ -17,9 +17,19 @@ document.getElementById("animalForm").addEventListener("submit", function(e) {
         }
     })
     .then(response => response.json())
+
     .then(data => {
-        alert("Animal added successfully!");
-        closePanel();
+        if(data.status === "success") {
+            alert("Animal added successfully!");
+            closePanel();
+            location.reload(); // Refresh to show new animal
+        } else {
+            alert("Failed to add animal. Please try again."+data.message);
+        }
+    })
+    .catch(err => {
+        console.error("Error adding animal:", err);
+        alert("Failed to add animal. Please try again.");
     });
 });
 
