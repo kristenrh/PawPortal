@@ -5,8 +5,8 @@
 <h1>Welcome to the Kennel!</h1>
 <p> Testing the kennel template. </p>
 
-<button onclick="openAddPanel()">Add Animal</button>
-<button onclick="openRemovePanel()">Remove Animal</button>
+<button class = "animal-add-btn" onclick="openAddPanel()">Add Animal</button>
+<button class = "animal-remove-btn" onclick="openRemovePanel()">Remove Animal</button>
 
 <div id="animalAddPanel" class="panel" style="display:none;">
     <form id="animalForm" method="POST">
@@ -114,7 +114,7 @@
 
 <div class="animal-dock" ondragover="allowDrop(event)" ondrop="drop(event)">
     {% for p in animals %}
-        {% if not p.animallocation %}
+        {% if p.animallocation  == None or p.animallocation == "" %}
             <div class="animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ p.animalid }}">
                 {{ p.animalname }}
             </div>

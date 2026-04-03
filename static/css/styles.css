@@ -95,6 +95,7 @@ body {
     padding: 20px;
 }
 
+
 .animal-card {
     width: 80px;
     height: 80px;
@@ -117,14 +118,14 @@ body {
 }
 
 .animal-add-btn {
-    width: 80px;
-    height: 20px;
+    width: 100px;
+    height: 60px;
     border: 2px dashed rgba(0, 0, 0, 0.3);
     border-radius: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 32px;
+    font-size: 16px;
     color: rgba(0, 0, 0, 0.3);
 }
 
