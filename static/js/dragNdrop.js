@@ -44,7 +44,7 @@ async function drop(ev) {
 }
 
 async function updateAnimalLocation(animalId, kennelId) {
-    const response = await fetch('/update_animal_location/', {
+    const response = await fetch('/location_update/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
