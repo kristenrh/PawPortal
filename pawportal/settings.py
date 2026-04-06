@@ -77,14 +77,11 @@ WSGI_APPLICATION = 'pawportal.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'defaultdb',
+        'NAME': 'db-pawportal-postgresqldatabase',
         'USER': 'doadmin',
-        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'PASSWORD': 'AVNS_I9wcuQ9Y6hlH5yg_8p8',
         'HOST': 'db-pawportal-postgresqldatabase-do-user-35042343-0.e.db.ondigitalocean.com',
         'PORT': '25060',
-        'OPTIONS': {
-            'sslmode': 'require',
-        },
     }
 }
 
