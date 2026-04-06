@@ -312,7 +312,7 @@ body {
 .dev-section {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     justify-content: center;
     margin-top: 10px;
     max-width: 1000px;
@@ -320,7 +320,8 @@ body {
 
 .dev-card:nth-child(2) {
     grid-column: span 2;
-}
+    max-width: 2000px;
+} 
 
 /* =========================
    Landing page
