@@ -178,6 +178,15 @@ body {
     gap: 24px;
 }
 
+.login-logo {
+    width: 420px;
+    height: 420px;
+    object-fit: contain;
+    margin: 0 auto 12px auto;
+    /* right: 50%; */
+    transform: translateX(30%);
+}
+
 /* =========================
    General cards / auth UI
 ========================= */
