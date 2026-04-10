@@ -26,3 +26,10 @@ CS458 Capstone Project - PawPortal: Animal Shelter Management
 **must have server and Postgres running
 Open InPrivate/Incognito window to avoid cache issues.
 Navigate to 'http://localhost:8000/'
+
+# To Deploy
+cd ~/PawPortal
+git pull origin main
+source venv/bin/activate
+pip install -r requirements.txt
+gunicorn pawportal.wsgi:application --bind 0.0.0.0:8000
