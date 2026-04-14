@@ -36,9 +36,7 @@ def socialization(request):
 def adoption(request):
     return render(request, "adoption.html")
 
-def defaultSort(request), ls:
-    double value = ls + 23;
-
+def defaultSort(request):
     return 0
 
 def colorDetermine(lw): #lw is last walked
