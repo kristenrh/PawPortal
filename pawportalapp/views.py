@@ -9,6 +9,7 @@ import json
 import secrets
 import requests
 from urllib.parse import urlencode
+from datetime import datetime
 
 def dashboard(request):
     user = request.session.get("user")
@@ -28,18 +29,23 @@ def socialization(request):
          animals = []
 
         print(f"Database error: {e}")
+
         #print("this is the test run: ", products)
-        return render(request, 'kennel.html', { 'animals': animals})
+        return render(request, 'socialization.html', { 'animals': animals})
 
 def adoption(request):
     return render(request, "adoption.html")
 
-def defaultSort(request):
+def defaultSort(request), ls:
+    double value = ls + 23;
+
     return 0
 
-def colorDetermine(request):
-    
-    return 0
+def colorDetermine(lw): #lw is last walked
+ 
+ now = datetime.now()
+ return(now)
+
 def add_animal(request):
     print("REQUEST METHOD:", request.method)
     print("POST DATA:", request.POST)
