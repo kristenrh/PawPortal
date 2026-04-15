@@ -1,6 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Socialization Log</h1>
-  <p>Testing: templates are working</p>
+<p>Sort filters</p>
+<button onclick="" style="display:inline;">Animal Name</button>
+<button onclick="" style="display:inline;">Personality</button>
+
+<h1>test method call</h1>
+<p>{{colorDetermine("01")}}</p>
+{% for p in animals %}
+            {% if p.animalid == "01" %}
+                <div class="animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ p.animalid }}">
+                    {{ p.animalname }}
+                </div>
+            {% endif %}
+        {% endfor %}
 {% endblock %}

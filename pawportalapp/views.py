@@ -9,6 +9,7 @@ import json
 import secrets
 import requests
 from urllib.parse import urlencode
+from datetime import datetime
 
 def dashboard(request):
     user = request.session.get("user")
@@ -19,10 +20,29 @@ def dashboard(request):
     return render(request, "dashboard.html")
 
 def socialization(request):
-    return render(request, "socialization.html")
+        try:
+            #products = Animal.objects.values_list("animalname", flat=True)  # Fetch all products
+         animals = Animal.objects.all()
+         #products = Animal.objects.all()  # Fetch all products
+        except Exception as e:
+         #products = []
+         animals = []
+
+        print(f"Database error: {e}")
+
+        #print("this is the test run: ", products)
+        return render(request, 'socialization.html', { 'animals': animals})
 
 def adoption(request):
     return render(request, "adoption.html")
+
+def defaultSort(request):
+    return 0
+
+def colorDetermine(lw): #lw is last walked
+ 
+ now = datetime.now()
+ return(now)
 
 def add_animal(request):
     print("REQUEST METHOD:", request.method)
@@ -65,7 +85,7 @@ def kennel(request):
     try:
         #products = Animal.objects.values_list("animalname", flat=True)  # Fetch all products
         animals = Animal.objects.all()
-        products = Animal.objects.all()  # Fetch all products
+        #products = Animal.objects.all()  # Fetch all products
         kennels = Animal.objects.values_list("animallocation", flat=True).distinct()  # Fetch distinct kennel locations
     except Exception as e:
         products = []
