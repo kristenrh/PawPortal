@@ -20,18 +20,19 @@ def dashboard(request):
     return render(request, "dashboard.html")
 
 def socialization(request):
-        try:
-            #products = Animal.objects.values_list("animalname", flat=True)  # Fetch all products
-         animals = Animal.objects.all()
-         #products = Animal.objects.all()  # Fetch all products
-        except Exception as e:
-         #products = []
-         animals = []
-
+    try:
+        animals = Animal.objects.all()
+    except Exception as e:
         print(f"Database error: {e}")
+        animals = []
 
-        #print("this is the test run: ", products)
-        return render(request, 'socialization.html', { 'animals': animals})
+    status_code = "01"
+    determined_color = colorDetermine(status_code)
+    context = {
+        'animals': animals,
+        'determined_color': determined_color,
+    }
+    return render(request, 'socialization.html', context)
 
 def adoption(request):
     return render(request, "adoption.html")
@@ -83,19 +84,15 @@ def remove_animal(request):
 
 def kennel(request):
     try:
-        #products = Animal.objects.values_list("animalname", flat=True)  # Fetch all products
         animals = Animal.objects.all()
-        #products = Animal.objects.all()  # Fetch all products
         kennels = Animal.objects.values_list("animallocation", flat=True).distinct()  # Fetch distinct kennel locations
     except Exception as e:
-        products = []
         animals = []
         kennels = ["A01", "B01", "C01", "D01", "E01", "A02"]
 
         print(f"Database error: {e}")
-    #print("this is the test run: ", products)
     
-    return render(request, 'kennel.html', {'products': products, 'animals': animals, 'kennels': kennels})
+    return render(request, 'kennel.html', {'animals': animals, 'kennels': kennels})
 
 def location_update(request):
     print("METHOD:", request.method)

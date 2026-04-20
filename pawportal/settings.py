@@ -1,10 +1,14 @@
 from pathlib import Path
 import os
+import dj_database_url
+from dotenv import load_dotenv
 
+load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dev-only-secret-key")
 DEBUG = True
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
 ALLOWED_HOSTS = [
     "localhost",
@@ -13,6 +17,13 @@ ALLOWED_HOSTS = [
     "pawportal.online",
     "www.pawportal.online",
 ]
+CSRF_TRUSTED_ORIGINS = [
+    'https://pawportal.online',
+    'https://www.pawportal.online',
+    'https://45.55.139.142',
+]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -54,17 +65,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'pawportal.wsgi.application'
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'defaultdb',
-        'USER': 'doadmin',
-        'PASSWORD': os.getenv("DB_PASSWORD"),
-        'HOST': 'db-pawportal-postgresqldatabase-do-user-35042343-0.e.db.ondigitalocean.com',
-        'PORT': '25060',
-        'OPTIONS': {
-            'sslmode': 'require',
-        },
-    }
+	'default': dj_database_url.config(
+	default=os.environ.get('DATABASE_URL')
+	)
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -91,8 +94,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = '/var/www/pawportal/static'
 
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
 GOOGLE_REDIRECT_URI = "https://pawportal.online/oauth2callback/"
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
