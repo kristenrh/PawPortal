@@ -11,6 +11,11 @@ db.sqlite3-journal
 venv/
 env/
 .venv/
+*.pyc
+__pycache__/
+db.sqlite3
+.env
+/DS_Store
 
 # VS Code
 .vscode/

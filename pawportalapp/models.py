@@ -7,7 +7,7 @@ class Animal(models.Model):
     animallocation = models.CharField(max_length=100, blank=True)
     lastwalk = models.DateTimeField(null=True, blank=True)
     animalage = models.IntegerField(null=True, blank=True)
-    isadpted = models.BooleanField(default=False)
+    isadopted = models.BooleanField(default=False)
 
 
     class Meta:
