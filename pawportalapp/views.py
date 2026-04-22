@@ -1,7 +1,6 @@
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.shortcuts import render
 from .models import Animal
-from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
@@ -70,15 +69,19 @@ def add_animal(request):
         print("Name:", name)
         print("Species:", species)
 
-        new_animal = Animal.objects.create(
-            animalname=name,
-            animalspecies=species,
-            animalage = age
-        )
+        try:
+            new_animal = Animal.objects.create(
+                animalname=name,
+                animalspecies=species,
+                animalage = age
+            )
+            return JsonResponse({"status": "success"})
 
-        return JsonResponse({"status": "success"})
+        except Exception as e:
+            print(f"Error: {e}")
+            return JsonResponse({"status": "error"})
 
-    return JsonResponse({"status": "error"})
+    return JsonResponse({"status": "error", "message": "Invalid Request"})
 
 def remove_animal(request):
     if request.method == "POST":
