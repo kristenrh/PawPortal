@@ -128,15 +128,51 @@ body {
 
 .animal-add-btn {
     width: 100px;
-    height: 60px;
-    border: 2px dashed rgba(0, 0, 0, 0.3);
-    border-radius: 12px;
+    height: 40px;
+    border: solid darkgreen;
+    border-radius: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 16px;
-    color: rgba(0, 0, 0, 0.3);
+    color: black;
+    background-color: white;
+    cursor: pointer;
+    box-shadow: 0 2px 4px 0 black;
+    transition-duration: .5s;
 }
+
+.animal-remove-btn {
+    width: 100px;
+    height: 40px;
+    border: solid darkred;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    box-shadow: 0 2px 4px 0 black;
+    transition-duration: .5s;
+}
+
+.animal-add-btn:hover {
+    background-color: green;
+        color: white;
+}
+
+.animal-remove-btn:hover {
+    background-color: red;
+    color: white;
+}
+
+.btn-container {
+    display: flex;
+    gap: 15px;
+}
+
 
 .panel {
     position: fixed;
