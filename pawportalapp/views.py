@@ -47,7 +47,7 @@ def colorDetermine(lw): #lw is last walked
  num = now - lw
 
  if(num < 0) :
-        print("negative number detected")
+     print("negative number detected")
  elif(num >= 0 and num <= 6):
      color_determine = "green"
  elif(num >= 7 and num <= 12  ):

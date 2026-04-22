@@ -7,10 +7,8 @@
     <button onclick="" style="display:inline;">Animal Name</button>
     <button onclick="" style="display:inline;">Personality</button>
 
-   
-
-    {% for dc in determined_colo %}
-     <div style="color: {{dc }};">
+    {% for dc in determined_color %}
+     <div style="bg_color: {{dc }};">
         {% for animal in animals %}
             <p>{{ animal.name }}</p>
         {% endfor %}
