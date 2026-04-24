@@ -7,15 +7,15 @@
     <button onclick="" style="display:inline;">Animal Name</button>
     <button onclick="" style="display:inline;">Personality</button>
 
-    <h1>test method call</h1>
-    <p>{{colorDetermine("01")}}</p>\
+    {% for dc in determined_color %}
+     <div style="bg_color: {{dc }};">
+        {% for animal in animals %}
+            <p>{{ animal.name }}</p>
+        {% endfor %}
+     </dix>
+     {% endfor %}
 
-    <div style="color: {{determined_color }};">
-        Status is Active
-    </div>
-
-    {% for animal in animals %}
-        <p>{{ animal.name }}</p>
-    {% endfor %}
+    
+    
 
 {% endblock %} 
