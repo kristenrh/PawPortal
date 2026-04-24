@@ -578,6 +578,42 @@ body {
     background: #f4f8ff;
 }
 
+/* Login page feature card */
+.login-features-card {
+    margin-top: 18px;
+}
+
+.login-features-card h2 {
+    margin-bottom: 14px;
+}
+
+.login-feature-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 12px 0;
+    padding: 4px 0;
+}
+
+/* Feature Icon */
+.feature-icon {
+    font-size: 20px;
+    min-width: 24px;
+    text-align: center;
+    line-height: 1;
+}
+
+/* Feature Text */
+.feature-text {
+    font-size: 16px;
+    line-height: 1.4;
+    opacity: 0.9;
+}
+
+.login-feature-item p {
+    margin: 0;
+    display: inline;
+}
 .calendar-add-btn{
     background: #96b9ff;
     border: 1px solid #5f87d6;
