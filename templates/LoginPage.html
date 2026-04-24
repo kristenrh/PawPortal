@@ -16,16 +16,21 @@
     <div class="content">
         <div class="dashboard-split">
 
+            <!-- LEFT SIDE -->
             <section class="dash-intro">
                 <h1 class="dash-title">Welcome to PawPortal!</h1>
                 <p class="dash-subtitle">
                     A simple shelter management portal for tracking kennels, socialization, and adoptions.
                 </p>
 
-                <img src="static\css\background-Round.png" alt="PawPortal logo" class="login-logo">
+                <!-- static path -->
+                <img src="{% static 'css/background-Round.png' %}" alt="PawPortal logo" class="login-logo">
             </section>
 
+            <!-- RIGHT SIDE -->
             <section class="dash-auth">
+
+                <!-- LOGIN CARD -->
                 <div class="auth-card">
                     <h2>Sign in</h2>
                     <p class="muted">Use your Google account to continue.</p>
@@ -36,8 +41,28 @@
                     </button>
 
                     <div class="auth-divider"></div>
-
                 </div>
+
+                <!-- FEATURES CARD -->
+                <div class="auth-card login-features-card">
+                    <h2>Features</h2>
+
+                    <div class="login-feature-item">
+                        <span>🐾</span>
+                        <p>Kennel overview for tracking animal placement.</p>
+                    </div>
+
+                    <div class="login-feature-item">
+                        <span>📝</span>
+                        <p>Socialization logs for staff and volunteer notes.</p>
+                    </div>
+
+                    <div class="login-feature-item">
+                        <span>📅</span>
+                        <p>Adoption calendar for upcoming appointments.</p>
+                    </div>
+                </div>
+
             </section>
 
         </div>
