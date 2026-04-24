@@ -43,21 +43,28 @@
                     <td>Dog</td>
                     <td>3 years</td>
                     <td>A-1</td>
-                    <td>April 12, 2026 at 10:30 AM</td>
+                    <td>April 24, 2026 at 10:30 AM</td>
                 </tr>
                 <tr>
                     <td>Milo</td>
                     <td>Cat</td>
                     <td>2 years</td>
                     <td>B-2</td>
-                    <td>April 13, 2026 at 1:15 PM</td>
+                    <td>April 23, 2026 at 1:15 PM</td>
                 </tr>
                 <tr>
                     <td>Charlie</td>
                     <td>Dog</td>
                     <td>5 years</td>
                     <td>C-1</td>
-                    <td>April 14, 2026 at 9:45 AM</td>
+                    <td>April 22, 2026 at 9:45 AM</td>
+                </tr>
+                <tr>
+                    <td>Daisy</td>
+                    <td>Cat</td>
+                    <td>1 year</td>
+                    <td>D-3</td>
+                    <td>April 21, 2026 at 3:00 PM</td>
                 </tr>
             </tbody>
         </table>
@@ -105,68 +112,63 @@
         document.getElementById("socialModal").classList.remove("show-modal");
     }
 
-    function sortSocialTable() {
-    const table = document.getElementById("socialTable");
-    const tbody = table.querySelector("tbody");
-    const rows = Array.from(tbody.querySelectorAll("tr"));
-    const sortType = document.getElementById("sortSelect").value;
-
-    const cleanDate = (text) => {
+    function cleanDate(text) {
         return new Date(text.replace(" at", ""));
-    };
+    }
 
-    rows.sort((a, b) => {
-        const nameA = a.cells[0].textContent.trim().toLowerCase();
-        const nameB = b.cells[0].textContent.trim().toLowerCase();
+    function sortSocialTable() {
+        const table = document.getElementById("socialTable");
+        const tbody = table.querySelector("tbody");
+        const rows = Array.from(tbody.querySelectorAll("tr"));
+        const sortType = document.getElementById("sortSelect").value;
 
-        const dateA = cleanDate(a.cells[4].textContent.trim());
-        const dateB = cleanDate(b.cells[4].textContent.trim());
+        rows.sort((a, b) => {
+            const nameA = a.cells[0].textContent.trim().toLowerCase();
+            const nameB = b.cells[0].textContent.trim().toLowerCase();
 
-        if (sortType === "name-az") return nameA.localeCompare(nameB);
-        if (sortType === "name-za") return nameB.localeCompare(nameA);
-        if (sortType === "recent") return dateB - dateA;
-        if (sortType === "oldest") return dateA - dateB;
+            const dateA = cleanDate(a.cells[4].textContent.trim());
+            const dateB = cleanDate(b.cells[4].textContent.trim());
 
-        return 0;
-    });
+            if (sortType === "name-az") return nameA.localeCompare(nameB);
+            if (sortType === "name-za") return nameB.localeCompare(nameA);
+            if (sortType === "recent") return dateB - dateA;
+            if (sortType === "oldest") return dateA - dateB;
 
-    rows.forEach(row => tbody.appendChild(row));
-}
-</script>
+            return 0;
+        });
 
-<script>
-function applyRowColors() {
-    const rows = document.querySelectorAll("#socialTable tbody tr");
+        rows.forEach(row => tbody.appendChild(row));
+        applyRowColors();
+    }
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);  // normalize
+    function applyRowColors() {
+        const rows = document.querySelectorAll("#socialTable tbody tr");
 
-    rows.forEach(row => {
-        const text = row.cells[4].textContent.trim();
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
 
-        // Fix parsing
-        const date = new Date(text.replace(" at", ""));
-        date.setHours(0, 0, 0, 0);
+        rows.forEach(row => {
+            const text = row.cells[4].textContent.trim();
+            const date = cleanDate(text);
+            date.setHours(0, 0, 0, 0);
 
-        const diffTime = today - date;
-        const diffDays = diffTime / (1000 * 60 * 60 * 24);
+            const diffTime = today - date;
+            const diffDays = diffTime / (1000 * 60 * 60 * 24);
 
-        // Remove old classes
-        row.classList.remove("row-green", "row-yellow", "row-orange", "row-red");
+            row.classList.remove("row-green", "row-yellow", "row-orange", "row-red");
 
-        if (diffDays === 0) {
-            row.classList.add("row-green");
-        } else if (diffDays === 1) {
-            row.classList.add("row-yellow");
-        } else if (diffDays === 2) {
-            row.classList.add("row-orange");
-        } else {
-            row.classList.add("row-red");
-        }
-    });
-}
+            if (diffDays === 0) {
+                row.classList.add("row-green");
+            } else if (diffDays === 1) {
+                row.classList.add("row-yellow");
+            } else if (diffDays === 2) {
+                row.classList.add("row-orange");
+            } else {
+                row.classList.add("row-red");
+            }
+        });
+    }
 
-// Run when page loads
-applyRowColors();
+    applyRowColors();
 </script>
 {% endblock %}
