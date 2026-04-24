@@ -1,7 +1,6 @@
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.shortcuts import render
 from .models import Animal
-from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
@@ -22,12 +21,15 @@ def dashboard(request):
 def socialization(request):
     try:
         animals = Animal.objects.all()
+        law = Animal.lastwalk.all();
     except Exception as e:
         print(f"Database error: {e}")
         animals = []
 
-    status_code = "01"
-    determined_color = colorDetermine(status_code)
+    determined_color = []
+    for law in animals:
+        determined_color[law] = colorDetermine(law)
+
     context = {
         'animals': animals,
         'determined_color': determined_color,
@@ -41,9 +43,19 @@ def defaultSort(request):
     return 0
 
 def colorDetermine(lw): #lw is last walked
- 
  now = datetime.now()
- return(now)
+ num = now - lw
+
+ if(num < 0) :
+     print("negative number detected")
+ elif(num >= 0 and num <= 6):
+     color_determine = "green"
+ elif(num >= 7 and num <= 12  ):
+     color_determine = "yellow"
+ else:
+     color_determine = "red"
+
+ return(color_determine)
 
 def add_animal(request):
     print("REQUEST METHOD:", request.method)
@@ -57,15 +69,19 @@ def add_animal(request):
         print("Name:", name)
         print("Species:", species)
 
-        new_animal = Animal.objects.create(
-            animalname=name,
-            animalspecies=species,
-            animalage = age
-        )
+        try:
+            new_animal = Animal.objects.create(
+                animalname=name,
+                animalspecies=species,
+                animalage = age
+            )
+            return JsonResponse({"status": "success"})
 
-        return JsonResponse({"status": "success"})
+        except Exception as e:
+            print(f"Error: {e}")
+            return JsonResponse({"status": "error"})
 
-    return JsonResponse({"status": "error"})
+    return JsonResponse({"status": "error", "message": "Invalid Request"})
 
 def remove_animal(request):
     if request.method == "POST":

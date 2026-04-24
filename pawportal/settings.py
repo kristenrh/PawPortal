@@ -7,7 +7,7 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dev-only-secret-key")
-DEBUG = True
+DEBUG = False
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
 ALLOWED_HOSTS = [

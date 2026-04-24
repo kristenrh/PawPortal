@@ -128,15 +128,51 @@ body {
 
 .animal-add-btn {
     width: 100px;
-    height: 60px;
-    border: 2px dashed rgba(0, 0, 0, 0.3);
-    border-radius: 12px;
+    height: 40px;
+    border: solid darkgreen;
+    border-radius: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 16px;
-    color: rgba(0, 0, 0, 0.3);
+    color: black;
+    background-color: white;
+    cursor: pointer;
+    box-shadow: 0 2px 4px 0 black;
+    transition-duration: .5s;
 }
+
+.animal-remove-btn {
+    width: 100px;
+    height: 40px;
+    border: solid darkred;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    box-shadow: 0 2px 4px 0 black;
+    transition-duration: .5s;
+}
+
+.animal-add-btn:hover {
+    background-color: green;
+        color: white;
+}
+
+.animal-remove-btn:hover {
+    background-color: red;
+    color: white;
+}
+
+.btn-container {
+    display: flex;
+    gap: 15px;
+}
+
 
 .panel {
     position: fixed;
@@ -537,4 +573,37 @@ body {
 .calendar-day.today {
     border: 2px solid #5f87d6;
     background: #f4f8ff;
+}
+
+/* Login page feature card */
+.login-features-card {
+    margin-top: 18px;
+}
+
+.login-features-card h2 {
+    margin-bottom: 14px;
+}
+
+.login-feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.login-feature-item:first-of-type {
+    border-top: none;
+}
+
+.login-feature-item span {
+    font-size: 22px;
+    line-height: 1;
+}
+
+.login-feature-item p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.4;
+    opacity: 0.8;
 }
