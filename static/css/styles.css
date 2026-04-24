@@ -685,11 +685,15 @@ body {
 
 .social-table td {
     padding: 14px;
-    border-top: 1px solid #d6e4ff;
+    border-top: 1px solid #c5d7fb;
+}
+
+.social-table tbody tr:not(:last-child) {
+    border-bottom: 1px solid #c5d7fb;
 }
 
 .social-table tbody tr:hover {
-    background: #f4f8ff;
+    background: #eef4ff;
 }
 
 /* Popup overlay */
@@ -762,14 +766,31 @@ body {
     background: #7ea6f5;
     border: 1px solid #5f87d6;
     border-radius: 12px;
-    padding: 8px 12px;
+    padding: 10px 12px;
     font-weight: bold;
     cursor: pointer;
     color: black;
     width: auto;
-    min-width: 140px;
+    min-width: 0;
 }
 
 .social-sort:hover {
     background: #88affc;
+}
+
+/* Row color coding */
+.row-green {
+    background-color: #e8f8ee;
+}
+
+.row-yellow {
+    background-color: #fff9e6;
+}
+
+.row-orange {
+    background-color: #fff1e6;
+}
+
+.row-red {
+    background-color: #fdeaea;
 }

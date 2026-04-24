@@ -133,4 +133,40 @@
     rows.forEach(row => tbody.appendChild(row));
 }
 </script>
+
+<script>
+function applyRowColors() {
+    const rows = document.querySelectorAll("#socialTable tbody tr");
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);  // normalize
+
+    rows.forEach(row => {
+        const text = row.cells[4].textContent.trim();
+
+        // Fix parsing
+        const date = new Date(text.replace(" at", ""));
+        date.setHours(0, 0, 0, 0);
+
+        const diffTime = today - date;
+        const diffDays = diffTime / (1000 * 60 * 60 * 24);
+
+        // Remove old classes
+        row.classList.remove("row-green", "row-yellow", "row-orange", "row-red");
+
+        if (diffDays === 0) {
+            row.classList.add("row-green");
+        } else if (diffDays === 1) {
+            row.classList.add("row-yellow");
+        } else if (diffDays === 2) {
+            row.classList.add("row-orange");
+        } else {
+            row.classList.add("row-red");
+        }
+    });
+}
+
+// Run when page loads
+applyRowColors();
+</script>
 {% endblock %}
