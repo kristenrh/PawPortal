@@ -759,10 +759,15 @@ body {
 }
 
 .social-sort {
-    background: white;
+    background: #7ea6f5;
     border: 1px solid #5f87d6;
     border-radius: 12px;
-    padding: 10px 14px;
+    padding: 10px 16px;
     font-weight: bold;
     cursor: pointer;
+    color: black;
+}
+
+.social-sort:hover {
+    background: #88affc;
 }

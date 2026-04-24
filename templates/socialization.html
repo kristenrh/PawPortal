@@ -106,38 +106,31 @@
     }
 
     function sortSocialTable() {
-        const table = document.getElementById("socialTable");
-        const tbody = table.querySelector("tbody");
-        const rows = Array.from(tbody.querySelectorAll("tr"));
-        const sortType = document.getElementById("sortSelect").value;
+    const table = document.getElementById("socialTable");
+    const tbody = table.querySelector("tbody");
+    const rows = Array.from(tbody.querySelectorAll("tr"));
+    const sortType = document.getElementById("sortSelect").value;
 
-        rows.sort((a, b) => {
-            const nameA = a.cells[0].textContent.trim().toLowerCase();
-            const nameB = b.cells[0].textContent.trim().toLowerCase();
+    const cleanDate = (text) => {
+        return new Date(text.replace(" at", ""));
+    };
 
-            const dateA = new Date(a.cells[4].textContent.trim());
-            const dateB = new Date(b.cells[4].textContent.trim());
+    rows.sort((a, b) => {
+        const nameA = a.cells[0].textContent.trim().toLowerCase();
+        const nameB = b.cells[0].textContent.trim().toLowerCase();
 
-            if (sortType === "name-az") {
-                return nameA.localeCompare(nameB);
-            }
+        const dateA = cleanDate(a.cells[4].textContent.trim());
+        const dateB = cleanDate(b.cells[4].textContent.trim());
 
-            if (sortType === "name-za") {
-                return nameB.localeCompare(nameA);
-            }
+        if (sortType === "name-az") return nameA.localeCompare(nameB);
+        if (sortType === "name-za") return nameB.localeCompare(nameA);
+        if (sortType === "recent") return dateB - dateA;
+        if (sortType === "oldest") return dateA - dateB;
 
-            if (sortType === "recent") {
-                return dateB - dateA;
-            }
+        return 0;
+    });
 
-            if (sortType === "oldest") {
-                return dateA - dateB;
-            }
-
-            return 0;
-        });
-
-        rows.forEach(row => tbody.appendChild(row));
-    }
+    rows.forEach(row => tbody.appendChild(row));
+}
 </script>
 {% endblock %}
