@@ -588,29 +588,26 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 10px 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    margin: 12px 0;
+    padding: 4px 0;
 }
 
-.login-feature-item:first-of-type {
-    border-top: none;
-}
-
-.login-feature-item span {
-    font-size: 22px;
+/* Feature Icon */
+.feature-icon {
+    font-size: 20px;
+    min-width: 24px;
+    text-align: center;
     line-height: 1;
 }
 
-/* Icon styling */
-.feature-icon {
-    font-size: 22px;
-    min-width: 28px;
+/* Feature Text */
+.feature-text {
+    font-size: 16px;
+    line-height: 1.4;
+    opacity: 0.9;
 }
 
-/* Text styling */
 .login-feature-item p {
     margin: 0;
-    font-size: 15px;
-    line-height: 1.4;
-    opacity: 0.85;
+    display: inline;
 }
