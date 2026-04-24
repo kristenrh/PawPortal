@@ -751,3 +751,18 @@ body {
     border-radius: 10px;
     border: 1px solid rgba(0, 0, 0, 0.18);
 }
+
+.social-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.social-sort {
+    background: white;
+    border: 1px solid #5f87d6;
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
