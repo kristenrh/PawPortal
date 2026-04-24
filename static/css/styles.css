@@ -664,7 +664,7 @@ body {
 .social-table-wrapper {
     width: 100%;
     overflow-x: auto;
-    background: rgba(255, 255, 255, 0.65);
+    background: rgba(255, 255, 255, 0.75);
     border: 1px solid #d6e4ff;
     border-radius: 16px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
@@ -692,7 +692,7 @@ body {
     background: #f4f8ff;
 }
 
-/* Popup background */
+/* Popup overlay */
 .social-modal {
     display: none;
     position: fixed;
@@ -701,6 +701,10 @@ body {
     align-items: center;
     justify-content: center;
     z-index: 1000;
+}
+
+.social-modal.show-modal {
+    display: flex;
 }
 
 /* Popup card */

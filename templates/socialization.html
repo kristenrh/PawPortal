@@ -9,23 +9,10 @@
             <p>Track the most recent socialization activity for each animal.</p>
         </div>
 
-        <button class="social-entry-btn" onclick="openSocialModal()">Socialization Entry</button>
+        <button class="social-entry-btn" type="button" onclick="openSocialModal()">
+            Socialization Entry
+        </button>
     </div>
-
-    <!-- Later: replace hardcoded table rows with database loop -->
-    <!-- Example:
-    {% comment %}
-    {% for animal in animals %}
-        <tr>
-            <td>{{ animal.name }}</td>
-            <td>{{ animal.species }}</td>
-            <td>{{ animal.age }}</td>
-            <td>{{ animal.kennel }}</td>
-            <td>{{ animal.last_socialization }}</td>
-        </tr>
-    {% endfor %}
-    {% endcomment %}
-    -->
 
     <div class="social-table-wrapper">
         <table class="social-table">
@@ -40,6 +27,7 @@
             </thead>
 
             <tbody>
+                <!-- Later: replace these hardcoded rows with database loop -->
                 <tr>
                     <td>Luna</td>
                     <td>Dog</td>
@@ -61,25 +49,17 @@
                     <td>C-1</td>
                     <td>April 14, 2026 at 9:45 AM</td>
                 </tr>
-                <tr>
-                    <td>Daisy</td>
-                    <td>Rabbit</td>
-                    <td>1 year</td>
-                    <td>D-3</td>
-                    <td>April 15, 2026 at 3:00 PM</td>
-                </tr>
             </tbody>
         </table>
     </div>
 
 </div>
 
-<!-- Popup Modal -->
 <div id="socialModal" class="social-modal">
     <div class="social-modal-card">
         <div class="modal-header">
             <h2>New Socialization Entry</h2>
-            <button class="modal-close" onclick="closeSocialModal()">×</button>
+            <button class="modal-close" type="button" onclick="closeSocialModal()">×</button>
         </div>
 
         <!-- Later: connect this form to Django view/database -->
@@ -99,20 +79,20 @@
             <label>Last Socialization</label>
             <input type="datetime-local">
 
-            <button type="button" class="social-entry-btn" onclick="closeSocialModal()">Save Entry</button>
+            <button type="button" class="social-entry-btn" onclick="closeSocialModal()">
+                Save Entry
+            </button>
         </form>
     </div>
 </div>
 
 <script>
-    // Opens hardcoded popup for now
-    // Later: this can submit data to Django/database
     function openSocialModal() {
-        document.getElementById("socialModal").style.display = "flex";
+        document.getElementById("socialModal").classList.add("show-modal");
     }
 
     function closeSocialModal() {
-        document.getElementById("socialModal").style.display = "none";
+        document.getElementById("socialModal").classList.remove("show-modal");
     }
 </script>
 {% endblock %}
