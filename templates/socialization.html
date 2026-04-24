@@ -1,21 +1,118 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Socialization Page</h1>
+<div class="social-page">
 
-    <p>Sort filters</p>
-    <button onclick="" style="display:inline;">Animal Name</button>
-    <button onclick="" style="display:inline;">Personality</button>
+    <div class="social-header">
+        <div>
+            <h1>Socialization Log</h1>
+            <p>Track the most recent socialization activity for each animal.</p>
+        </div>
 
-    {% for dc in determined_color %}
-     <div style="bg_color: {{dc }};">
-        {% for animal in animals %}
-            <p>{{ animal.name }}</p>
-        {% endfor %}
-     </dix>
-     {% endfor %}
+        <button class="social-entry-btn" onclick="openSocialModal()">Socialization Entry</button>
+    </div>
 
-    
-    
+    <!-- Later: replace hardcoded table rows with database loop -->
+    <!-- Example:
+    {% comment %}
+    {% for animal in animals %}
+        <tr>
+            <td>{{ animal.name }}</td>
+            <td>{{ animal.species }}</td>
+            <td>{{ animal.age }}</td>
+            <td>{{ animal.kennel }}</td>
+            <td>{{ animal.last_socialization }}</td>
+        </tr>
+    {% endfor %}
+    {% endcomment %}
+    -->
 
-{% endblock %} 
+    <div class="social-table-wrapper">
+        <table class="social-table">
+            <thead>
+                <tr>
+                    <th>Animal Name</th>
+                    <th>Animal Species</th>
+                    <th>Animal Age</th>
+                    <th>Animal Kennel</th>
+                    <th>Last Socialization</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Luna</td>
+                    <td>Dog</td>
+                    <td>3 years</td>
+                    <td>A-1</td>
+                    <td>April 12, 2026 at 10:30 AM</td>
+                </tr>
+                <tr>
+                    <td>Milo</td>
+                    <td>Cat</td>
+                    <td>2 years</td>
+                    <td>B-2</td>
+                    <td>April 13, 2026 at 1:15 PM</td>
+                </tr>
+                <tr>
+                    <td>Charlie</td>
+                    <td>Dog</td>
+                    <td>5 years</td>
+                    <td>C-1</td>
+                    <td>April 14, 2026 at 9:45 AM</td>
+                </tr>
+                <tr>
+                    <td>Daisy</td>
+                    <td>Rabbit</td>
+                    <td>1 year</td>
+                    <td>D-3</td>
+                    <td>April 15, 2026 at 3:00 PM</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<!-- Popup Modal -->
+<div id="socialModal" class="social-modal">
+    <div class="social-modal-card">
+        <div class="modal-header">
+            <h2>New Socialization Entry</h2>
+            <button class="modal-close" onclick="closeSocialModal()">×</button>
+        </div>
+
+        <!-- Later: connect this form to Django view/database -->
+        <form>
+            <label>Animal Name</label>
+            <input type="text" placeholder="Example: Luna">
+
+            <label>Animal Species</label>
+            <input type="text" placeholder="Example: Dog">
+
+            <label>Animal Age</label>
+            <input type="text" placeholder="Example: 3 years">
+
+            <label>Animal Kennel</label>
+            <input type="text" placeholder="Example: A-1">
+
+            <label>Last Socialization</label>
+            <input type="datetime-local">
+
+            <button type="button" class="social-entry-btn" onclick="closeSocialModal()">Save Entry</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Opens hardcoded popup for now
+    // Later: this can submit data to Django/database
+    function openSocialModal() {
+        document.getElementById("socialModal").style.display = "flex";
+    }
+
+    function closeSocialModal() {
+        document.getElementById("socialModal").style.display = "none";
+    }
+</script>
+{% endblock %}
