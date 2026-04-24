@@ -586,7 +586,7 @@ body {
 
 .login-feature-item {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 12px;
     padding: 10px 0;
     border-top: 1px solid rgba(0, 0, 0, 0.08);
@@ -601,9 +601,16 @@ body {
     line-height: 1;
 }
 
+/* Icon styling */
+.feature-icon {
+    font-size: 22px;
+    min-width: 28px;
+}
+
+/* Text styling */
 .login-feature-item p {
     margin: 0;
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.4;
-    opacity: 0.8;
+    opacity: 0.85;
 }
