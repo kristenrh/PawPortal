@@ -39,8 +39,8 @@
             <tbody>
                 <!-- Later: replace these hardcoded rows with database loop -->
                  {% for c in context %}
-                    {% for dc in c.determined_color %}
-                        <div style="bg_color: {{dc }};">
+                    <!--{% for dc in c.determined_color %}
+                        <div style="bg_color: {{dc }};">-->
                         {% for a in c.animals %}
                          <th>{{ a.animalname }}</th>
                          <th>{{ a.animalname }}</th>
@@ -48,7 +48,7 @@
                          <th>{{ a.animalname }}</th>
                          <th>{{ a.animalname }}</th>
                          {% endfor %}
-                     {% endfor %}
+                     <!--{% endfor %}-->
                  {% endfor %}
 
      </dix>
