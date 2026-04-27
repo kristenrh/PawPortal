@@ -38,34 +38,20 @@
 
             <tbody>
                 <!-- Later: replace these hardcoded rows with database loop -->
-                <tr>
-                    <td>Luna</td>
-                    <td>Dog</td>
-                    <td>3 years</td>
-                    <td>A-1</td>
-                    <td>April 24, 2026 at 10:30 AM</td>
-                </tr>
-                <tr>
-                    <td>Milo</td>
-                    <td>Cat</td>
-                    <td>2 years</td>
-                    <td>B-2</td>
-                    <td>April 23, 2026 at 1:15 PM</td>
-                </tr>
-                <tr>
-                    <td>Charlie</td>
-                    <td>Dog</td>
-                    <td>5 years</td>
-                    <td>C-1</td>
-                    <td>April 22, 2026 at 9:45 AM</td>
-                </tr>
-                <tr>
-                    <td>Daisy</td>
-                    <td>Cat</td>
-                    <td>1 year</td>
-                    <td>D-3</td>
-                    <td>April 21, 2026 at 3:00 PM</td>
-                </tr>
+                 {% for c in context %}
+                    {% for dc in c.determined_color %}
+                        <div style="bg_color: {{dc }};">
+                        {% for a in c.animals %}
+                         <th>{{ a.animalname }}</th>
+                         <th>{{ a.animalname }}</th>
+                         <th>{{ a.animalname }}</th>
+                         <th>{{ a.animalname }}</th>
+                         <th>{{ a.animalname }}</th>
+                         {% endfor %}
+                     {% endfor %}
+                 {% endfor %}
+
+     </dix>
             </tbody>
         </table>
     </div>

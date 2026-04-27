@@ -27,3 +27,14 @@ class person(models.Model):
 
     def __str__(self):
         return f"{self.firstname} {self.lastname}"
+
+#class peson(models.Model):
+    #firstname = models.CharField(max_length=100)
+    #lastname = models.CharField(max_length=100)
+  #  email = models.EmailField(max_length=254, blank=True)
+
+    #class Meta:
+        db_table = "person"
+
+    #def __str__(self):
+        return f"{self.firstname} {self.lastname}"
