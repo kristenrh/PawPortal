@@ -41,13 +41,13 @@
                  {% for c in context %}
                     <!--{% for dc in c.determined_color %}
                         <div style="bg_color: {{dc }};">-->
-                        {% for a in c.animals %}
+                        
+                         <th>{{ c.animals.animalname }}</th>
+                         <!--<th>{{ a.animalname }}</th>
                          <th>{{ a.animalname }}</th>
                          <th>{{ a.animalname }}</th>
-                         <th>{{ a.animalname }}</th>
-                         <th>{{ a.animalname }}</th>
-                         <th>{{ a.animalname }}</th>
-                         {% endfor %}
+                         <th>{{ a.animalname }}</th>-->
+                         
                      <!--{% endfor %}-->
                  {% endfor %}
 
