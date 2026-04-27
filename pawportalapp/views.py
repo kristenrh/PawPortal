@@ -39,7 +39,7 @@ def socialization(request):
     #print(detemineed_color)
     context = {
         'animals': animals,
-        'determined_color': determined_color,
+        'determined_color': determined_color
     }
 
     #context = sorted(context.animals.animalname)
