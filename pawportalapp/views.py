@@ -35,7 +35,8 @@ def socialization(request):
 
 
    
-    print(animals)
+    #print(animals) #test to see if the information was in the array
+    #print(detemineed_color)
     context = {
         'animals': animals,
         'determined_color': determined_color,
