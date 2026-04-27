@@ -39,7 +39,7 @@ def socialization(request):
         'determined_color': determined_color,
     }
 
-    context = sorted(context.animal.animalname)
+    context = sorted(context.animals.animalname)
     return render(request, 'socialization.html', context)
 
 def adoption(request):
@@ -55,9 +55,9 @@ def colorDetermine(lw): #lw is last walked
 
  if(num < 0) :
      print("negative number detected")
- elif(num >= 0 and num <= 6):
+ elif(num >= 0 and num < 7):
      color_determine = "green"
- elif(num >= 7 and num <= 12  ):
+ elif(num >= 7 and num < 13  ):
      color_determine = "yellow"
  else:
      color_determine = "red"
