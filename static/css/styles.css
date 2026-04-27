@@ -623,3 +623,174 @@ body {
     margin: 0;
     display: inline;
 }
+
+/* =========================
+   Socialization Log
+========================= */
+.social-page {
+    width: 100%;
+}
+
+.social-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.social-header h1 {
+    margin: 0;
+    font-size: 42px;
+}
+
+.social-header p {
+    margin: 8px 0 0 0;
+    opacity: 0.75;
+}
+
+.social-entry-btn {
+    background: #7ea6f5;
+    border: 1px solid #5f87d6;
+    border-radius: 12px;
+    padding: 10px 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.social-entry-btn:hover {
+    background: #88affc;
+}
+
+.social-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid #d6e4ff;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.social-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 850px;
+}
+
+.social-table th {
+    background: #96b9ff;
+    text-align: left;
+    padding: 14px;
+    font-weight: bold;
+}
+
+.social-table td {
+    padding: 14px;
+    border-top: 1px solid #c5d7fb;
+}
+
+.social-table tbody tr:not(:last-child) {
+    border-bottom: 1px solid #c5d7fb;
+}
+
+.social-table tbody tr:hover {
+    background: #eef4ff;
+}
+
+/* Popup overlay */
+.social-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.social-modal.show-modal {
+    display: flex;
+}
+
+/* Popup card */
+.social-modal-card {
+    background: white;
+    border-radius: 18px;
+    padding: 22px;
+    width: 420px;
+    max-width: 90%;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.modal-header h2 {
+    margin: 0;
+}
+
+.modal-close {
+    border: none;
+    background: transparent;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.social-modal-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.social-modal-card label {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.social-modal-card input {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.18);
+}
+
+.social-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.social-sort {
+    background: #7ea6f5;
+    border: 1px solid #5f87d6;
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-weight: bold;
+    cursor: pointer;
+    color: black;
+    width: auto;
+    min-width: 0;
+}
+
+.social-sort:hover {
+    background: #88affc;
+}
+
+/* Row color coding */
+.row-green {
+    background-color: #e8f8ee;
+}
+
+.row-yellow {
+    background-color: #fff9e6;
+}
+
+.row-orange {
+    background-color: #fff1e6;
+}
+
+.row-red {
+    background-color: #fdeaea;
+}
