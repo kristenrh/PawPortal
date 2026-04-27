@@ -21,25 +21,32 @@ def dashboard(request):
 def socialization(request):
     try:
         animals = Animal.objects.all()
-        law = Animal.lastwalk.all();
+        law = Animal.lastwalk.all()
+
     except Exception as e:
         print(f"Database error: {e}")
         animals = []
 
     determined_color = []
+    i = 0
+
     for law in animals:
-        determined_color[law] = colorDetermine(law)
+        determined_color[i] = colorDetermine(law)
+        ++i
 
     context = {
         'animals': animals,
         'determined_color': determined_color,
     }
+
+    context = sorted(context.animal.animalname)
     return render(request, 'socialization.html', context)
 
 def adoption(request):
     return render(request, "adoption.html")
 
-def defaultSort(request):
+def defaultSort(context):
+    
     return 0
 
 def colorDetermine(lw): #lw is last walked

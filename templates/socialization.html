@@ -7,10 +7,10 @@
     <button onclick="" style="display:inline;">Animal Name</button>
     <button onclick="" style="display:inline;">Personality</button>
 
-    {% for dc in determined_color %}
-     <div style="bg_color: {{dc }};">
-        {% for animal in animals %}
-            <p>{{ animal.name }}</p>
+    {% for determined_color in context %}
+     <div style="bg_color: {{determined_color }};">
+        {% for animal in context %}
+            <p>{{ animal.animalname }}</p>
         {% endfor %}
      </dix>
      {% endfor %}
