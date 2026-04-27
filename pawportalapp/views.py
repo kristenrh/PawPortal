@@ -39,7 +39,7 @@ def socialization(request):
         'determined_color': determined_color,
     }
 
-    context = sorted(context.animals.animalname)
+    #context = sorted(context.animals.animalname)
     return render(request, 'socialization.html', context)
 
 def adoption(request):
