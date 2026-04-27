@@ -100,10 +100,165 @@
         {% endfor %}
     </div>
 
+
     <div class="kennel-slot" data-kennel-id="A02" ondragover="allowDrop(event)" ondrop="drop(event)">
         Kennel A-2
         {% for p in animals %}
             {% if p.animallocation == "A02" %}
+                <div class="animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ p.animalid }}">
+                    {{ p.animalname }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="kennel-slot" data-kennel-id="B02" ondragover="allowDrop(event)" ondrop="drop(event)">
+        Kennel B-2
+        {% for p in animals %}
+            {% if p.animallocation == "B02" %}
+                <div class="animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ p.animalid }}">
+                    {{ p.animalname }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="kennel-slot" data-kennel-id="C02" ondragover="allowDrop(event)" ondrop="drop(event)">
+        Kennel C-2
+        {% for p in animals %}
+            {% if p.animallocation == "C02" %}
+                <div class="animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ p.animalid }}">
+                    {{ p.animalname }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="kennel-slot" data-kennel-id="D02" ondragover="allowDrop(event)" ondrop="drop(event)">
+        Kennel D-2
+        {% for p in animals %}
+            {% if p.animallocation == "D02" %}
+                <div class="animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ p.animalid }}">
+                    {{ p.animalname }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="kennel-slot" data-kennel-id="E02" ondragover="allowDrop(event)" ondrop="drop(event)">
+        Kennel E-2
+        {% for p in animals %}
+            {% if p.animallocation == "E02" %}
+                <div class="animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ p.animalid }}">
+                    {{ p.animalname }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="kennel-slot" data-kennel-id="A03" ondragover="allowDrop(event)" ondrop="drop(event)">
+        Kennel A-3
+        {% for p in animals %}
+            {% if p.animallocation == "A03" %}
+                <div class="animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ p.animalid }}">
+                    {{ p.animalname }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="kennel-slot" data-kennel-id="B03" ondragover="allowDrop(event)" ondrop="drop(event)">
+        Kennel B-3
+        {% for p in animals %}
+            {% if p.animallocation == "B03" %}
+                <div class="animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ p.animalid }}">
+                    {{ p.animalname }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="kennel-slot" data-kennel-id="C03" ondragover="allowDrop(event)" ondrop="drop(event)">
+        Kennel C-3
+        {% for p in animals %}
+            {% if p.animallocation == "C03" %}
+                <div class="animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ p.animalid }}">
+                    {{ p.animalname }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="kennel-slot" data-kennel-id="D03" ondragover="allowDrop(event)" ondrop="drop(event)">
+        Kennel D-3
+        {% for p in animals %}
+            {% if p.animallocation == "D03" %}
+                <div class="animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ p.animalid }}">
+                    {{ p.animalname }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="kennel-slot" data-kennel-id="E03" ondragover="allowDrop(event)" ondrop="drop(event)">
+        Kennel E-3
+        {% for p in animals %}
+            {% if p.animallocation == "E03" %}
+                <div class="animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ p.animalid }}">
+                    {{ p.animalname }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="kennel-slot" data-kennel-id="A04" ondragover="allowDrop(event)" ondrop="drop(event)">
+        Kennel A-4
+        {% for p in animals %}
+            {% if p.animallocation == "A04" %}
+                <div class="animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ p.animalid }}">
+                    {{ p.animalname }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="kennel-slot" data-kennel-id="B04" ondragover="allowDrop(event)" ondrop="drop(event)">
+        Kennel B-4
+        {% for p in animals %}
+            {% if p.animallocation == "B04" %}
+                <div class="animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ p.animalid }}">
+                    {{ p.animalname }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="kennel-slot" data-kennel-id="C04" ondragover="allowDrop(event)" ondrop="drop(event)">
+        Kennel C-4
+        {% for p in animals %}
+            {% if p.animallocation == "C04" %}
+                <div class="animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ p.animalid }}">
+                    {{ p.animalname }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="kennel-slot" data-kennel-id="D04" ondragover="allowDrop(event)" ondrop="drop(event)">
+        Kennel D-4
+        {% for p in animals %}
+            {% if p.animallocation == "D04" %}
+                <div class="animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ p.animalid }}">
+                    {{ p.animalname }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="kennel-slot" data-kennel-id="E04" ondragover="allowDrop(event)" ondrop="drop(event)">
+        Kennel E-4
+        {% for p in animals %}
+            {% if p.animallocation == "E04" %}
                 <div class="animal-card" draggable="true" ondragstart="drag(event)" id="animal-{{ p.animalid }}">
                     {{ p.animalname }}
                 </div>

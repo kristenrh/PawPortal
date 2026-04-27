@@ -1,21 +1,157 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Socialization Page</h1>
+<div class="social-page">
 
-    <p>Sort filters</p>
-    <button onclick="" style="display:inline;">Animal Name</button>
-    <button onclick="" style="display:inline;">Personality</button>
+    <div class="social-header">
+        <div>
+            <h1>Socialization Log</h1>
+            <p>Track the most recent socialization activity for each animal.</p>
+        </div>
 
-    {% for determined_color in context %}
-     <div style="bg_color: {{determined_color }};">
-        {% for animal in context %}
-            <p>{{ animal.animalname }}</p>
-        {% endfor %}
+        <div class="social-actions">
+            <select id="sortSelect" class="social-sort" onchange="sortSocialTable()">
+                <option value="">Sort Options</option>
+                <option value="name-az">Animal Name A-Z</option>
+                <option value="name-za">Animal Name Z-A</option>
+                <option value="recent">Most Recent - Least Recent</option>
+                <option value="oldest">Least Recent - Most Recent</option>
+            </select>
+
+            <button class="social-entry-btn" type="button" onclick="openSocialModal()">
+                Socialization Entry
+            </button>
+        </div>
+    </div>
+
+    <div class="social-table-wrapper">
+        <table class="social-table" id="socialTable">
+            <thead>
+                <tr>
+                    <th>Animal Name</th>
+                    <th>Animal Species</th>
+                    <th>Animal Age</th>
+                    <th>Animal Kennel</th>
+                    <th>Last Socialization</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <!-- Later: replace these hardcoded rows with database loop -->
+                 {% for determined_color in context %}
+                    <div style="bg_color: {{determined_color }};">
+                     {% for animal in context %}
+                      <th>{{ animal.animalname }}</th>
+                     <th>{{ animal.animalname }}</th>
+                     <th>{{ animal.animalname }}</th>
+                     <th>{{ animal.animalname }}</th>
+                     <th>{{ animal.animalname }}</th>
+                     {% endfor %}
+                {% endfor %}
      </dix>
-     {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-    
-    
+</div>
 
-{% endblock %} 
+<div id="socialModal" class="social-modal">
+    <div class="social-modal-card">
+        <div class="modal-header">
+            <h2>New Socialization Entry</h2>
+            <button class="modal-close" type="button" onclick="closeSocialModal()">×</button>
+        </div>
+
+        <!-- Later: connect this form to database -->
+        <form>
+            <label>Animal Name</label>
+            <input type="text" placeholder="Example: Luna">
+
+            <label>Animal Species</label>
+            <input type="text" placeholder="Example: Dog">
+
+            <label>Animal Age</label>
+            <input type="text" placeholder="Example: 3 years">
+
+            <label>Animal Kennel</label>
+            <input type="text" placeholder="Example: A-1">
+
+            <label>Last Socialization</label>
+            <input type="datetime-local">
+
+            <button type="button" class="social-entry-btn" onclick="closeSocialModal()">
+                Save Entry
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openSocialModal() {
+        document.getElementById("socialModal").classList.add("show-modal");
+    }
+
+    function closeSocialModal() {
+        document.getElementById("socialModal").classList.remove("show-modal");
+    }
+
+    function cleanDate(text) {
+        return new Date(text.replace(" at", ""));
+    }
+
+    function sortSocialTable() {
+        const table = document.getElementById("socialTable");
+        const tbody = table.querySelector("tbody");
+        const rows = Array.from(tbody.querySelectorAll("tr"));
+        const sortType = document.getElementById("sortSelect").value;
+
+        rows.sort((a, b) => {
+            const nameA = a.cells[0].textContent.trim().toLowerCase();
+            const nameB = b.cells[0].textContent.trim().toLowerCase();
+
+            const dateA = cleanDate(a.cells[4].textContent.trim());
+            const dateB = cleanDate(b.cells[4].textContent.trim());
+
+            if (sortType === "name-az") return nameA.localeCompare(nameB);
+            if (sortType === "name-za") return nameB.localeCompare(nameA);
+            if (sortType === "recent") return dateB - dateA;
+            if (sortType === "oldest") return dateA - dateB;
+
+            return 0;
+        });
+
+        rows.forEach(row => tbody.appendChild(row));
+        applyRowColors();
+    }
+
+    function applyRowColors() {
+        const rows = document.querySelectorAll("#socialTable tbody tr");
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        rows.forEach(row => {
+            const text = row.cells[4].textContent.trim();
+            const date = cleanDate(text);
+            date.setHours(0, 0, 0, 0);
+
+            const diffTime = today - date;
+            const diffDays = diffTime / (1000 * 60 * 60 * 24);
+
+            row.classList.remove("row-green", "row-yellow", "row-orange", "row-red");
+
+            if (diffDays === 0) {
+                row.classList.add("row-green");
+            } else if (diffDays === 1) {
+                row.classList.add("row-yellow");
+            } else if (diffDays === 2) {
+                row.classList.add("row-orange");
+            } else {
+                row.classList.add("row-red");
+            }
+        });
+    }
+
+    applyRowColors();
+</script>
+{% endblock %}
