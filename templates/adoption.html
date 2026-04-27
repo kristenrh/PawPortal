@@ -4,7 +4,7 @@
 
 <div class="calendar-page">
     <div class="calendar-topbar">
-        <button class="calendar-add-btn">Create New Event</button>
+        <button class="calendar-add-btn" onclick="addEvent()">Create New Event</button>
         <button id="prev-month" class="calendar-nav-btn" type="button">←</button>
         <h1 id="calendar-month" class="calendar-title">April 2026</h1>
         <button id="next-month" class="calendar-nav-btn" type="button">→</button>
@@ -22,6 +22,20 @@
 </div>
 
 <script>
+    function addEvent() {
+        const date = prompt("Enter date (YYYY-MM-DD):");
+        const time = prompt("Enter time (e.g., 10:00 AM):");
+        const petName = prompt("Enter pet name:");
+        
+        if (date && time && petName) {
+            const eventText = `${time} - ${petName}`;
+            if (!events[date]) {
+                events[date] = [];
+            }
+            events[date].push(eventText);
+            renderCalendar(currentMonth, currentYear);
+        }
+    }
     const calendar = document.getElementById("calendar");
     const monthLabel = document.getElementById("calendar-month");
     const prevBtn = document.getElementById("prev-month");
