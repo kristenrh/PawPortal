@@ -8,7 +8,7 @@
             <h1>Socialization Log</h1>
             <p>Track the most recent socialization activity for each animal.</p>
         </div>
-
+        <p>this isnt a copy</p>
         <div class="social-actions">
             <select id="sortSelect" class="social-sort" onchange="sortSocialTable()">
                 <option value="">Sort Options</option>
@@ -38,11 +38,11 @@
 
             <tbody>
                 <!-- Later: replace these hardcoded rows with database loop -->
-                 {% for c in animals %}
+                 {% for animal in animals %}
                     <!--{% for dc in c.determined_color %}
                         <div style="bg_color: {{dc }};">-->
                          <tr>
-                         <th>{{ c }}</th>
+                        <th>{{ animal.animalname }}</th>
                          <!--<th>{{ a.animalname }}</th>
                          <th>{{ a.animalname }}</th>
                          <th>{{ a.animalname }}</th>
