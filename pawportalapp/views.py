@@ -19,12 +19,9 @@ def dashboard(request):
     return render(request, "dashboard.html")
 
 def socialization(request):
-    animals = []
     try:
         animals = Animal.objects.all()
-        law = Animal.lastwalk.all()
-        
-
+       
     except Exception as e:
         print(f"Database error: {e}")
         animals = []
@@ -32,9 +29,9 @@ def socialization(request):
     determined_color = []
     i = 0
 
-    for law in animals:
-        determined_color[i] = colorDetermine(law)
-        ++i
+    #for law in animals:
+        #determined_color[i] = colorDetermine(law)
+        #++i
 
 
    
