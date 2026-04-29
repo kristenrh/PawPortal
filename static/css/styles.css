@@ -560,11 +560,17 @@ body {
     border-radius: 12px;
     padding: 10px;
     box-sizing: border-box;
+    cursor: pointer;
+}
+
+.calendar-day:hover {
+    background: #f4f8ff;
 }
 
 .calendar-day.empty {
     background: transparent;
     border: none;
+    cursor: default;
 }
 
 .day-number {
@@ -578,11 +584,63 @@ body {
     border-radius: 8px;
     padding: 6px 8px;
     font-size: 13px;
-    margin-top: 6px;
+    margin-top: 7px;
+    margin-bottom: 4px;
 }
 
 .calendar-day.today {
     border: 2px solid #5f87d6;
+    background: #f4f8ff;
+}
+
+/* Edit/delete event modal */
+.day-events-card {
+    width: 560px;
+}
+
+.day-event-edit-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.day-event-input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.18);
+}
+
+.trash-btn {
+    background: #fdeaea;
+    border: 1px solid #d38b8b;
+    border-radius: 10px;
+    padding: 8px 10px;
+    cursor: pointer;
+}
+
+.trash-btn:hover {
+    background: #f8d2d2;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 18px;
+}
+
+.calendar-cancel-btn {
+    background: white;
+    border: 1px solid #5f87d6;
+    border-radius: 12px;
+    padding: 10px 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.calendar-cancel-btn:hover {
     background: #f4f8ff;
 }
 
