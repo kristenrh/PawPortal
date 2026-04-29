@@ -1,5 +1,5 @@
 /* =========================
-   Base page
+Base page
 ========================= */
 html, body {
     margin: 0%;
@@ -15,7 +15,7 @@ body {
 }
 
 /* =========================
-   Navbar
+Navbar
 ========================= */
 .navbar {
     background: #96b9ff;
@@ -75,7 +75,7 @@ body {
 }
 
 /* =========================
-   Kennel / animal layout
+Kennel Layout
 ========================= */
 .shelter-map {
     display: grid;
@@ -173,7 +173,6 @@ body {
     gap: 15px;
 }
 
-
 .panel {
     position: fixed;
     top: 50%;
@@ -185,8 +184,9 @@ body {
     padding: 20px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
+
 /* =========================
-   Split dashboard layout
+Split dashboard layout
 ========================= */
 .dashboard-split {
     display: grid;
@@ -224,7 +224,7 @@ body {
 }
 
 /* =========================
-   General cards / auth UI
+General cards
 ========================= */
 .auth-card {
     background: rgba(255, 255, 255, 0.85);
@@ -322,7 +322,7 @@ body {
 }
 
 /* =========================
-   Developer card
+Developer card
 ========================= */
 .dev-card {
     background: rgba(255, 255, 255, 0.5);
@@ -372,7 +372,7 @@ body {
 }
 
 /* =========================
-   Landing page
+Landing page
 ========================= */
 .landing-page {
     display: flex;
@@ -453,7 +453,7 @@ body {
 }
 
 /* =========================
-   Responsive
+Responsive
 ========================= */
 @media (max-width: 900px) {
     .dashboard-split {
@@ -493,7 +493,7 @@ body {
 }
 
 /* =========================
-   Adoption Calendar
+Adoption Calendar
 ========================= */
 .calendar-page {
     max-width: 1100px;
@@ -596,18 +596,28 @@ body {
 /* Edit/delete event modal */
 .day-events-card {
     width: 560px;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
-.day-event-edit-row {
+.day-event-edit-card {
     display: flex;
-    gap: 10px;
-    align-items: center;
-    margin-bottom: 12px;
+    flex-direction: column;
+    gap: 8px;
+    background: #f4f8ff;
+    border: 1px solid #d6e4ff;
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 14px;
 }
 
-.day-event-input {
-    flex: 1;
-    padding: 10px;
+.day-event-edit-card label {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.day-event-edit-card input {
+    padding: 9px;
     border-radius: 10px;
     border: 1px solid rgba(0, 0, 0, 0.18);
 }
@@ -618,6 +628,8 @@ body {
     border-radius: 10px;
     padding: 8px 10px;
     cursor: pointer;
+    font-weight: bold;
+    margin-top: 8px;
 }
 
 .trash-btn:hover {
@@ -644,7 +656,9 @@ body {
     background: #f4f8ff;
 }
 
-/* Login page feature card */
+/* =========================
+Login Page Feature Card
+========================= */
 .login-features-card {
     margin-top: 18px;
 }
@@ -682,7 +696,7 @@ body {
 }
 
 /* =========================
-   Socialization Log
+Socialization Log
 ========================= */
 .social-page {
     width: 100%;

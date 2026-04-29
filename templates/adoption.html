@@ -26,7 +26,6 @@
     </div>
 </div>
 
-<!-- Create Event Modal -->
 <div id="adoptionModal" class="social-modal">
     <div class="social-modal-card">
         <div class="modal-header">
@@ -35,8 +34,8 @@
         </div>
 
         <!-- TODO DATABASE:
-             submit this form to Django using POST.
-             save animal, adopter, date, time, and notes to calendar table
+             Later, submit this form to Django using POST.
+             Save animal, adopter, date, time, and notes to the adoption calendar table.
         -->
         <form>
             <label>Animal Name</label>
@@ -61,7 +60,6 @@
     </div>
 </div>
 
-<!-- Edit/Delete Day Events Modal -->
 <div id="dayEventsModal" class="social-modal">
     <div class="social-modal-card day-events-card">
         <div class="modal-header">
@@ -70,7 +68,7 @@
         </div>
 
         <!-- TODO DATABASE:
-             load events for this date from the database.
+             Later, load events for this date from the database.
              Save edited values with a Django POST/update view.
              Delete with a Django delete view after confirmation.
         -->
@@ -104,12 +102,21 @@
     ];
 
     // TODO DATABASE:
-    // replace this object with events passed from database.
+    // Later, replace this object with events passed from Django/database.
     const events = {
-        "2026-04-03": ["10:00 AM - Luna (John)"],
-        "2026-04-06": ["1:30 PM - Charlie (Sarah)", "3:00 PM - Milo (Jamie)"],
-        "2026-04-10": ["11:00 AM - Daisy"],
-        "2026-04-20": ["2:00 PM - Max (Emily)"]
+        "2026-04-03": [
+            { animal: "Luna", adopter: "John", time: "10:00", notes: "" }
+        ],
+        "2026-04-06": [
+            { animal: "Charlie", adopter: "Sarah", time: "13:30", notes: "" },
+            { animal: "Milo", adopter: "Jamie", time: "15:00", notes: "" }
+        ],
+        "2026-04-10": [
+            { animal: "Daisy", adopter: "", time: "11:00", notes: "" }
+        ],
+        "2026-04-20": [
+            { animal: "Max", adopter: "Emily", time: "14:00", notes: "" }
+        ]
     };
 
     function openAdoptionModal() {
@@ -134,13 +141,29 @@
         if (dayEvents.length === 0) {
             list.innerHTML = "<p class='muted'>No events for this day.</p>";
         } else {
-            dayEvents.forEach((eventText, index) => {
+            dayEvents.forEach((event, index) => {
                 const item = document.createElement("div");
-                item.classList.add("day-event-edit-row");
+                item.classList.add("day-event-edit-card");
 
                 item.innerHTML = `
-                    <input class="day-event-input" type="text" value="${eventText}">
-                    <button class="trash-btn" type="button" onclick="deleteDayEvent(${index})">🗑️</button>
+                    <label>Animal Name</label>
+                    <input class="edit-animal" type="text" value="${event.animal || ""}">
+
+                    <label>Adopter Name</label>
+                    <input class="edit-adopter" type="text" value="${event.adopter || ""}">
+
+                    <label>Adoption Date</label>
+                    <input class="edit-date" type="date" value="${dateKey}">
+
+                    <label>Adoption Time</label>
+                    <input class="edit-time" type="time" value="${event.time || ""}">
+
+                    <label>Notes</label>
+                    <input class="edit-notes" type="text" value="${event.notes || ""}">
+
+                    <button class="trash-btn" type="button" onclick="deleteDayEvent(${index})">
+                        🗑️ Delete Event
+                    </button>
                 `;
 
                 list.appendChild(item);
@@ -158,24 +181,45 @@
     function saveDayEventChanges() {
         if (!selectedDateKey) return;
 
-        const inputs = document.querySelectorAll(".day-event-input");
-        const updatedEvents = [];
+        const cards = document.querySelectorAll(".day-event-edit-card");
+        const updatedEventsByDate = {};
 
-        inputs.forEach(input => {
-            const value = input.value.trim();
-            if (value !== "") {
-                updatedEvents.push(value);
+        cards.forEach(card => {
+            const animal = card.querySelector(".edit-animal").value.trim();
+            const adopter = card.querySelector(".edit-adopter").value.trim();
+            const date = card.querySelector(".edit-date").value;
+            const time = card.querySelector(".edit-time").value;
+            const notes = card.querySelector(".edit-notes").value.trim();
+
+            if (!animal || !date || !time) {
+                return;
             }
+
+            if (!updatedEventsByDate[date]) {
+                updatedEventsByDate[date] = [];
+            }
+
+            updatedEventsByDate[date].push({
+                animal: animal,
+                adopter: adopter,
+                time: time,
+                notes: notes
+            });
         });
 
-        events[selectedDateKey] = updatedEvents;
+        delete events[selectedDateKey];
 
-        if (events[selectedDateKey].length === 0) {
-            delete events[selectedDateKey];
-        }
+        Object.keys(updatedEventsByDate).forEach(date => {
+            if (!events[date]) {
+                events[date] = [];
+            }
+
+            events[date] = events[date].concat(updatedEventsByDate[date]);
+        });
 
         // TODO DATABASE:
-        // send updatedEvents to database before refreshing calendar.
+        // Later, send updated event data to Django/database here.
+
         renderCalendar(currentMonth, currentYear);
         closeDayEventsModal();
     }
@@ -194,7 +238,8 @@
         }
 
         // TODO DATABASE:
-        // Later, delete this event from the database here.
+        // Later, delete this specific event from the database here.
+
         renderCalendar(currentMonth, currentYear);
         openDayEventsModal(selectedDateKey);
     }
@@ -204,31 +249,23 @@
         const adopter = document.getElementById("eventAdopter").value;
         const date = document.getElementById("eventDate").value;
         const timeValue = document.getElementById("eventTime").value;
+        const notes = document.getElementById("eventNotes").value;
 
         if (!animal || !date || !timeValue) {
             alert("Please enter animal, date, and time.");
             return;
         }
 
-        const timeParts = timeValue.split(":");
-        let hour = parseInt(timeParts[0]);
-        const minute = timeParts[1];
-        const ampm = hour >= 12 ? "PM" : "AM";
-
-        hour = hour % 12;
-        if (hour === 0) hour = 12;
-
-        const formattedTime = `${hour}:${minute} ${ampm}`;
-
-        const eventText = adopter
-            ? `${formattedTime} - ${animal} (${adopter})`
-            : `${formattedTime} - ${animal}`;
-
         if (!events[date]) {
             events[date] = [];
         }
 
-        events[date].push(eventText);
+        events[date].push({
+            animal: animal,
+            adopter: adopter,
+            time: timeValue,
+            notes: notes
+        });
 
         closeAdoptionModal();
         renderCalendar(currentMonth, currentYear);
@@ -238,6 +275,22 @@
         document.getElementById("eventDate").value = "";
         document.getElementById("eventTime").value = "";
         document.getElementById("eventNotes").value = "";
+    }
+
+    function formatEventText(event) {
+        const timeParts = event.time.split(":");
+        let hour = parseInt(timeParts[0]);
+        const minute = timeParts[1];
+        const ampm = hour >= 12 ? "PM" : "AM";
+
+        hour = hour % 12;
+        if (hour === 0) hour = 12;
+
+        const formattedTime = `${hour}:${minute} ${ampm}`;
+
+        return event.adopter
+            ? `${formattedTime} - ${event.animal} (${event.adopter})`
+            : `${formattedTime} - ${event.animal}`;
     }
 
     function renderCalendar(month, year) {
@@ -281,10 +334,10 @@
             dayCell.appendChild(dayNumber);
 
             if (events[key]) {
-                events[key].forEach(eventText => {
+                events[key].forEach(event => {
                     const eventDiv = document.createElement("div");
                     eventDiv.classList.add("calendar-event");
-                    eventDiv.textContent = eventText;
+                    eventDiv.textContent = formatEventText(event);
                     dayCell.appendChild(eventDiv);
                 });
             }
