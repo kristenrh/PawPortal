@@ -26,6 +26,7 @@
     </div>
 </div>
 
+// New Event Modal
 <div id="adoptionModal" class="social-modal">
     <div class="social-modal-card">
         <div class="modal-header">
@@ -33,10 +34,15 @@
             <button class="modal-close" type="button" onclick="closeAdoptionModal()">×</button>
         </div>
 
-        <!-- Later: connect this form to database -->
+        <!-- TODO DATABASE:
+             Convert this form to method="POST"
+        -->
         <form>
             <label>Animal Name</label>
             <input id="eventAnimal" type="text" placeholder="Example: Luna">
+
+            <label>Adopter Name</label>
+            <input id="eventAdopter" type="text" placeholder="Example: Jane Smith">
 
             <label>Adoption Date</label>
             <input id="eventDate" type="date">
@@ -68,12 +74,13 @@
         "July", "August", "September", "October", "November", "December"
     ];
 
-    // Example hard-coded events prior to database connection
+    // TODO DATABASE:
+    // Replace this with events passed in
     const events = {
-        "2026-04-03": ["10:00 AM - Luna"],
-        "2026-04-06": ["1:30 PM - Charlie"],
+        "2026-04-03": ["10:00 AM - Luna (John)"],
+        "2026-04-06": ["1:30 PM - Charlie (Sarah)"],
         "2026-04-10": ["11:00 AM - Daisy"],
-        "2026-04-20": ["2:00 PM - Max"]
+        "2026-04-20": ["2:00 PM - Max (Emily)"]
     };
 
     function openAdoptionModal() {
@@ -86,37 +93,42 @@
 
     function saveAdoptionEvent() {
         const animal = document.getElementById("eventAnimal").value;
+        const adopter = document.getElementById("eventAdopter").value;
         const date = document.getElementById("eventDate").value;
         const timeValue = document.getElementById("eventTime").value;
 
         if (!animal || !date || !timeValue) {
-            alert("Please enter an animal name, date, and time.");
+            alert("Please enter animal, date, and time.");
             return;
         }
 
+        // Convert time
         const timeParts = timeValue.split(":");
         let hour = parseInt(timeParts[0]);
         const minute = timeParts[1];
         const ampm = hour >= 12 ? "PM" : "AM";
 
         hour = hour % 12;
-        if (hour === 0) {
-            hour = 12;
-        }
+        if (hour === 0) hour = 12;
 
         const formattedTime = `${hour}:${minute} ${ampm}`;
-        const eventText = `${formattedTime} - ${animal}`;
 
+        const eventText = adopter
+            ? `${formattedTime} - ${animal} (${adopter})`
+            : `${formattedTime} - ${animal}`;
+
+        // Add to calendar
         if (!events[date]) {
             events[date] = [];
         }
-
         events[date].push(eventText);
 
         closeAdoptionModal();
         renderCalendar(currentMonth, currentYear);
 
+        // Clear inputs
         document.getElementById("eventAnimal").value = "";
+        document.getElementById("eventAdopter").value = "";
         document.getElementById("eventDate").value = "";
         document.getElementById("eventTime").value = "";
         document.getElementById("eventNotes").value = "";
@@ -143,7 +155,11 @@
             const dayCell = document.createElement("div");
             dayCell.classList.add("calendar-day");
 
-            if (day === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+            if (
+                day === today.getDate() &&
+                month === today.getMonth() &&
+                year === today.getFullYear()
+            ) {
                 dayCell.classList.add("today");
             }
 
