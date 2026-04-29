@@ -4,10 +4,15 @@
 
 <div class="calendar-page">
     <div class="calendar-topbar">
-        <button class="calendar-add-btn" onclick="addEvent()">Create New Event</button>
-        <button id="prev-month" class="calendar-nav-btn" type="button">←</button>
-        <h1 id="calendar-month" class="calendar-title">April 2026</h1>
-        <button id="next-month" class="calendar-nav-btn" type="button">→</button>
+        <button class="calendar-event-btn" type="button" onclick="openAdoptionModal()">
+            Create New Event
+        </button>
+
+        <div class="calendar-month-controls">
+            <button id="prev-month" class="calendar-nav-btn" type="button">←</button>
+            <h1 id="calendar-month" class="calendar-title">April 2026</h1>
+            <button id="next-month" class="calendar-nav-btn" type="button">→</button>
+        </div>
     </div>
 
     <div class="calendar" id="calendar">
@@ -21,27 +26,41 @@
     </div>
 </div>
 
+<div id="adoptionModal" class="social-modal">
+    <div class="social-modal-card">
+        <div class="modal-header">
+            <h2>New Adoption Event</h2>
+            <button class="modal-close" type="button" onclick="closeAdoptionModal()">×</button>
+        </div>
+
+        <!-- Later: connect this form to database -->
+        <form>
+            <label>Animal Name</label>
+            <input id="eventAnimal" type="text" placeholder="Example: Luna">
+
+            <label>Adoption Date</label>
+            <input id="eventDate" type="date">
+
+            <label>Adoption Time</label>
+            <input id="eventTime" type="time">
+
+            <label>Notes</label>
+            <input id="eventNotes" type="text" placeholder="Optional notes">
+
+            <button type="button" class="calendar-event-btn" onclick="saveAdoptionEvent()">
+                Save Event
+            </button>
+        </form>
+    </div>
+</div>
+
 <script>
-    function addEvent() {
-        const date = prompt("Enter date (YYYY-MM-DD):");
-        const time = prompt("Enter time (e.g., 10:00 AM):");
-        const petName = prompt("Enter pet name:");
-        
-        if (date && time && petName) {
-            const eventText = `${time} - ${petName}`;
-            if (!events[date]) {
-                events[date] = [];
-            }
-            events[date].push(eventText);
-            renderCalendar(currentMonth, currentYear);
-        }
-    }
     const calendar = document.getElementById("calendar");
     const monthLabel = document.getElementById("calendar-month");
     const prevBtn = document.getElementById("prev-month");
     const nextBtn = document.getElementById("next-month");
 
-    let currentMonth = 3; // Started at April
+    let currentMonth = 3;
     let currentYear = 2026;
 
     const monthNames = [
@@ -57,8 +76,53 @@
         "2026-04-20": ["2:00 PM - Max"]
     };
 
+    function openAdoptionModal() {
+        document.getElementById("adoptionModal").classList.add("show-modal");
+    }
+
+    function closeAdoptionModal() {
+        document.getElementById("adoptionModal").classList.remove("show-modal");
+    }
+
+    function saveAdoptionEvent() {
+        const animal = document.getElementById("eventAnimal").value;
+        const date = document.getElementById("eventDate").value;
+        const timeValue = document.getElementById("eventTime").value;
+
+        if (!animal || !date || !timeValue) {
+            alert("Please enter an animal name, date, and time.");
+            return;
+        }
+
+        const timeParts = timeValue.split(":");
+        let hour = parseInt(timeParts[0]);
+        const minute = timeParts[1];
+        const ampm = hour >= 12 ? "PM" : "AM";
+
+        hour = hour % 12;
+        if (hour === 0) {
+            hour = 12;
+        }
+
+        const formattedTime = `${hour}:${minute} ${ampm}`;
+        const eventText = `${formattedTime} - ${animal}`;
+
+        if (!events[date]) {
+            events[date] = [];
+        }
+
+        events[date].push(eventText);
+
+        closeAdoptionModal();
+        renderCalendar(currentMonth, currentYear);
+
+        document.getElementById("eventAnimal").value = "";
+        document.getElementById("eventDate").value = "";
+        document.getElementById("eventTime").value = "";
+        document.getElementById("eventNotes").value = "";
+    }
+
     function renderCalendar(month, year) {
-        // remove old day cells
         const oldDays = calendar.querySelectorAll(".calendar-day");
         oldDays.forEach(day => day.remove());
 
@@ -68,23 +132,18 @@
         const daysInMonth = new Date(year, month + 1, 0).getDate();
 
         const today = new Date();
-        const todayDate = today.getDate();
-        const todayMonth = today.getMonth();
-        const todayYear = today.getFullYear();
 
-        // empty boxes before month starts
         for (let i = 0; i < firstDay; i++) {
             const emptyCell = document.createElement("div");
             emptyCell.classList.add("calendar-day", "empty");
             calendar.appendChild(emptyCell);
         }
 
-        // day cells
         for (let day = 1; day <= daysInMonth; day++) {
             const dayCell = document.createElement("div");
             dayCell.classList.add("calendar-day");
 
-            if (day === todayDate && month === todayMonth && year === todayYear) {
+            if (day === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
                 dayCell.classList.add("today");
             }
 
@@ -128,4 +187,5 @@
 
     renderCalendar(currentMonth, currentYear);
 </script>
+
 {% endblock %}
