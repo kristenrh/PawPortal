@@ -281,6 +281,23 @@
     {% endfor %}
 </div>
 
+<script>
+function openAddPanel() {
+    document.getElementById("animalAddPanel").style.display = "block";
+}
+
+function closeAddPanel() {
+    document.getElementById("animalAddPanel").style.display = "none";
+}
+
+function openRemovePanel() {
+    document.getElementById("animalRemovePanel").style.display = "block";
+}
+
+function closeRemovePanel() {
+    document.getElementById("animalRemovePanel").style.display = "none";
+}
+</script>
 
 
 {% endblock %}
