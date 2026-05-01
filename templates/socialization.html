@@ -42,16 +42,16 @@
                  {% for a in animals %}
                    
                      <tr>
-                     <th>{{ a.animalname }}</th>
-                     <th>{{ a.animalspecies }}</th>
-                     <th>{{ a.animalage }}</th>
-                     <th>{{ a.animallocation }}</th>
-                     <th>{{ a.lastwalk }}</th>
+                     <td>{{ a.animalname }}</td>
+                     <td>{{ a.animalspecies }}</td>
+                     <td>{{ a.animalage }}</td>
+                     <td>{{ a.animallocation }}</td>
+                     <td>{{ a.lastwalk }}</td>
                     </tr>
                 
                  {% endfor %}
 
-     </dix>
+     </div>
             </tbody>
         </table>
     </div>
@@ -159,4 +159,5 @@
 
     applyRowColors();
 </script>
+<script src="{% static 'js/addanimal.js' %}"></script>
 {% endblock %}
