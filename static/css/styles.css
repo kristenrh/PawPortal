@@ -104,44 +104,6 @@ Kennel Layout
     padding: 20px;
 }
 
-<<<<<<< HEAD
-.animal-add-btn {
-    width: 100px;
-    height: 40px;
-    border: solid darkgreen;
-    border-radius: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 16px;
-    color: black;
-    background-color: green;
-    cursor: pointer;
-}
-
-.animal-remove-btn {
-    width: 100px;
-    height: 40px;
-    border: solid darkred;
-    border-radius: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 16px;
-    background-color: red;
-    color: black;
-    cursor: pointer;
-}
-
-.btn-container {
-    display: flex;
-    gap: 15px;
-}
-
-||||||| 0b0d2c4
-
-=======
->>>>>>> d64f7910881781434650ff4d9a2a8baa668c0c46
 .animal-card {
     width: 80px;
     height: 80px;
@@ -163,64 +125,6 @@ Kennel Layout
     gap: 20px;
 }
 
-<<<<<<< HEAD
-.animal-add-btn {
-    width: 100px;
-    height: 60px;
-    border: 2px dashed rgba(0, 0, 0, 0.3);
-    border-radius: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 16px;
-    color: rgba(0, 0, 0, 0.3);
-||||||| 0b0d2c4
-.animal-add-btn {
-    width: 100px;
-    height: 40px;
-    border: solid darkgreen;
-    border-radius: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 16px;
-    color: black;
-    background-color: white;
-    cursor: pointer;
-    box-shadow: 0 2px 4px 0 black;
-    transition-duration: .5s;
-}
-
-.animal-remove-btn {
-    width: 100px;
-    height: 40px;
-    border: solid darkred;
-    border-radius: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 16px;
-    background-color: white;
-    color: black;
-    cursor: pointer;
-    box-shadow: 0 2px 4px 0 black;
-    transition-duration: .5s;
-}
-
-.animal-add-btn:hover {
-    background-color: green;
-        color: white;
-}
-
-.animal-remove-btn:hover {
-    background-color: red;
-    color: white;
-}
-
-.btn-container {
-    display: flex;
-    gap: 15px;
-=======
 .btn-container {
     display: flex;
     gap: 12px;
@@ -242,7 +146,6 @@ Kennel Layout
 .animal-add-btn:hover,
 .animal-remove-btn:hover {
     background: #88affc;
->>>>>>> d64f7910881781434650ff4d9a2a8baa668c0c46
 }
 
 .panel {
