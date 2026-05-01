@@ -26,20 +26,9 @@ def socialization(request):
         print(f"Database error: {e}")
         animals = []
 
-    determined_color = []
-    i = 0
-
-    #for law in animals:
-        #determined_color[i] = colorDetermine(law)
-        #++i
-
-
-   
-    #print(animals) #test to see if the information was in the array
-    #print(detemineed_color)
+  
     context = {
         'animals': animals,
-        'determined_color': determined_color
     }
 
     #context = sorted(context.animals.animalname)
@@ -47,25 +36,6 @@ def socialization(request):
 
 def adoption(request):
     return render(request, "adoption.html")
-
-def defaultSort(context):
-    
-    return 0
-
-def colorDetermine(lw): #lw is last walked
- now = datetime.now()
- num = now - lw
-
- if(num < 0) :
-     print("negative number detected")
- elif(num >= 0 and num < 7):
-     color_determine = "green"
- elif(num >= 7 and num < 13  ):
-     color_determine = "yellow"
- else:
-     color_determine = "red"
-
- return(color_determine)
 
 def add_animal(request):
     print("REQUEST METHOD:", request.method)
