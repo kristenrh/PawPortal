@@ -69,6 +69,7 @@ def add_animal(request):
             next_url = request.POST.get("next")
             if next_url:
               next_url = str(next_url)
+              print("After string: ", next_url)
               return redirect(next_url)
          
             
