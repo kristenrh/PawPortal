@@ -27,4 +27,14 @@ class person(models.Model):
 
     def __str__(self):
         return f"{self.firstname} {self.lastname}"
+    
+class AdoptionEvent(models.Model):
+    animal = models.ForeignKey(Animal, on_delete=models.CASCADE)
+    adopter_name = models.CharField(max_length=255)
+    adoption_date = models.DateField()
+    adoption_time = models.TimeField()
+    notes = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.animal.animalname} adoption by {self.adopter_name}"
 

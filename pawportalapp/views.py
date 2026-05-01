@@ -1,6 +1,8 @@
+from urllib import request
+
 from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.shortcuts import render
-from .models import Animal
+from .models import AdoptionEvent, Animal
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
@@ -45,15 +47,21 @@ def add_animal(request):
         name = request.POST.get("animalName")
         species = request.POST.get("animalSpecies")
         age = request.POST.get("animalAge")
+        location = request.POST.get("animallocation")
+        lw = request.POST.get("lastwalk")
 
         print("Name:", name)
         print("Species:", species)
+        print("Location", location)
+        print("last walk", lw)
 
         try:
             new_animal = Animal.objects.create(
                 animalname=name,
                 animalspecies=species,
-                animalage = age
+                animalage = age,
+                animallocation = location,
+                lastwalk = lw
             )
             return JsonResponse({"status": "success"})
 
@@ -214,3 +222,31 @@ def google_callback(request):
 def logout_view(request):
     request.session.flush()
     return redirect("/")
+
+
+
+from django.shortcuts import get_object_or_404
+
+def save_adoption_event(request):
+    if request.method == 'POST':
+        try:
+            animal_id = request.POST.get('animalId')
+            animal = get_object_or_404(Animal, animalid=animal_id)
+            
+            date_str = request.POST.get('adoption_date')
+            time_str = request.POST.get('adoption_time')
+            
+            combined_dt = datetime.strptime(f"{date_str} {time_str}", "%Y-%m-%d %H:%M")
+
+            AdoptionEvent.objects.create(
+                animal=animal,
+                adopter_name=request.POST.get('adopter_name'),
+                adoption_date=combined_dt.date(),
+                adoption_time=combined_dt.time(),
+                notes=request.POST.get('notes')
+            )
+            return redirect('calendar_page')
+            
+        except Exception as e:
+            print(f"Error saving adoption: {e}")
+            return render(request, 'calendar.html', {'error': 'Check your date/time format!'})
