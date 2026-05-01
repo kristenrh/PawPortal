@@ -13,6 +13,8 @@ from urllib.parse import urlencode
 from datetime import datetime
 from django.utils import timezone
 
+
+
 def dashboard(request):
     user = request.session.get("user")
 
@@ -41,6 +43,9 @@ def adoption(request):
     return render(request, "adoption.html")
 
 def add_animal(request):
+    import traceback
+
+    print(traceback.format_exc())
     print("REQUEST METHOD:", request.method)
     print("POST DATA:", request.POST)
 
