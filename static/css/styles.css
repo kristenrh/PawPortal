@@ -104,6 +104,38 @@ body {
     padding: 20px;
 }
 
+.animal-add-btn {
+    width: 100px;
+    height: 40px;
+    border: solid darkgreen;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    color: black;
+    background-color: green;
+    cursor: pointer;
+}
+
+.animal-remove-btn {
+    width: 100px;
+    height: 40px;
+    border: solid darkred;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    background-color: red;
+    color: black;
+    cursor: pointer;
+}
+
+.btn-container {
+    display: flex;
+    gap: 15px;
+}
 
 .animal-card {
     width: 80px;
@@ -124,18 +156,6 @@ body {
     justify-content: center;
     align-items: center;
     gap: 20px;
-}
-
-.animal-add-btn {
-    width: 100px;
-    height: 60px;
-    border: 2px dashed rgba(0, 0, 0, 0.3);
-    border-radius: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 16px;
-    color: rgba(0, 0, 0, 0.3);
 }
 
 .panel {
