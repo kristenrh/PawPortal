@@ -29,7 +29,7 @@
     </form>
 </div>
 
-<div id="animalRemovePanel" class="panel" style="display:none;">
+<div id="animalRemovePanel" class="panel" style="display:none;" action="{% url 'remove_animal' %}">
     <form id="removeForm">
         {% csrf_token %}
         <label for="removeAnimalSelect">Animal to Remove:</label>
@@ -281,7 +281,6 @@
     {% endfor %}
 </div>
 
-<script src="{% static 'js/dragNdrop.js' %}"></script>
-<script src="{% static 'js/addanimal.js' %}"></script>
+
 
 {% endblock %}

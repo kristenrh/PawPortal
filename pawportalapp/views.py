@@ -88,7 +88,7 @@ def add_animal(request):
             print(f"Error: {e}")
             return JsonResponse({"status": "error"})
 
-    return JsonResponse({"status": "error", "message": "Invalid Request"})
+    
 
 def remove_animal(request):
     if request.method == "POST":
