@@ -66,7 +66,9 @@ def add_animal(request):
                 animallocation = location,
                 lastwalk = lw
             )
-            return JsonResponse({"status": "success"})
+            next_url = request.POST.get("next")
+            if next_url:
+             return redirect(next_url)
 
         except Exception as e:
             print(f"Error: {e}")
