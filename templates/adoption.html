@@ -368,4 +368,11 @@
     renderCalendar(currentMonth, currentYear);
 </script>
 
+<label for="animalSelect">Animal Name</label>
+<select id="animalSelect" name="animalId">
+    {% for animal in animals %}
+        <option value="{{ animal.id }}">{{ animal.animalname }}</option>
+    {% endfor %}
+</select>
+
 {% endblock %}
