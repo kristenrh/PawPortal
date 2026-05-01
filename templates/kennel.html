@@ -10,7 +10,7 @@
     <button class="animal-remove-btn" onclick="openRemovePanel()">Remove</button>
 </div>
 
-<div id="animalAddPanel" class="panel" style="display:none;">
+<div id="animalAddPanel"  name="next" value="{{ request.path }}" class="panel" style="display:none;">
     <form id="animalForm" method="POST">
         {% csrf_token %}
         <label for="animalName">Animal Name:</label>
