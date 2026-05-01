@@ -66,9 +66,9 @@
         </div>
 
         <!-- Later: connect this form to database -->
-        <form>
+        <form id="socAdd" method="POST">
             {% csrf_token %}
-            
+
             <label>Animal Name</label>
             <input type="text" name="animalName" placeholder="Example: Luna">
 
@@ -159,6 +159,5 @@
 
     applyRowColors();
 </script>
-<script src="{% static 'js/dragNdrop.js' %}"></script>
 <script src="{% static 'js/addanimal.js' %}"></script>
 {% endblock %}
