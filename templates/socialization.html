@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
 {% block content %}
 <div class="social-page">
@@ -41,10 +43,10 @@
                    
                      <tr>
                      <th>{{ a.animalname }}</th>
-                     <th>{{ a.animalspeices }}</th>
+                     <th>{{ a.animalspecies }}</th>
                      <th>{{ a.animalage }}</th>
                      <th>{{ a.animallocation }}</th>
-                     <th>{{ a.latwalk }}</th>
+                     <th>{{ a.lastwalk }}</th>
                     </tr>
                 
                  {% endfor %}
@@ -66,21 +68,21 @@
         <!-- Later: connect this form to database -->
         <form>
             <label>Animal Name</label>
-            <input type="text" placeholder="Example: Luna">
+            <input type="text" name="animalName" placeholder="Example: Luna">
 
             <label>Animal Species</label>
-            <input type="text" placeholder="Example: Dog">
+            <input type="text" name="animalSpecies" placeholder="Example: Dog">
 
             <label>Animal Age</label>
-            <input type="text" placeholder="Example: 3 years">
+            <input type="text" name="animalAge" placeholder="Example: 3 years">
 
             <label>Animal Kennel</label>
-            <input type="text" placeholder="Example: A-1">
+            <input type="text" name="animallocation" placeholder="Example: A-1">
 
             <label>Last Socialization</label>
-            <input type="datetime-local">
+            <input type="datetime-local" name="lastwalk">
 
-            <button type="button" class="social-entry-btn" onclick="closeSocialModal()">
+            <button type="submit" class="social-entry-btn">
                 Save Entry
             </button>
         </form>
@@ -155,4 +157,6 @@
 
     applyRowColors();
 </script>
+<script src="{% static 'js/dragNdrop.js' %}"></script>
+<script src="{% static 'js/addanimal.js' %}"></script>
 {% endblock %}
