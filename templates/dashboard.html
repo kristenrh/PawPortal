@@ -28,7 +28,7 @@
           <p>Manage upcoming adoption events and scheduled appointments.</p>
       </a>
   </section>
-
+  
   <section class="dev-section">
       <div class="auth-card dev-card">
           <h2>Developed By</h2>
@@ -39,6 +39,16 @@
               <li>Will Pantzlaff</li>
           </ul>
       </div>
+      <div class="auth-card dev-card">
+        <h2>Setup New User</h2>
+        <input type="text" placeholder="Email" class="dev-input">
+        <select class="dev-select">
+            <option value="" disabled selected>Select user type</option>
+            <option value="volunteer">Volunteer</option>
+            <option value="staff">Staff</option>
+        </select>
+        <button class="dev-btn">Create User</button>
+     </div>
   </section>
 </div>
 {% endblock %}

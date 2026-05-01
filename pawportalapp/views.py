@@ -1,7 +1,6 @@
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.shortcuts import render
 from .models import Animal
-from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
@@ -20,29 +19,23 @@ def dashboard(request):
     return render(request, "dashboard.html")
 
 def socialization(request):
-        try:
-            #products = Animal.objects.values_list("animalname", flat=True)  # Fetch all products
-         animals = Animal.objects.all()
-         #products = Animal.objects.all()  # Fetch all products
-        except Exception as e:
-         #products = []
-         animals = []
-
+    try:
+        animals = Animal.objects.all()
+       
+    except Exception as e:
         print(f"Database error: {e}")
+        animals = []
 
-        #print("this is the test run: ", products)
-        return render(request, 'socialization.html', { 'animals': animals})
+  
+    context = {
+        'animals': animals,
+    }
+
+    #context = sorted(context.animals.animalname)
+    return render(request, 'socialization.html', context)
 
 def adoption(request):
     return render(request, "adoption.html")
-
-def defaultSort(request):
-    return 0
-
-def colorDetermine(lw): #lw is last walked
- 
- now = datetime.now()
- return(now)
 
 def add_animal(request):
     print("REQUEST METHOD:", request.method)
@@ -56,15 +49,19 @@ def add_animal(request):
         print("Name:", name)
         print("Species:", species)
 
-        new_animal = Animal.objects.create(
-            animalname=name,
-            animalspecies=species,
-            animalage = age
-        )
+        try:
+            new_animal = Animal.objects.create(
+                animalname=name,
+                animalspecies=species,
+                animalage = age
+            )
+            return JsonResponse({"status": "success"})
 
-        return JsonResponse({"status": "success"})
+        except Exception as e:
+            print(f"Error: {e}")
+            return JsonResponse({"status": "error"})
 
-    return JsonResponse({"status": "error"})
+    return JsonResponse({"status": "error", "message": "Invalid Request"})
 
 def remove_animal(request):
     if request.method == "POST":
@@ -83,19 +80,16 @@ def remove_animal(request):
 
 def kennel(request):
     try:
-        #products = Animal.objects.values_list("animalname", flat=True)  # Fetch all products
         animals = Animal.objects.all()
-        #products = Animal.objects.all()  # Fetch all products
         kennels = Animal.objects.values_list("animallocation", flat=True).distinct()  # Fetch distinct kennel locations
     except Exception as e:
-        products = []
         animals = []
         kennels = ["A01", "B01", "C01", "D01", "E01", "A02"]
 
         print(f"Database error: {e}")
-    #print("this is the test run: ", products)
     
-    return render(request, 'kennel.html', {'products': products, 'animals': animals, 'kennels': kennels})
+    
+    return render(request, 'kennel.html', {'animals': animals, 'kennels': kennels})
 
 def location_update(request):
     print("METHOD:", request.method)
