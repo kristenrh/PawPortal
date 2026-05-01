@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
 {% block content %}
 <h1>Welcome to the Kennel!</h1>
-<p> Testing the kennel template. </p>
 
-<div class = "btn-container">
-<button class = "animal-add-btn" onclick="openAddPanel()">Add</button>
-<button class = "animal-remove-btn" onclick="openRemovePanel()">Remove</button>
+<div class="btn-container">
+    <button class="animal-add-btn" onclick="openAddPanel()">Add</button>
+    <button class="animal-remove-btn" onclick="openRemovePanel()">Remove</button>
 </div>
 
 <div id="animalAddPanel" class="panel" style="display:none;">
