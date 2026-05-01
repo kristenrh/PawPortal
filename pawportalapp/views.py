@@ -50,11 +50,12 @@ def add_animal(request):
         age = request.POST.get("animalAge")
         location = request.POST.get("animallocation")
         lw_raw = request.POST.get("lastwalk")
-        if lw_raw != "":
+
+        lw = None
+        if lw_raw:
             lw = datetime.fromisoformat(lw_raw)
             lw = timezone.make_aware(lw)
-        else: 
-         lw = None
+         
 
         print("Name:", name)
         print("Species:", species)
