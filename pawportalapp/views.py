@@ -50,8 +50,11 @@ def add_animal(request):
         age = request.POST.get("animalAge")
         location = request.POST.get("animallocation")
         lw_raw = request.POST.get("lastwalk")
-        lw = datetime.fromisoformat(lw_raw)
-        lw = timezone.make_aware(lw)
+        if lw_raw != "":
+            lw = datetime.fromisoformat(lw_raw)
+            lw = timezone.make_aware(lw)
+        else: 
+         lw = None
 
         print("Name:", name)
         print("Species:", species)
@@ -68,9 +71,10 @@ def add_animal(request):
             )
             next_url = request.POST.get("next")
             if next_url:
-              next_url = str(next_url)
-              print("After string: ", next_url)
-              return redirect(next_url)
+                next_url = str(next_url)
+                print("After string: ", next_url)
+                return redirect(next_url)
+            return redirect("kennel")
          
             
 
