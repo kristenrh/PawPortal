@@ -45,15 +45,21 @@ def add_animal(request):
         name = request.POST.get("animalName")
         species = request.POST.get("animalSpecies")
         age = request.POST.get("animalAge")
+        location = request.POST.get("animallocation")
+        lw = request.POST.get("lastwalk")
 
         print("Name:", name)
         print("Species:", species)
+        print("Location", location)
+        print("last walk", lw)
 
         try:
             new_animal = Animal.objects.create(
                 animalname=name,
                 animalspecies=species,
-                animalage = age
+                animalage = age,
+                animallocation = location,
+                lastwalk = lw
             )
             return JsonResponse({"status": "success"})
 
