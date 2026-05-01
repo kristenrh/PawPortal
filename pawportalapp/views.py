@@ -69,6 +69,9 @@ def add_animal(request):
             next_url = request.POST.get("next")
             if next_url:
              return redirect(next_url)
+            else:
+                 return redirect("kennel") 
+         
             
 
         except Exception as e:
