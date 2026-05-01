@@ -66,7 +66,7 @@
         </div>
 
         <!-- Later: connect this form to database -->
-        <form id="socAdd" method="POST" onsubmit="console.log('submitted')">
+        <form id="socAdd" method="POST" action="{% url 'add_animal' %}" onsubmit="console.log('submitted')">
             {% csrf_token %}
 
             <label>Animal Name</label>
@@ -159,5 +159,4 @@
 
     applyRowColors();
 </script>
-<script src="{% static 'js/addanimal.js' %}"></script>
 {% endblock %}
