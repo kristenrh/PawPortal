@@ -11,6 +11,7 @@ import secrets
 import requests
 from urllib.parse import urlencode
 from datetime import datetime
+from django.utils import timezone
 
 def dashboard(request):
     user = request.session.get("user")
@@ -48,7 +49,9 @@ def add_animal(request):
         species = request.POST.get("animalSpecies")
         age = request.POST.get("animalAge")
         location = request.POST.get("animallocation")
-        lw = request.POST.get("lastwalk")
+        lw_raw = request.POST.get("lastwalk")
+        lw = datetime.fromisoformat(lw_raw)
+        lw = timezone.make_aware(lw)
 
         print("Name:", name)
         print("Species:", species)
