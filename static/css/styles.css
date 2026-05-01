@@ -257,28 +257,6 @@ Kennel Layout
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
-/* Kennel add/remove modal form */
-#animalAddPanel form,
-#animalRemovePanel form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-#animalAddPanel label,
-#animalRemovePanel label {
-    font-weight: bold;
-    font-size: 14px;
-}
-
-#animalAddPanel input,
-#animalRemovePanel input,
-.modal-select {
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.18);
-}
-
 /* =========================
 Split dashboard layout
 ========================= */
