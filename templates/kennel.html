@@ -13,7 +13,7 @@
 <div id="animalAddPanel"  class="panel" style="display:none;">
     <form id="animalForm" method="POST" action="{% url 'add_animal' %}">
         {% csrf_token %}
-        <input type="hidden" name="next" value="{{ request.path }}">
+        <input type="hidden" name="next" value="/kennel/">
 
         <label for="animalName">Animal Name:</label>
         <input type="text" id="animalName" name="animalName" required>
