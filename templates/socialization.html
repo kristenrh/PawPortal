@@ -67,6 +67,8 @@
 
         <!-- Later: connect this form to database -->
         <form>
+            {% csrf_token %}
+            
             <label>Animal Name</label>
             <input type="text" name="animalName" placeholder="Example: Luna">
 
