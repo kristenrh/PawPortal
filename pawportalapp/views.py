@@ -93,9 +93,8 @@ def add_animal(request):
 def remove_animal(request):
     if request.method == "POST":
         animal_id = request.POST.get("animalId")
-
-
-
+        print("🔥 REMOVE VIEW HIT 🔥", request.method)
+        print("POST:", request.POST)
         print("REMOVE ID:", animal_id)
 
         animal = get_object_or_404(Animal, pk=animal_id)
