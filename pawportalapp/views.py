@@ -91,18 +91,19 @@ def add_animal(request):
     
 
 def remove_animal(request):
-    if request.method == "POST":
-        animal_id = request.POST.get("animalId")
-        print("🔥 REMOVE VIEW HIT 🔥", request.method)
-        print("POST:", request.POST)
-        print("REMOVE ID:", animal_id)
+   animal_id = request.POST.get("animalId")
+   print("REMOVE ID:", animal_id)
+   try:
+       animal_obj = Animal.objects.get(pk=int(animal_id))
+       animal_obj.delete()
+       return JsonResponse({"status": "success"})
 
-        animal = get_object_or_404(Animal, pk=animal_id)
-        animal.delete()
+   except Animal.DoesNotExist:
+    return JsonResponse({"status": "error", "message": "Animal not found"})
 
-        return redirect("kennel")
-
-    return redirect("kennel")
+   except Exception as e:
+    print("❌ DELETE ERROR:", e)
+    return JsonResponse({"status": "error", "message": str(e)})
 
 def kennel(request):
     try:
