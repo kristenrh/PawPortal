@@ -29,8 +29,8 @@
     </form>
 </div>
 
-<div id="animalRemovePanel" class="panel" style="display:none;" action="{% url 'remove_animal' %}">
-    <form id="removeForm">
+<div id="animalRemovePanel" class="panel" style="display:none;" >
+    <form id="removeForm" action="{% url 'remove_animal' %}">
         {% csrf_token %}
         <label for="removeAnimalSelect">Animal to Remove:</label>
         <select id="removeAnimalSelect" name="animalId">
