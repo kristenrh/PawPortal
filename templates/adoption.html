@@ -111,21 +111,7 @@
 
     // TODO DATABASE:
     // Later, replace this object with events passed from Django/database.
-    const events = {
-        "2026-04-03": [
-            { animal: "Luna", adopter: "John", time: "10:00", notes: "" }
-        ],
-        "2026-04-06": [
-            { animal: "Charlie", adopter: "Sarah", time: "13:30", notes: "" },
-            { animal: "Milo", adopter: "Jamie", time: "15:00", notes: "" }
-        ],
-        "2026-04-10": [
-            { animal: "Daisy", adopter: "", time: "11:00", notes: "" }
-        ],
-        "2026-04-20": [
-            { animal: "Max", adopter: "Emily", time: "14:00", notes: "" }
-        ]
-    };
+    const events = const events = JSON.parse('{{ events_json|escapejs }}');
 
     function openAdoptionModal() {
         document.getElementById("adoptionModal").classList.add("show-modal");
