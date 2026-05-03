@@ -38,26 +38,33 @@
              Later, submit this form to Django using POST.
              Save animal, adopter, date, time, and notes to the adoption calendar table.
         -->
-        <form>
-            <label>Animal Name</label>
-            <input id="eventAnimal" type="text" placeholder="Example: Luna">
+        <form method="POST" action="{% url 'save_adoption_event' %}">
+    {% csrf_token %}
+    
+    <label>Animal Name</label>
+    <select name="animalId" id="eventAnimal" required>
+        <option value="" disabled selected>Select an animal...</option>
+        {% for animal in animals %}
+            <option value="{{ animal.animalid }}">{{ animal.animalname }}</option>
+        {% endfor %}
+    </select>
 
-            <label>Adopter Name</label>
-            <input id="eventAdopter" type="text" placeholder="Example: Jane Smith">
+    <label>Adopter Name</label>
+    <input name="adopter_name" id="eventAdopter" type="text" placeholder="Example: Jane Smith" required>
 
-            <label>Adoption Date</label>
-            <input id="eventDate" type="date">
+    <label>Adoption Date</label>
+    <input name="adoption_date" id="eventDate" type="date" required>
 
-            <label>Adoption Time</label>
-            <input id="eventTime" type="time">
+    <label>Adoption Time</label>
+    <input name="adoption_time" id="eventTime" type="time" required>
 
-            <label>Notes</label>
-            <input id="eventNotes" type="text" placeholder="Optional notes">
+    <label>Notes</label>
+    <input name="notes" id="eventNotes" type="text" placeholder="Optional notes">
 
-            <button type="button" class="calendar-event-btn" onclick="saveAdoptionEvent()">
-                Save Event
-            </button>
-        </form>
+    <button type="submit" class="calendar-event-btn">
+        Save Event
+    </button>
+</form>
     </div>
 </div>
 
