@@ -40,7 +40,30 @@ def socialization(request):
     return render(request, 'socialization.html', context)
 
 def adoption(request):
-    return render(request, "adoption.html")
+    animals = Animal.objects.all()
+
+    all_events = AdoptionEvent.objects.all()
+
+    events_dict = {}
+
+    for event in all_events:
+        date_key = event.adoption_date.strftime('%Y-%m-%d')
+        time_str = event.adoption_time.strftime('%H:%M')
+
+        if date_key not in events_dict:
+            events_dict[date_key] = []
+
+        events_dict[date_key].append({
+            "animal": event.animal.animalname,
+            "adopter": event.adopter_name,
+            "time": time_str,
+            "notes": event.notes if event.notes else""
+        })
+    
+    return render(request, "adoption.html", {
+        "animals":animals,
+        "events_json":json.dumps(events_dict)
+    })
 
 def add_animal(request):
     import traceback
