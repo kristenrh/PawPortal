@@ -164,38 +164,38 @@
         applyRowColors();
     }
 
-    function applyRowColors() {
-        const rows = document.querySelectorAll("#socialTable tbody tr");
+function applyRowColors() {
+    const rows = document.querySelectorAll("#socialTable tbody tr");
 
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-        rows.forEach(row => {
-            const date = getRowDate(row);
+    rows.forEach(row => {
+        const date = getRowDate(row);
 
-            row.classList.remove("row-green", "row-yellow", "row-orange", "row-red");
+        row.classList.remove("row-green", "row-yellow", "row-orange", "row-red");
 
-            if (date === null) {
-                row.classList.add("row-red");
-                return;
-            }
+        if (date === null) {
+            row.classList.add("row-red");
+            return;
+        }
 
-            date.setHours(0, 0, 0, 0);
+        date.setHours(0, 0, 0, 0);
 
-            const diffTime = today - date;
-            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        const diffTime = today - date;
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
-            if (diffDays === 0) {
-                row.classList.add("row-green");
-            } else if (diffDays === 1) {
-                row.classList.add("row-yellow");
-            } else if (diffDays === 2) {
-                row.classList.add("row-orange");
-            } else {
-                row.classList.add("row-red");
-            }
-        });
-    }
+        if (diffDays === 0) {
+            row.classList.add("row-green");
+        } else if (diffDays >= 1 && diffDays <= 2) {
+            row.classList.add("row-yellow");
+        } else if (diffDays >= 3 && diffDays <= 7) {
+            row.classList.add("row-orange");
+        } else {
+            row.classList.add("row-red");
+        }
+    });
+}
 
     document.addEventListener("DOMContentLoaded", function () {
         applyRowColors();

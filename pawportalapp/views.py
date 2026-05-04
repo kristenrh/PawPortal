@@ -12,6 +12,7 @@ import requests
 from urllib.parse import urlencode
 from datetime import datetime
 from django.utils import timezone
+from django.shortcuts import get_object_or_404
 
 
 
@@ -122,19 +123,27 @@ def add_animal(request):
     
 
 def remove_animal(request):
-   animal_id = request.POST.get("animalId")
-   print("REMOVE ID:", animal_id)
-   try:
-       animal_obj = Animal.objects.get(animalid=int(animal_id))
-       animal_obj.delete()
-       return JsonResponse({"status": "success"})
-
-   except Animal.DoesNotExist:
-       return JsonResponse({"status": "error", "message": "Animal not found"})
-
-   except Exception as e:
-       print("❌ DELETE ERROR:", e)
-       return redirect('kennel')
+    try:
+            # 1. Parse the JSON sent by your JavaScript fetch()
+            data = json.loads(request.body)
+            animal_id = data.get("animalId")
+            
+            print("REMOVE ID:", animal_id)
+            
+            if not animal_id:
+                return JsonResponse({"status": "error", "message": "No animal ID received."})
+    
+            animal_obj = Animal.objects.get(animalid=int(animal_id))
+            animal_obj.delete()
+            
+            return JsonResponse({"status": "success"})
+    
+        except Animal.DoesNotExist:
+            return JsonResponse({"status": "error", "message": "Animal not found in database."})
+            
+        except Exception as e:
+            print("❌ DELETE ERROR:", e)
+            return JsonResponse({"status": "error", "message": str(e)})
 
 def kennel(request):
     try:
