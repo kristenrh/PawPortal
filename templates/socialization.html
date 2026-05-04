@@ -81,15 +81,14 @@
             <label>Animal Age</label>
             <input type="text" name="animalAge" placeholder="Example: 3 years" required>
 
-        <label for="local">Animal Kennel</label>
-        <select id="local" name="animalId">
-            {% for p in animals %}
-            {% if %}
-                <option value="{{ p.animalid }}">{{ p.animalname }}</option>
-            {% endfor %}
-        </select>
-            <label>Animal Kennel</label>
-            <input type="text" name="animallocation" placeholder="Example: A-1" required>
+            <label for="local">Animal Kennel</label>
+            <select id="local" name="animallocation">
+                 {% for p in animals %}
+                    <option value="{{ p.animalid }}">{{ p.animallocation }}</option>
+                {% endfor %}
+            </select>
+            {#<label>Animal Kennel</label>#}
+            {#<input type="text" name="animallocation" placeholder="Example: A-1" required>#}
 
             <label>Last Socialization</label>
             <input type="datetime-local" name="lastwalk" required>
