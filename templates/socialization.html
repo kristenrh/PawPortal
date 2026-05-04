@@ -125,39 +125,39 @@
         const rows = Array.from(tbody.querySelectorAll("tr"));
         const sortType = document.getElementById("sortSelect").value;
 
-        rows.sort((a, b) => {
-            const nameA = a.cells[0].textContent.trim().toLowerCase();
-            const nameB = b.cells[0].textContent.trim().toLowerCase();
+    rows.sort((a, b) => {
+        const nameA = a.cells[0].textContent.trim().toLowerCase();
+        const nameB = b.cells[0].textContent.trim().toLowerCase();
 
-            const dateA = getRowDate(a);
-            const dateB = getRowDate(b);
+        const dateA = getRowDate(a);
+        const dateB = getRowDate(b);
 
-            if (sortType === "name-az") {
-                return nameA.localeCompare(nameB);
-            }
+        if (sortType === "name-az") {
+            return nameA.localeCompare(nameB);
+        }
 
-            if (sortType === "name-za") {
-                return nameB.localeCompare(nameA);
-            }
+        if (sortType === "name-za") {
+            return nameB.localeCompare(nameA);
+        }
 
-            if (sortType === "recent") {
-                if (dateA === null && dateB === null) return 0;
-                if (dateA === null) return 1;
-                if (dateB === null) return -1;
+        if (sortType === "recent") {
+            if (dateA === null && dateB === null) return 0;
+            if (dateA === null) return 1;
+            if (dateB === null) return -1;
 
-                return dateB - dateA;
-            }
+            return dateB - dateA;
+        }
 
-            if (sortType === "oldest") {
-                if (dateA === null && dateB === null) return 0;
-                if (dateA === null) return 1;
-                if (dateB === null) return -1;
+        if (sortType === "oldest") {
+            if (dateA === null && dateB === null) return 0;
+            if (dateA === null) return -1;
+            if (dateB === null) return 1;
 
-                return dateA - dateB;
-            }
+            return dateA - dateB;
+        }
 
-            return 0;
-        });
+        return 0;
+    });
 
         rows.forEach(row => tbody.appendChild(row));
 
@@ -176,7 +176,6 @@ function applyRowColors() {
         row.classList.remove("row-green", "row-yellow", "row-orange", "row-red");
 
         if (date === null) {
-            row.classList.add("row-red");
             return;
         }
 
