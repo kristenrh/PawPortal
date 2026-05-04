@@ -138,7 +138,7 @@ def remove_animal(request):
 
 def kennel(request):
     try:
-        animals = Animal.objects.all()
+        animals = Animal.objects.filter(isadopted=False)
         kennels = Animal.objects.values_list("animallocation", flat=True).distinct()  # Fetch distinct kennel locations
     except Exception as e:
         animals = []
