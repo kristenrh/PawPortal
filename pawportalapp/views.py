@@ -127,14 +127,14 @@ def remove_animal(request):
    try:
        animal_obj = Animal.objects.get(animalid=int(animal_id))
        animal_obj.delete()
-       return redirect('kennel')
+       return JsonResponse({"status": "success"})
 
    except Animal.DoesNotExist:
-    return JsonResponse({"status": "error", "message": "Animal not found"})
+       return JsonResponse({"status": "error", "message": "Animal not found"})
 
    except Exception as e:
-    print("❌ DELETE ERROR:", e)
-    return redirect('kennel')
+       print("❌ DELETE ERROR:", e)
+       return redirect('kennel')
 
 def kennel(request):
     try:
