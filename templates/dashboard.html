@@ -2,53 +2,61 @@
 
 {% block content %}
 <div class="landing-page">
-  <section class="landing-intro">
-      <h1 class="landing-title">Welcome to PawPortal!</h1>
-      <p class="landing-subtitle">
-          A simple shelter management portal for tracking kennels, socialization, and adoptions.
-      </p>
-  </section>
+    <section class="landing-intro">
+        <h1 class="landing-title">Welcome to PawPortal!</h1>
+        <p class="landing-subtitle">
+            A simple shelter management portal for tracking kennels, socialization, and adoptions.
+        </p>
+    </section>
 
-  <section class="feature-grid">
-      <a href="{% url 'kennel' %}" class="feature-card">
-          <div class="feature-icon">🐾</div>
-          <h2>Kennel Overview</h2>
-          <p>View kennel assignments and get a quick look at shelter layout.</p>
-      </a>
+    <section class="feature-grid">
+        <a href="{% url 'kennel' %}" class="feature-card">
+            <div class="feature-icon">🐾</div>
+            <h2>Kennel Overview</h2>
+            <p>View kennel assignments and get a quick look at shelter layout.</p>
+        </a>
 
-      <a href="{% url 'socialization' %}" class="feature-card">
-          <div class="feature-icon">📝</div>
-          <h2>Socialization Log</h2>
-          <p>Track volunteer and staff interactions with shelter animals.</p>
-      </a>
+        <a href="{% url 'socialization' %}" class="feature-card">
+            <div class="feature-icon">📝</div>
+            <h2>Socialization Log</h2>
+            <p>Track volunteer and staff interactions with shelter animals.</p>
+        </a>
 
-      <a href="{% url 'adoption' %}" class="feature-card">
-          <div class="feature-icon">📅</div>
-          <h2>Adoption Calendar</h2>
-          <p>Manage upcoming adoption events and scheduled appointments.</p>
-      </a>
-  </section>
-  
-  <section class="dev-section">
-      <div class="auth-card dev-card">
-          <h2>Developed By</h2>
-          <ul class="dev-list">
-              <li>Kristen Henningfeld</li>
-              <li>Adam Rath</li>
-              <li>Dan Shultz</li>
-              <li>Will Pantzlaff</li>
-          </ul>
-      </div>
-      <div class="auth-card dev-card">
-        <h2>Setup New User</h2>
-        <input type="text" placeholder="Email" class="dev-input">
-        <select class="dev-select dashboard-Button">
-            <option value="" disabled selected>Select user type</option>
-            <option value="volunteer">Volunteer</option>
-            <option value="staff">Staff</option>
-        </select>
-        <button class="dev-btn dashboard-Button">Create User</button>
-     </div>
-  </section>
+        <a href="{% url 'adoption' %}" class="feature-card">
+            <div class="feature-icon">📅</div>
+            <h2>Adoption Calendar</h2>
+            <p>Manage upcoming adoption events and scheduled appointments.</p>
+        </a>
+    </section>
+
+    <section class="dev-section">
+        <div class="auth-card dev-card">
+            <h2>Developed By</h2>
+            <ul class="dev-list">
+                <li>Kristen Henningfeld</li>
+                <li>Adam Rath</li>
+                <li>Dan Shultz</li>
+                <li>Will Pantzlaff</li>
+            </ul>
+        </div>
+
+        <div class="auth-card dev-card setup-user-card">
+            <h2>Setup New User</h2>
+
+            <div class="setup-user-form">
+                <input type="text" placeholder="Email" class="dev-input">
+
+                <div class="setup-user-row">
+                    <select class="dev-select">
+                        <option value="" disabled selected>Select user type</option>
+                        <option value="volunteer">Volunteer</option>
+                        <option value="staff">Staff</option>
+                    </select>
+
+                    <button class="dev-btn">Create User</button>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
 {% endblock %}
