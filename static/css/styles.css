@@ -198,6 +198,10 @@ Split dashboard layout
     gap: 24px;
 }
 
+.dashboard-Button {
+    margin: 10px;
+}
+
 /* =========================
 General cards
 ========================= */
@@ -745,7 +749,7 @@ Socialization Log
 }
 
 .social-table tbody tr:hover {
-    background: #eef4ff;
+    filter: brightness(0.97);
 }
 
 /* Popup overlay */
@@ -844,5 +848,5 @@ Socialization Log
 }
 
 .row-red {
-    background-color: #fdeaea;
+    background-color: #f8caca;
 }

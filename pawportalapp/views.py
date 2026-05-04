@@ -12,6 +12,7 @@ import requests
 from urllib.parse import urlencode
 from datetime import datetime
 from django.utils import timezone
+from django.shortcuts import get_object_or_404
 
 
 
@@ -74,13 +75,12 @@ def delete_adoption_event(request):
         return redirect('adoption')
 
 def add_animal(request):
-    import traceback
-
-    print(traceback.format_exc())
     print("REQUEST METHOD:", request.method)
     print("POST DATA:", request.POST)
 
     if request.method == "POST":
+        # Because your console output shows QueryDict, we know the frontend 
+        # is sending standard form data, so request.POST.get is correct here!
         name = request.POST.get("animalName")
         species = request.POST.get("animalSpecies")
         age = request.POST.get("animalAge")
@@ -92,7 +92,6 @@ def add_animal(request):
             lw = datetime.fromisoformat(lw_raw)
             lw = timezone.make_aware(lw)
          
-
         print("Name:", name)
         print("Species:", species)
         print("Location", location)
@@ -102,26 +101,23 @@ def add_animal(request):
             new_animal = Animal.objects.create(
                 animalname=name,
                 animalspecies=species,
-                animalage = age,
-                animallocation = location,
-                lastwalk = lw
+                animalage=age,
+                animallocation=location,
+                lastwalk=lw
             )
-            next_url = request.POST.get("next")
-            if next_url:
-                next_url = str(next_url)
-                print("After string: ", next_url)
-                return redirect(next_url)
-            return redirect("kennel")
-         
+            print("Successfully saved to database!")
             
-
+            # THE FIX: Return a JSON success message instead of a redirect
+            return JsonResponse({"status": "success"})
+         
         except Exception as e:
             print(f"Error: {e}")
-            return JsonResponse({"status": "error"})
+            return JsonResponse({"status": "error", "message": str(e)})
 
-    
-
+    # Fallback for GET requests
+    return JsonResponse({"status": "error", "message": "Invalid request method."})
 def remove_animal(request):
+<<<<<<< HEAD
 <<<<<<< HEAD
    if request.method == "POST":
      import json 
@@ -140,18 +136,50 @@ def remove_animal(request):
        animal_obj = Animal.objects.get(animalid=int(animal_id))
        animal_obj.delete()
        return redirect('kennel')
+=======
+    try:
+        animal_id = None
+        
+        # 1. Determine how the data was sent
+        if request.content_type == 'application/json':
+            # It came from JavaScript fetch()
+            data = json.loads(request.body)
+            # Try grabbing common variable names
+            animal_id = data.get("animalId") or data.get("animal_id") or data.get("id")
+        else:
+            # It came from a standard HTML form submission
+            animal_id = request.POST.get("animalId") or request.POST.get("animal_id")
+            
+        print("REMOVE ID:", animal_id)
+        
+        # 2. Safety check
+        if not animal_id:
+            return JsonResponse({"status": "error", "message": "No animal ID received from the browser."})
+>>>>>>> 217b56df4b86d57f9a5d28bb5a7cca2a5f5b0a8d
 
-   except Animal.DoesNotExist:
-    return JsonResponse({"status": "error", "message": "Animal not found"})
+        # 3. Find and delete
+        animal_obj = Animal.objects.get(animalid=int(animal_id))
+        animal_obj.delete()
+        
+        return JsonResponse({"status": "success"})
 
+<<<<<<< HEAD
    except Exception as e:
     print("❌ DELETE ERROR:", e)
     return redirect('kennel')
 >>>>>>> db13da4a20094445f3d307b84014cfcb93de2fa2
+=======
+    except Animal.DoesNotExist:
+        return JsonResponse({"status": "error", "message": "Animal not found in database."})
+        
+    except Exception as e:
+        print("❌ DELETE ERROR:", e)
+        return JsonResponse({"status": "error", "message": str(e)})
+>>>>>>> 217b56df4b86d57f9a5d28bb5a7cca2a5f5b0a8d
 
 def kennel(request):
     try:
-        animals = Animal.objects.all()
+        animals = Animal.objects.filter(isadopted=False)
         kennels = Animal.objects.values_list("animallocation", flat=True).distinct()  # Fetch distinct kennel locations
     except Exception as e:
         animals = []
