@@ -1,7 +1,6 @@
 from urllib import request
 
 from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
-from django.shortcuts import render
 from .models import AdoptionEvent, Animal
 from django.shortcuts import render, redirect
 from django.conf import settings
@@ -13,8 +12,6 @@ from urllib.parse import urlencode
 from datetime import datetime
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
-
-
 
 def dashboard(request):
     user = request.session.get("user")
@@ -75,50 +72,59 @@ def delete_adoption_event(request):
         return redirect('adoption')
 
 def add_animal(request):
-    import traceback
-
-    print(traceback.format_exc())
-    print("REQUEST METHOD:", request.method)
-    print("POST DATA:", request.POST)
-
     if request.method == "POST":
-        name = request.POST.get("animalName")
-        species = request.POST.get("animalSpecies")
-        age = request.POST.get("animalAge")
+        name = request.POST.get("animalName", "").strip()
+        species = request.POST.get("animalSpecies", "").strip()
+        age = request.POST.get("animalAge", "").strip()
+        next_url = request.POST.get("next", "")
+
         location = request.POST.get("animallocation")
         lw_raw = request.POST.get("lastwalk")
 
         lw = None
+
         if lw_raw:
             lw = datetime.fromisoformat(lw_raw)
-            lw = timezone.make_aware(lw)
-         
 
-        print("Name:", name)
-        print("Species:", species)
-        print("Location", location)
-        print("last walk", lw)
+            if timezone.is_naive(lw):
+                lw = timezone.make_aware(lw)
 
         try:
-            new_animal = Animal.objects.create(
-                animalname=name,
-                animalspecies=species,
-                animalage = age,
-                animallocation = location,
-                lastwalk = lw
-            )
-            next_url = request.POST.get("next")
+            animal = Animal.objects.filter(animalname__iexact=name).first()
+
+            if animal:
+                animal.animalname = name
+                animal.animalspecies = species
+                animal.animalage = age
+                if location is not None:
+                    animal.animallocation = location.strip()
+                if lw_raw is not None:
+                    animal.lastwalk = lw
+
+                animal.save()
+            else:
+                new_location = ""
+
+                if location is not None:
+                    new_location = location.strip()
+
+                Animal.objects.create(
+                    animalname=name,
+                    animalspecies=species,
+                    animalage=age,
+                    animallocation=new_location,
+                    lastwalk=lw
+                )
             if next_url:
-                next_url = str(next_url)
-                print("After string: ", next_url)
                 return redirect(next_url)
-            return redirect("kennel")
-         
             
+            return redirect("kennel")
 
         except Exception as e:
-            print(f"Error: {e}")
-            return JsonResponse({"status": "error"})
+            print(f"Error saving animal: {e}")
+            return JsonResponse({"status": "error", "message": str(e)}, status=400)
+
+    return redirect("kennel")
 
     
 
