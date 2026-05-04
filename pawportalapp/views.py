@@ -54,6 +54,7 @@ def adoption(request):
             events_dict[date_key] = []
 
         events_dict[date_key].append({
+            "id": event.id,
             "animal": event.animal.animalname,
             "adopter": event.adopter_name,
             "time": time_str,
