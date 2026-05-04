@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
 {% block content %}
 <div class="social-page">
@@ -10,6 +9,7 @@
             <h1>Socialization Log</h1>
             <p>Track the most recent socialization activity for each animal.</p>
         </div>
+
         <div class="social-actions">
             <select id="sortSelect" class="social-sort" onchange="sortSocialTable()">
                 <option value="">Sort Options</option>
@@ -38,20 +38,22 @@
             </thead>
 
             <tbody>
-                <!-- Later: replace these hardcoded rows with database loop -->
-                 {% for a in animals %}
-                   
-                     <tr>
-                     <td>{{ a.animalname }}</td>
-                     <td>{{ a.animalspecies }}</td>
-                     <td>{{ a.animalage }}</td>
-                     <td>{{ a.animallocation }}</td>
-                     <td>{{ a.lastwalk }}</td>
-                    </tr>
-                
-                 {% endfor %}
+                {% for a in animals %}
+                <tr>
+                    <td>{{ a.animalname }}</td>
+                    <td>{{ a.animalspecies }}</td>
+                    <td>{{ a.animalage }}</td>
+                    <td>{{ a.animallocation }}</td>
 
-     </div>
+                    <td data-date="{{ a.lastwalk|date:'c' }}">
+                        {% if a.lastwalk %}
+                            {{ a.lastwalk|date:"M d, Y g:i A" }}
+                        {% else %}
+                            No socialization recorded
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
@@ -65,26 +67,25 @@
             <button class="modal-close" type="button" onclick="closeSocialModal()">×</button>
         </div>
 
-        <!-- Later: connect this form to database -->
-        <form id="socadd"  method="POST" action="{% url 'add_animal' %}" onsubmit="console.log('submitted')">
+        <form id="socadd" method="POST" action="{% url 'add_animal' %}">
             {% csrf_token %}
 
             <input type="hidden" name="next" value="{{ request.path }}">
 
             <label>Animal Name</label>
-            <input type="text" name="animalName" placeholder="Example: Luna">
+            <input type="text" name="animalName" placeholder="Example: Luna" required>
 
             <label>Animal Species</label>
-            <input type="text" name="animalSpecies" placeholder="Example: Dog">
+            <input type="text" name="animalSpecies" placeholder="Example: Dog" required>
 
             <label>Animal Age</label>
-            <input type="text" name="animalAge" placeholder="Example: 3 years">
+            <input type="text" name="animalAge" placeholder="Example: 3 years" required>
 
             <label>Animal Kennel</label>
-            <input type="text" name="animallocation" placeholder="Example: A-1">
+            <input type="text" name="animallocation" placeholder="Example: A-1" required>
 
             <label>Last Socialization</label>
-            <input type="datetime-local" name="lastwalk">
+            <input type="datetime-local" name="lastwalk" required>
 
             <button type="submit" class="social-entry-btn">
                 Save Entry
@@ -102,8 +103,20 @@
         document.getElementById("socialModal").classList.remove("show-modal");
     }
 
-    function cleanDate(text) {
-        return new Date(text.replace(" at", ""));
+    function getRowDate(row) {
+        const dateText = row.cells[4].dataset.date;
+
+        if (!dateText) {
+            return null;
+        }
+
+        const date = new Date(dateText);
+
+        if (isNaN(date)) {
+            return null;
+        }
+
+        return date;
     }
 
     function sortSocialTable() {
@@ -116,18 +129,38 @@
             const nameA = a.cells[0].textContent.trim().toLowerCase();
             const nameB = b.cells[0].textContent.trim().toLowerCase();
 
-            const dateA = cleanDate(a.cells[4].textContent.trim());
-            const dateB = cleanDate(b.cells[4].textContent.trim());
+            const dateA = getRowDate(a);
+            const dateB = getRowDate(b);
 
-            if (sortType === "name-az") return nameA.localeCompare(nameB);
-            if (sortType === "name-za") return nameB.localeCompare(nameA);
-            if (sortType === "recent") return dateB - dateA;
-            if (sortType === "oldest") return dateA - dateB;
+            if (sortType === "name-az") {
+                return nameA.localeCompare(nameB);
+            }
+
+            if (sortType === "name-za") {
+                return nameB.localeCompare(nameA);
+            }
+
+            if (sortType === "recent") {
+                if (dateA === null && dateB === null) return 0;
+                if (dateA === null) return 1;
+                if (dateB === null) return -1;
+
+                return dateB - dateA;
+            }
+
+            if (sortType === "oldest") {
+                if (dateA === null && dateB === null) return 0;
+                if (dateA === null) return 1;
+                if (dateB === null) return -1;
+
+                return dateA - dateB;
+            }
 
             return 0;
         });
 
         rows.forEach(row => tbody.appendChild(row));
+
         applyRowColors();
     }
 
@@ -138,14 +171,19 @@
         today.setHours(0, 0, 0, 0);
 
         rows.forEach(row => {
-            const text = row.cells[4].textContent.trim();
-            const date = cleanDate(text);
+            const date = getRowDate(row);
+
+            row.classList.remove("row-green", "row-yellow", "row-orange", "row-red");
+
+            if (date === null) {
+                row.classList.add("row-red");
+                return;
+            }
+
             date.setHours(0, 0, 0, 0);
 
             const diffTime = today - date;
-            const diffDays = diffTime / (1000 * 60 * 60 * 24);
-
-            row.classList.remove("row-green", "row-yellow", "row-orange", "row-red");
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
             if (diffDays === 0) {
                 row.classList.add("row-green");
@@ -159,6 +197,8 @@
         });
     }
 
-    applyRowColors();
+    document.addEventListener("DOMContentLoaded", function () {
+        applyRowColors();
+    });
 </script>
 {% endblock %}
