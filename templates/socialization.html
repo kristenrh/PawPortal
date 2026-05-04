@@ -83,8 +83,8 @@
 
             <label for="local">Animal Kennel</label>
             <select id="local" name="animallocation">
-                 {% for p in animals %}
-                    <option value="{{ p.animalid }}">{{ p.animallocation }}</option>
+                 {% for k in kennels %}
+                    <option value="{{ k.id }}">{{ p.kennels }}</option>
                 {% endfor %}
             </select>
             {#<label>Animal Kennel</label>#}

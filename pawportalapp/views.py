@@ -25,12 +25,15 @@ def dashboard(request):
 def socialization(request):
     try:
         animals = Animal.objects.all()
+        kennels = Animal.objects.values_list("animallocation", flat=True).distinct()
     except Exception as e:
         print(f"Database error: {e}")
         animals = []
+        kennels = ["A01", "B01", "C01", "D01", "E01", "A02"]
  
     context = {
         "animals": animals,
+        "kennels": kennels
     }
  
     return render(request, "socialization.html", context)
