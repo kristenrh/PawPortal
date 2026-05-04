@@ -1,17 +1,17 @@
-from urllib import request
-
 from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
-from .models import AdoptionEvent, Animal
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
-from django.views.decorators.csrf import csrf_exempt
+from django.utils import timezone
+
+from .models import AdoptionEvent, Animal
+
+from urllib.parse import urlencode
+from datetime import datetime
+
 import json
 import secrets
 import requests
-from urllib.parse import urlencode
-from datetime import datetime
-from django.utils import timezone
-from django.shortcuts import get_object_or_404
+
 
 def dashboard(request):
     user = request.session.get("user")
@@ -21,32 +21,46 @@ def dashboard(request):
 
     return render(request, "dashboard.html")
 
+
 def socialization(request):
     try:
         animals = Animal.objects.all()
-       
     except Exception as e:
         print(f"Database error: {e}")
         animals = []
 
-  
     context = {
-        'animals': animals,
+        "animals": animals,
     }
 
-    #context = sorted(context.animals.animalname)
-    return render(request, 'socialization.html', context)
+    return render(request, "socialization.html", context)
+
+
+def kennel(request):
+    try:
+        animals = Animal.objects.filter(isadopted=False)
+        kennels = Animal.objects.values_list("animallocation", flat=True).distinct()
+
+    except Exception as e:
+        print(f"Database error: {e}")
+        animals = []
+        kennels = ["A01", "B01", "C01", "D01", "E01", "A02"]
+
+    return render(request, "kennel.html", {
+        "animals": animals,
+        "kennels": kennels,
+    })
+
 
 def adoption(request):
     animals = Animal.objects.all()
-
     all_events = AdoptionEvent.objects.all()
 
     events_dict = {}
 
     for event in all_events:
-        date_key = event.adoption_date.strftime('%Y-%m-%d')
-        time_str = event.adoption_time.strftime('%H:%M')
+        date_key = event.adoption_date.strftime("%Y-%m-%d")
+        time_str = event.adoption_time.strftime("%H:%M")
 
         if date_key not in events_dict:
             events_dict[date_key] = []
@@ -56,26 +70,23 @@ def adoption(request):
             "animal": event.animal.animalname,
             "adopter": event.adopter_name,
             "time": time_str,
-            "notes": event.notes if event.notes else""
+            "notes": event.notes if event.notes else "",
         })
-    
+
     return render(request, "adoption.html", {
-        "animals":animals,
-        "events_json":json.dumps(events_dict)
+        "animals": animals,
+        "events_json": json.dumps(events_dict),
     })
 
+
 def delete_adoption_event(request):
-    if request.method == 'POST':
-        target_id = request.POST.get('event_id')
+    if request.method == "POST":
+        target_id = request.POST.get("event_id")
         event_to_delete = get_object_or_404(AdoptionEvent, id=target_id)
         event_to_delete.delete()
-        return redirect('adoption')
+        return redirect("adoption")
 
-def wants_json(request):
-    return (
-        request.headers.get("x-requested-with") == "XMLHttpRequest"
-        or request.content_type == "application/json"
-    )
+    return redirect("adoption")
 
 
 def add_animal(request):
@@ -85,6 +96,8 @@ def add_animal(request):
         age = request.POST.get("animalAge", "").strip()
         next_url = request.POST.get("next", "")
 
+        # These fields only come from the socialization form.
+        # The kennel form does not send these.
         location = request.POST.get("animallocation", None)
         lw_raw = request.POST.get("lastwalk", None)
 
@@ -100,13 +113,13 @@ def add_animal(request):
             except Exception as e:
                 print("Date error:", e)
 
-                if wants_json(request):
+                if next_url == "/kennel/":
                     return JsonResponse({
                         "status": "error",
-                        "message": "Invalid date format."
-                    }, status=400)
+                        "message": "Invalid date format.",
+                    })
 
-                return redirect(next_url or "kennel")
+                return redirect(next_url or "socialization")
 
         try:
             animal = Animal.objects.filter(animalname__iexact=name).first()
@@ -116,17 +129,18 @@ def add_animal(request):
                 animal.animalspecies = species
                 animal.animalage = age
 
-                # Only socialization form sends this.
-                # Kennel form will not overwrite drag/drop location.
+                # Only update kennel location if the form actually sent it.
+                # This prevents the kennel add form from wiping drag/drop location.
                 if location is not None:
                     animal.animallocation = location.strip()
 
-                # Only socialization form sends this.
-                # Kennel form will not overwrite lastwalk.
+                # Only update lastwalk if the form actually sent it.
+                # This prevents the kennel add form from wiping socialization data.
                 if lw_raw is not None:
                     animal.lastwalk = lw
 
                 animal.save()
+
                 message = "Animal updated successfully."
 
             else:
@@ -140,40 +154,36 @@ def add_animal(request):
                     animalspecies=species,
                     animalage=age,
                     animallocation=new_location,
-                    lastwalk=lw
+                    lastwalk=lw,
                 )
 
                 message = "Animal added successfully."
 
-            if wants_json(request):
+            # Kennel add uses fetch(), so it expects JSON.
+            if next_url == "/kennel/":
                 return JsonResponse({
                     "status": "success",
                     "message": message,
                     "animalId": animal.animalid,
-                    "animalName": animal.animalname
+                    "animalName": animal.animalname,
                 })
 
+            # Socialization form uses normal POST, so redirect back.
             if next_url:
                 return redirect(next_url)
 
-            return redirect("kennel")
+            return redirect("socialization")
 
         except Exception as e:
             print(f"Error saving animal: {e}")
 
-            if wants_json(request):
+            if next_url == "/kennel/":
                 return JsonResponse({
                     "status": "error",
-                    "message": str(e)
-                }, status=400)
+                    "message": str(e),
+                })
 
-            return redirect(next_url or "kennel")
-
-    if wants_json(request):
-        return JsonResponse({
-            "status": "error",
-            "message": "Invalid request method."
-        }, status=400)
+            return redirect(next_url or "socialization")
 
     return redirect("kennel")
 
@@ -222,6 +232,7 @@ def remove_animal(request):
 =======
     if request.method == "POST":
         try:
+<<<<<<< HEAD
             animal_id = None
 >>>>>>> 7a04e8fb5ceb919aef8356968c3f5665187160a0
 
@@ -247,41 +258,46 @@ def remove_animal(request):
             if not animal_id:
                 animal_id = request.POST.get("animalId") or request.POST.get("animal_id")
 >>>>>>> 7a04e8fb5ceb919aef8356968c3f5665187160a0
+=======
+            data = json.loads(request.body)
+            animal_id = data.get("id")
+>>>>>>> 2eb67f182e1eecb968a946ea051ddb870e1b3374
 
             print("REMOVE ID:", animal_id)
 
             if not animal_id:
                 return JsonResponse({
                     "status": "error",
-                    "message": "No animal ID received from the browser."
-                }, status=400)
+                    "message": "No animal ID received.",
+                })
 
             animal_obj = Animal.objects.get(animalid=int(animal_id))
             animal_obj.delete()
 
             return JsonResponse({
                 "status": "success",
-                "message": "Animal removed successfully."
+                "message": "Animal removed successfully.",
             })
 
         except Animal.DoesNotExist:
             return JsonResponse({
                 "status": "error",
-                "message": "Animal not found in database."
-            }, status=404)
+                "message": "Animal not found in database.",
+            })
 
         except Exception as e:
             print("DELETE ERROR:", e)
 
             return JsonResponse({
                 "status": "error",
-                "message": str(e)
-            }, status=400)
+                "message": str(e),
+            })
 
     return JsonResponse({
         "status": "error",
-        "message": "Invalid request method."
-    }, status=400)
+        "message": "Invalid request method.",
+    })
+
 
 def location_update(request):
     print("METHOD:", request.method)
@@ -306,38 +322,21 @@ def location_update(request):
 
         except Exception as e:
             print("ERROR:", e)
-            return JsonResponse({"status": "error", "message": str(e)}, status=400)
+            return JsonResponse({
+                "status": "error",
+                "message": str(e),
+            }, status=400)
 
     return JsonResponse({"status": "error"}, status=400)
+
 
 def google_login(request):
     """
     Redirects the user to Google's OAuth 2.0 authorization endpoint.
     """
-    
-    # --- demo check for placeholder client ID/secret ---
-    cid = settings.GOOGLE_CLIENT_ID
-    csecret = settings.GOOGLE_CLIENT_SECRET
-    # if "REPLACE WITH YOUR GOOGLE CLIENT ID" in cid or "REPLACE WITH YOUR GOOGLE CLIENT SECRET" in csecret:
-    #     return HttpResponse(
-    #         "<h1 style='color:red; font-size:2rem;'>"
-    #         "Google OAuth is NOT configured"
-    #         "</h1>"
-    #         "<p>Set real GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in settings.py.</p>"
-    #         f"<pre style='background:#222;color:#ff0000;padding:1rem;'>"
-    #         f"GOOGLE_CLIENT_ID    = {cid!r}\n"
-    #         f"GOOGLE_CLIENT_SECRET = {csecret!r}"
-    #         "</pre>"
-    #     )
-    # --- end demo check ---
 
-
-
-
-    # Random string to protect against CSRF
     state = secrets.token_urlsafe(16)
     request.session["oauth_state"] = state
-    
 
     params = {
         "client_id": settings.GOOGLE_CLIENT_ID,
@@ -354,21 +353,25 @@ def google_login(request):
 def google_callback(request):
     """
     Handles Google's redirect back:
-      - checks 'state'
-      - exchanges 'code' for an access token
+      - checks state
+      - exchanges code for an access token
       - fetches user info
       - stores email in the session
     """
+
     if request.GET.get("state") != request.session.get("oauth_state"):
-        # template = loader.get_template('Homepage.html')
-        # return HttpResponse(template.render())
-        return HttpResponseBadRequest("Invalid state " + request.GET.get("state", "") +" vs " + request.session.get("oauth_state", "")) 
+        return HttpResponseBadRequest(
+            "Invalid state "
+            + request.GET.get("state", "")
+            + " vs "
+            + request.session.get("oauth_state", "")
+        )
 
     code = request.GET.get("code")
+
     if not code:
         return HttpResponseBadRequest("Missing code")
 
-    # Exchange code for tokens
     token_res = requests.post(
         "https://oauth2.googleapis.com/token",
         data={
@@ -379,25 +382,29 @@ def google_callback(request):
             "grant_type": "authorization_code",
         },
     )
+
     if not token_res.ok:
         return HttpResponseBadRequest("Token request failed")
 
     access_token = token_res.json().get("access_token")
+
     if not access_token:
         return HttpResponseBadRequest("No access token")
 
-    # Fetch basic user info
     userinfo_res = requests.get(
         "https://www.googleapis.com/oauth2/v3/userinfo",
         headers={"Authorization": f"Bearer {access_token}"},
     )
+
     if not userinfo_res.ok:
         return HttpResponseBadRequest("Userinfo request failed")
 
     userinfo = userinfo_res.json()
 
-    # Store just the email in the session for this demo
-    request.session["user"] = {"email": userinfo.get("email")}
+    request.session["user"] = {
+        "email": userinfo.get("email"),
+    }
+
     request.session.pop("oauth_state", None)
 
     return redirect("/")
@@ -408,29 +415,34 @@ def logout_view(request):
     return redirect("/")
 
 
-
-from django.shortcuts import get_object_or_404
-
 def save_adoption_event(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         try:
-            animal_id = request.POST.get('animalId')
+            animal_id = request.POST.get("animalId")
             animal = get_object_or_404(Animal, animalid=animal_id)
-            
-            date_str = request.POST.get('adoption_date')
-            time_str = request.POST.get('adoption_time')
-            
-            combined_dt = datetime.strptime(f"{date_str} {time_str}", "%Y-%m-%d %H:%M")
+
+            date_str = request.POST.get("adoption_date")
+            time_str = request.POST.get("adoption_time")
+
+            combined_dt = datetime.strptime(
+                f"{date_str} {time_str}",
+                "%Y-%m-%d %H:%M",
+            )
 
             AdoptionEvent.objects.create(
                 animal=animal,
-                adopter_name=request.POST.get('adopter_name'),
+                adopter_name=request.POST.get("adopter_name"),
                 adoption_date=combined_dt.date(),
                 adoption_time=combined_dt.time(),
-                notes=request.POST.get('notes')
+                notes=request.POST.get("notes"),
             )
-            return redirect('adoption')
-            
+
+            return redirect("adoption")
+
         except Exception as e:
             print(f"Error saving adoption: {e}")
-            return render(request, 'adoption.html', {'error': 'Check your date/time format!'})
+            return render(request, "adoption.html", {
+                "error": "Check your date/time format!",
+            })
+
+    return redirect("adoption")
