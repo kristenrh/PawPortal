@@ -71,6 +71,13 @@ def delete_adoption_event(request):
         event_to_delete.delete()
         return redirect('adoption')
 
+def wants_json(request):
+    return (
+        request.headers.get("x-requested-with") == "XMLHttpRequest"
+        or request.content_type == "application/json"
+    )
+
+
 def add_animal(request):
     if request.method == "POST":
         name = request.POST.get("animalName", "").strip()
@@ -78,16 +85,28 @@ def add_animal(request):
         age = request.POST.get("animalAge", "").strip()
         next_url = request.POST.get("next", "")
 
-        location = request.POST.get("animallocation")
-        lw_raw = request.POST.get("lastwalk")
+        location = request.POST.get("animallocation", None)
+        lw_raw = request.POST.get("lastwalk", None)
 
         lw = None
 
         if lw_raw:
-            lw = datetime.fromisoformat(lw_raw)
+            try:
+                lw = datetime.fromisoformat(lw_raw)
 
-            if timezone.is_naive(lw):
-                lw = timezone.make_aware(lw)
+                if timezone.is_naive(lw):
+                    lw = timezone.make_aware(lw)
+
+            except Exception as e:
+                print("Date error:", e)
+
+                if wants_json(request):
+                    return JsonResponse({
+                        "status": "error",
+                        "message": "Invalid date format."
+                    }, status=400)
+
+                return redirect(next_url or "kennel")
 
         try:
             animal = Animal.objects.filter(animalname__iexact=name).first()
@@ -96,41 +115,71 @@ def add_animal(request):
                 animal.animalname = name
                 animal.animalspecies = species
                 animal.animalage = age
+
+                # Only socialization form sends this.
+                # Kennel form will not overwrite drag/drop location.
                 if location is not None:
                     animal.animallocation = location.strip()
+
+                # Only socialization form sends this.
+                # Kennel form will not overwrite lastwalk.
                 if lw_raw is not None:
                     animal.lastwalk = lw
 
                 animal.save()
+                message = "Animal updated successfully."
+
             else:
                 new_location = ""
 
                 if location is not None:
                     new_location = location.strip()
 
-                Animal.objects.create(
+                animal = Animal.objects.create(
                     animalname=name,
                     animalspecies=species,
                     animalage=age,
                     animallocation=new_location,
                     lastwalk=lw
                 )
+
+                message = "Animal added successfully."
+
+            if wants_json(request):
+                return JsonResponse({
+                    "status": "success",
+                    "message": message,
+                    "animalId": animal.animalid,
+                    "animalName": animal.animalname
+                })
+
             if next_url:
                 return redirect(next_url)
-            
+
             return redirect("kennel")
 
         except Exception as e:
             print(f"Error saving animal: {e}")
-            return JsonResponse({"status": "error", "message": str(e)}, status=400)
+
+            if wants_json(request):
+                return JsonResponse({
+                    "status": "error",
+                    "message": str(e)
+                }, status=400)
+
+            return redirect(next_url or "kennel")
+
+    if wants_json(request):
+        return JsonResponse({
+            "status": "error",
+            "message": "Invalid request method."
+        }, status=400)
 
     return redirect("kennel")
 
-    
 
-    # Fallback for GET requests
-    return JsonResponse({"status": "error", "message": "Invalid request method."})
 def remove_animal(request):
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
    if request.method == "POST":
@@ -170,13 +219,17 @@ def remove_animal(request):
         if not animal_id:
             return JsonResponse({"status": "error", "message": "No animal ID received from the browser."})
 >>>>>>> 217b56df4b86d57f9a5d28bb5a7cca2a5f5b0a8d
+=======
+    if request.method == "POST":
+        try:
+            animal_id = None
+>>>>>>> 7a04e8fb5ceb919aef8356968c3f5665187160a0
 
-        # 3. Find and delete
-        animal_obj = Animal.objects.get(animalid=int(animal_id))
-        animal_obj.delete()
-        
-        return JsonResponse({"status": "success"})
+            if request.content_type == "application/json":
+                data = json.loads(request.body)
+                animal_id = data.get("animalId") or data.get("animal_id") or data.get("id")
 
+<<<<<<< HEAD
 <<<<<<< HEAD
    except Exception as e:
     print("❌ DELETE ERROR:", e)
@@ -190,19 +243,45 @@ def remove_animal(request):
         print("❌ DELETE ERROR:", e)
         return JsonResponse({"status": "error", "message": str(e)})
 >>>>>>> 217b56df4b86d57f9a5d28bb5a7cca2a5f5b0a8d
+=======
+            if not animal_id:
+                animal_id = request.POST.get("animalId") or request.POST.get("animal_id")
+>>>>>>> 7a04e8fb5ceb919aef8356968c3f5665187160a0
 
-def kennel(request):
-    try:
-        animals = Animal.objects.filter(isadopted=False)
-        kennels = Animal.objects.values_list("animallocation", flat=True).distinct()  # Fetch distinct kennel locations
-    except Exception as e:
-        animals = []
-        kennels = ["A01", "B01", "C01", "D01", "E01", "A02"]
+            print("REMOVE ID:", animal_id)
 
-        print(f"Database error: {e}")
-    
-    
-    return render(request, 'kennel.html', {'animals': animals, 'kennels': kennels})
+            if not animal_id:
+                return JsonResponse({
+                    "status": "error",
+                    "message": "No animal ID received from the browser."
+                }, status=400)
+
+            animal_obj = Animal.objects.get(animalid=int(animal_id))
+            animal_obj.delete()
+
+            return JsonResponse({
+                "status": "success",
+                "message": "Animal removed successfully."
+            })
+
+        except Animal.DoesNotExist:
+            return JsonResponse({
+                "status": "error",
+                "message": "Animal not found in database."
+            }, status=404)
+
+        except Exception as e:
+            print("DELETE ERROR:", e)
+
+            return JsonResponse({
+                "status": "error",
+                "message": str(e)
+            }, status=400)
+
+    return JsonResponse({
+        "status": "error",
+        "message": "Invalid request method."
+    }, status=400)
 
 def location_update(request):
     print("METHOD:", request.method)
