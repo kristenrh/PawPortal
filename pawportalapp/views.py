@@ -75,13 +75,12 @@ def delete_adoption_event(request):
         return redirect('adoption')
 
 def add_animal(request):
-    import traceback
-
-    print(traceback.format_exc())
     print("REQUEST METHOD:", request.method)
     print("POST DATA:", request.POST)
 
     if request.method == "POST":
+        # Because your console output shows QueryDict, we know the frontend 
+        # is sending standard form data, so request.POST.get is correct here!
         name = request.POST.get("animalName")
         species = request.POST.get("animalSpecies")
         age = request.POST.get("animalAge")
@@ -93,7 +92,6 @@ def add_animal(request):
             lw = datetime.fromisoformat(lw_raw)
             lw = timezone.make_aware(lw)
          
-
         print("Name:", name)
         print("Species:", species)
         print("Location", location)
@@ -103,29 +101,21 @@ def add_animal(request):
             new_animal = Animal.objects.create(
                 animalname=name,
                 animalspecies=species,
-                animalage = age,
-                animallocation = location,
-                lastwalk = lw
+                animalage=age,
+                animallocation=location,
+                lastwalk=lw
             )
-            next_url = request.POST.get("next")
-            if next_url:
-                next_url = str(next_url)
-                print("After string: ", next_url)
-                return redirect(next_url)
-            return redirect("kennel")
-         
+            print("Successfully saved to database!")
             
-
+            # THE FIX: Return a JSON success message instead of a redirect
+            return JsonResponse({"status": "success"})
+         
         except Exception as e:
             print(f"Error: {e}")
-            return JsonResponse({"status": "error"})
+            return JsonResponse({"status": "error", "message": str(e)})
 
-    
-
-import json
-from django.http import JsonResponse
-from .models import Animal # Make sure this matches your actual import
-
+    # Fallback for GET requests
+    return JsonResponse({"status": "error", "message": "Invalid request method."})
 def remove_animal(request):
     try:
         animal_id = None
