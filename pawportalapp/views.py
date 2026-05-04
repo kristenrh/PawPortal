@@ -66,6 +66,13 @@ def adoption(request):
         "events_json":json.dumps(events_dict)
     })
 
+def delete_adoption_event(request):
+    if request.method == 'POST':
+        target_id = request.POST.get('event_id')
+        event_to_delete = get_object_or_404(AdoptionEvent, id=target_id)
+        event_to_delete.delete()
+        return redirect('adoption')
+
 def add_animal(request):
     import traceback
 
