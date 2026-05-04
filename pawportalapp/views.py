@@ -91,19 +91,16 @@ def add_animal(request):
     
 
 def remove_animal(request):
-   animal_id = request.POST.get("animalId")
-   print("REMOVE ID:", animal_id)
-   try:
-       animal_obj = Animal.objects.get(pk=int(animal_id))
-       animal_obj.delete()
-       return JsonResponse({"status": "success"})
-
-   except Animal.DoesNotExist:
-    return JsonResponse({"status": "error", "message": "Animal not found"})
-
-   except Exception as e:
-    print("❌ DELETE ERROR:", e)
-    return JsonResponse({"status": "error", "message": str(e)})
+   if request.method == "POST":
+     import json 
+     try:
+         data= json.loads(request.body) animal_id = data.get("id")
+         animal_obj = Animal.objects.get(animalid = animal_id) animal_obj.delete()
+         return JsonResponse({"status": "success"}) 
+     except Animal.DoesNotExist:
+         return JsonResponse({"status": "error", "message": "Animal not found"})
+     except Exception as e: return JsonResponse({"status": "error", "message": str(e)}) 
+     return JsonResponse({"status": "error", "message": "Invalid request method"}, status=400)
 
 def kennel(request):
     try:
