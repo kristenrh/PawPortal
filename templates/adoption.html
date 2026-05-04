@@ -111,7 +111,7 @@
 
     // TODO DATABASE:
     // Later, replace this object with events passed from Django/database.
-    const events = const events = JSON.parse('{{ events_json|escapejs }}');
+    const events = JSON.parse('{{ events_json|escapejs }}');
 
     function openAdoptionModal() {
         document.getElementById("adoptionModal").classList.add("show-modal");
