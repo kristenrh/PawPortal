@@ -1,3 +1,7 @@
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
 /* * JavaScript for handling drag-and-drop functionality on the kennel page.*/
 function getCookie(name) {
     let cookieValue = null;
@@ -15,9 +19,7 @@ function getCookie(name) {
 }
 /* Allow dropping by preventing the default behavior. */
 
-function allowDrop(ev) {
-    ev.preventDefault();
-}
+
 
 function drag(ev) {
     ev.dataTransfer.setData("animalID", ev.target.id);

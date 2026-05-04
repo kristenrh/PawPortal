@@ -40,7 +40,38 @@ def socialization(request):
     return render(request, 'socialization.html', context)
 
 def adoption(request):
-    return render(request, "adoption.html")
+    animals = Animal.objects.all()
+
+    all_events = AdoptionEvent.objects.all()
+
+    events_dict = {}
+
+    for event in all_events:
+        date_key = event.adoption_date.strftime('%Y-%m-%d')
+        time_str = event.adoption_time.strftime('%H:%M')
+
+        if date_key not in events_dict:
+            events_dict[date_key] = []
+
+        events_dict[date_key].append({
+            "id": event.id,
+            "animal": event.animal.animalname,
+            "adopter": event.adopter_name,
+            "time": time_str,
+            "notes": event.notes if event.notes else""
+        })
+    
+    return render(request, "adoption.html", {
+        "animals":animals,
+        "events_json":json.dumps(events_dict)
+    })
+
+def delete_adoption_event(request):
+    if request.method == 'POST':
+        target_id = request.POST.get('event_id')
+        event_to_delete = get_object_or_404(AdoptionEvent, id=target_id)
+        event_to_delete.delete()
+        return redirect('adoption')
 
 def add_animal(request):
     import traceback
@@ -91,6 +122,7 @@ def add_animal(request):
     
 
 def remove_animal(request):
+<<<<<<< HEAD
    if request.method == "POST":
      import json 
      try:
@@ -101,6 +133,21 @@ def remove_animal(request):
          return JsonResponse({"status": "error", "message": "Animal not found"})
      except Exception as e: return JsonResponse({"status": "error", "message": str(e)}) 
      return JsonResponse({"status": "error", "message": "Invalid request method"}, status=400)
+=======
+   animal_id = request.POST.get("animalId")
+   print("REMOVE ID:", animal_id)
+   try:
+       animal_obj = Animal.objects.get(animalid=int(animal_id))
+       animal_obj.delete()
+       return redirect('kennel')
+
+   except Animal.DoesNotExist:
+    return JsonResponse({"status": "error", "message": "Animal not found"})
+
+   except Exception as e:
+    print("❌ DELETE ERROR:", e)
+    return redirect('kennel')
+>>>>>>> db13da4a20094445f3d307b84014cfcb93de2fa2
 
 def kennel(request):
     try:
@@ -261,8 +308,8 @@ def save_adoption_event(request):
                 adoption_time=combined_dt.time(),
                 notes=request.POST.get('notes')
             )
-            return redirect('calendar_page')
+            return redirect('adoption')
             
         except Exception as e:
             print(f"Error saving adoption: {e}")
-            return render(request, 'calendar.html', {'error': 'Check your date/time format!'})
+            return render(request, 'adoption.html', {'error': 'Check your date/time format!'})
