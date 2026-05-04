@@ -122,25 +122,39 @@ def add_animal(request):
 
     
 
+import json
+from django.http import JsonResponse
+from .models import Animal # Make sure this matches your actual import
+
 def remove_animal(request):
     try:
-            # 1. Parse the JSON sent by your JavaScript fetch()
-        data = json.loads(request.body)
-        animal_id = data.get("animalId")
+        animal_id = None
+        
+        # 1. Determine how the data was sent
+        if request.content_type == 'application/json':
+            # It came from JavaScript fetch()
+            data = json.loads(request.body)
+            # Try grabbing common variable names
+            animal_id = data.get("animalId") or data.get("animal_id") or data.get("id")
+        else:
+            # It came from a standard HTML form submission
+            animal_id = request.POST.get("animalId") or request.POST.get("animal_id")
             
         print("REMOVE ID:", animal_id)
-            
+        
+        # 2. Safety check
         if not animal_id:
-            return JsonResponse({"status": "error", "message": "No animal ID received."})
-    
+            return JsonResponse({"status": "error", "message": "No animal ID received from the browser."})
+
+        # 3. Find and delete
         animal_obj = Animal.objects.get(animalid=int(animal_id))
         animal_obj.delete()
-            
+        
         return JsonResponse({"status": "success"})
-    
+
     except Animal.DoesNotExist:
         return JsonResponse({"status": "error", "message": "Animal not found in database."})
-            
+        
     except Exception as e:
         print("❌ DELETE ERROR:", e)
         return JsonResponse({"status": "error", "message": str(e)})
