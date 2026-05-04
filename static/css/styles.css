@@ -350,6 +350,11 @@ Developer card
     grid-column-end: 3;
 }
 
+.dev-input {
+    display: block;
+    margin: 0 auto 14px auto;
+}
+
 /* =========================
 Landing page
 ========================= */
