@@ -13,5 +13,6 @@ urlpatterns = [
     path("oauth2callback/", views.google_callback, name="oauth2callback"),
     path("logout/", views.logout_view, name="logout"),
     path('save-adoption-event/', views.save_adoption_event, name='save_adoption_event'),
+    path('delete-event/', views.delete_adoption_event, name='delete_adoption_event'),
 ]
 
