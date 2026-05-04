@@ -2,6 +2,8 @@
 
 {% block content %}
 
+
+
 <div class="calendar-page">
 
     <div class="calendar-topbar">
@@ -93,7 +95,10 @@
         </div>
     </div>
 </div>
-
+<form id="secureDeleteForm" method="POST" action="{% url 'delete_adoption_event' %}" style="display: none;">
+    {% csrf_token %}
+    <input type="hidden" name="event_id" id="deleteTargetId">
+</form>
 <script>
     const calendar = document.getElementById("calendar");
     const monthLabel = document.getElementById("calendar-month");
@@ -155,8 +160,8 @@
                     <label>Notes</label>
                     <input class="edit-notes" type="text" value="${event.notes || ""}">
 
-                    <button class="trash-btn" type="button" onclick="deleteDayEvent(${index})">
-                        🗑️ Delete Event
+                    <button class="trash-btn" type="button" onclick="executeDatabaseDelete(${event.id})">
+                    🗑️ Delete Event
                     </button>
                 `;
 
