@@ -287,8 +287,8 @@ def save_adoption_event(request):
                 adoption_time=combined_dt.time(),
                 notes=request.POST.get('notes')
             )
-            return redirect('calendar_page')
+            return redirect('adoption')
             
         except Exception as e:
             print(f"Error saving adoption: {e}")
-            return render(request, 'calendar.html', {'error': 'Check your date/time format!'})
+            return render(request, 'adoption.html', {'error': 'Check your date/time format!'})
