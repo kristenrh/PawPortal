@@ -30,7 +30,7 @@
 </div>
 
 <div id="animalRemovePanel" class="panel" style="display:none;" >
-    <form id="removeForm" method="POST" action="{% url 'remove_animal' %}">
+    <form id="removeForm" method="POST" >
         {% csrf_token %}
         <label for="removeAnimalSelect">Animal to Remove:</label>
         <select id="removeAnimalSelect" name="animalId">

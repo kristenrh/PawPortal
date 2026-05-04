@@ -189,10 +189,79 @@ def add_animal(request):
 
 
 def remove_animal(request):
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+   if request.method == "POST":
+     import json 
+     try:
+         data= json.loads(request.body) animal_id = data.get("id")
+         animal_obj = Animal.objects.get(animalid = animal_id) animal_obj.delete()
+         return JsonResponse({"status": "success"}) 
+     except Animal.DoesNotExist:
+         return JsonResponse({"status": "error", "message": "Animal not found"})
+     except Exception as e: return JsonResponse({"status": "error", "message": str(e)}) 
+     return JsonResponse({"status": "error", "message": "Invalid request method"}, status=400)
+=======
+   animal_id = request.POST.get("animalId")
+   print("REMOVE ID:", animal_id)
+   try:
+       animal_obj = Animal.objects.get(animalid=int(animal_id))
+       animal_obj.delete()
+       return redirect('kennel')
+=======
+    try:
+        animal_id = None
+        
+        # 1. Determine how the data was sent
+        if request.content_type == 'application/json':
+            # It came from JavaScript fetch()
+            data = json.loads(request.body)
+            # Try grabbing common variable names
+            animal_id = data.get("animalId") or data.get("animal_id") or data.get("id")
+        else:
+            # It came from a standard HTML form submission
+            animal_id = request.POST.get("animalId") or request.POST.get("animal_id")
+            
+        print("REMOVE ID:", animal_id)
+        
+        # 2. Safety check
+        if not animal_id:
+            return JsonResponse({"status": "error", "message": "No animal ID received from the browser."})
+>>>>>>> 217b56df4b86d57f9a5d28bb5a7cca2a5f5b0a8d
+=======
     if request.method == "POST":
         try:
+<<<<<<< HEAD
+            animal_id = None
+>>>>>>> 7a04e8fb5ceb919aef8356968c3f5665187160a0
+
+            if request.content_type == "application/json":
+                data = json.loads(request.body)
+                animal_id = data.get("animalId") or data.get("animal_id") or data.get("id")
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+   except Exception as e:
+    print("❌ DELETE ERROR:", e)
+    return redirect('kennel')
+>>>>>>> db13da4a20094445f3d307b84014cfcb93de2fa2
+=======
+    except Animal.DoesNotExist:
+        return JsonResponse({"status": "error", "message": "Animal not found in database."})
+        
+    except Exception as e:
+        print("❌ DELETE ERROR:", e)
+        return JsonResponse({"status": "error", "message": str(e)})
+>>>>>>> 217b56df4b86d57f9a5d28bb5a7cca2a5f5b0a8d
+=======
+            if not animal_id:
+                animal_id = request.POST.get("animalId") or request.POST.get("animal_id")
+>>>>>>> 7a04e8fb5ceb919aef8356968c3f5665187160a0
+=======
             data = json.loads(request.body)
             animal_id = data.get("id")
+>>>>>>> 2eb67f182e1eecb968a946ea051ddb870e1b3374
 
             print("REMOVE ID:", animal_id)
 
