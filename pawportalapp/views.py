@@ -131,7 +131,7 @@ def remove_animal(request):
 
        return JsonResponse({"status": "success"})
 
-  except Animal.DoesNotExist:
+   except Animal.DoesNotExist:
        return JsonResponse({"status": "error", "message": "Animal not found"})
 
    except Exception as e:
