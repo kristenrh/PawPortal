@@ -131,6 +131,7 @@ Kennel Layout
     margin: 18px 0 8px 0;
 }
 
+.dashboard-Button,
 .animal-add-btn,
 .animal-remove-btn {
     background: #7ea6f5;
