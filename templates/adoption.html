@@ -223,25 +223,15 @@
         closeDayEventsModal();
     }
 
-    function deleteDayEvent(index) {
-        const confirmed = confirm("Are you sure you want to delete this adoption event?");
-
-        if (!confirmed) {
-            return;
-        }
-
-        events[selectedDateKey].splice(index, 1);
-
-        if (events[selectedDateKey].length === 0) {
-            delete events[selectedDateKey];
-        }
-
-        // TODO DATABASE:
-        // Later, delete this specific event from the database here.
-
-        renderCalendar(currentMonth, currentYear);
-        openDayEventsModal(selectedDateKey);
+    function executeDatabaseDelete(eventId) {
+    const confirmed = confirm("Are you sure you want to permanently delete this adoption event?");
+    
+    if (confirmed) {
+        document.getElementById('deleteTargetId').value = eventId;
+        
+        document.getElementById('secureDeleteForm').submit();
     }
+}
 
     function saveAdoptionEvent() {
         const animal = document.getElementById("eventAnimal").value;
