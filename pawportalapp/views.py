@@ -79,6 +79,37 @@ def adoption(request):
         "animals": animals,
         "events_json": json.dumps(events_dict),
     })
+
+def edit_adoption_event(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            events_data = data.get("events", [])
+
+            # Loop through each event that was edited in the modal
+            for ev in events_data:
+                # 1. Find the exact row in the database
+                event_obj = AdoptionEvent.objects.get(id=int(ev["id"]))
+                
+                # 2. Update the fields
+                event_obj.adopter_name = ev.get("adopter")
+                event_obj.adoption_date = ev.get("date")
+                event_obj.adoption_time = ev.get("time")
+                event_obj.notes = ev.get("notes")
+                
+                # 3. Commit the changes to PostgreSQL
+                event_obj.save()
+
+            return JsonResponse({"status": "success"})
+
+        except AdoptionEvent.DoesNotExist:
+            return JsonResponse({"status": "error", "message": "Event not found in the database."})
+        except Exception as e:
+            print("❌ EDIT ERROR:", e)
+            return JsonResponse({"status": "error", "message": str(e)})
+
+    return JsonResponse({"status": "error", "message": "Invalid request method."})
+
  
  
 def delete_adoption_event(request):
