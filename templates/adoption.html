@@ -145,8 +145,10 @@
                 item.classList.add("day-event-edit-card");
 
                 item.innerHTML = `
+                    <input type="hidden" class="edit-event-id" value="${event.id}">
+                    
                     <label>Animal Name</label>
-                    <input class="edit-animal" type="text" value="${event.animal || ""}">
+                    <input class="edit-animal" type="text" value="${event.animal || ""}" disabled>
 
                     <label>Adopter Name</label>
                     <input class="edit-adopter" type="text" value="${event.adopter || ""}">
@@ -177,62 +179,55 @@
         selectedDateKey = null;
     }
 
-    function saveDayEventChanges() {
-        if (!selectedDateKey) return;
+async function saveDayEventChanges() {
+    if (!selectedDateKey) return;
 
-        const cards = document.querySelectorAll(".day-event-edit-card");
-        const updatedEventsByDate = {};
+    const cards = document.querySelectorAll(".day-event-edit-card");
+    const updates = [];
 
-        cards.forEach(card => {
-            const animal = card.querySelector(".edit-animal").value.trim();
-            const adopter = card.querySelector(".edit-adopter").value.trim();
-            const date = card.querySelector(".edit-date").value;
-            const time = card.querySelector(".edit-time").value;
-            const notes = card.querySelector(".edit-notes").value.trim();
+    // Gather the data from every card in the modal
+    cards.forEach(card => {
+        const eventId = card.querySelector(".edit-event-id").value;
+        const adopter = card.querySelector(".edit-adopter").value.trim();
+        const date = card.querySelector(".edit-date").value;
+        const time = card.querySelector(".edit-time").value;
+        const notes = card.querySelector(".edit-notes").value.trim();
 
-            if (!animal || !date || !time) {
-                return;
-            }
-
-            if (!updatedEventsByDate[date]) {
-                updatedEventsByDate[date] = [];
-            }
-
-            updatedEventsByDate[date].push({
-                animal: animal,
+        if (eventId && date && time) {
+            updates.push({
+                id: eventId,
                 adopter: adopter,
+                date: date,
                 time: time,
                 notes: notes
             });
+        }
+    });
+
+    try {
+        // Send the payload to Django
+        const response = await fetch('/edit_adoption_event/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // Grab the CSRF token directly from the hidden delete form
+                'X-CSRFToken': document.querySelector('#secureDeleteForm [name=csrfmiddlewaretoken]').value
+            },
+            body: JSON.stringify({ events: updates })
         });
 
-        delete events[selectedDateKey];
-
-        Object.keys(updatedEventsByDate).forEach(date => {
-            if (!events[date]) {
-                events[date] = [];
-            }
-
-            events[date] = events[date].concat(updatedEventsByDate[date]);
-        });
-
-        // TODO DATABASE:
-        // Later, send updated event data to Django/database here.
-
-        renderCalendar(currentMonth, currentYear);
-        closeDayEventsModal();
-    }
-
-    function executeDatabaseDelete(eventId) {
-    const confirmed = confirm("Are you sure you want to permanently delete this adoption event?");
-    
-    if (confirmed) {
-        document.getElementById('deleteTargetId').value = eventId;
+        const result = await response.json();
         
-        document.getElementById('secureDeleteForm').submit();
+        if (result.status === 'success') {
+            window.location.reload(); // Refresh to pull the new data from Postgres
+        } else {
+            alert("Error saving events: " + result.message);
+        }
+    } catch (err) {
+        console.error("Network error:", err);
+        alert("A network error occurred while saving.");
     }
 }
-
     function saveAdoptionEvent() {
         const animal = document.getElementById("eventAnimal").value;
         const adopter = document.getElementById("eventAdopter").value;
@@ -265,6 +260,8 @@
         document.getElementById("eventTime").value = "";
         document.getElementById("eventNotes").value = "";
     }
+
+    
 
     function formatEventText(event) {
         const timeParts = event.time.split(":");
